@@ -14,6 +14,10 @@ Open <http://127.0.0.1:8788/>.
 
 - `index.html` — production landing page
 - `images/` — production image assets
+- `magazine/articles.js` — magazine article data source
+- `magazine/index.html` — Pinterest-style magazine archive
+- `magazine/article.html` — shared article detail view (`?slug=`)
+- `magazine/magazine.css`, `magazine/magazine.js` — shared magazine UI
 - `favicon.ico` — browser icon
 - `robots.txt`, `sitemap.xml` — search-engine metadata
 
