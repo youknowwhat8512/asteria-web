@@ -7,9 +7,9 @@ window.ASTERIA_ARTICLES = [
     titleKo: "첫 번째 컵, 경험이 예상을 뒤집다",
     publishedAt: "2026-07-20",
     eventDate: "2026-06-07",
-    image: "/images/mag-club-cup-2026-spinnaker.jpeg",
-    ogImage: "/images/og-club-cup-2026.jpg",
-    imageAlt: "푸른 스피니커를 펼친 J/70이 아라마리나 레이스 마크 옆을 지나는 모습",
+    image: "/images/mag-club-cup-2026-three-boat-line.jpeg",
+    ogImage: "/images/og-club-cup-2026-fleet.jpg",
+    imageAlt: "아라마리나 수면에서 세 대의 J/70이 나란히 항해하는 모습",
     heroNote: "FIRST RUNNING · ARA MARINA · J/70",
     shape: "wide",
     excerpt: "첫 자체 대회, 세 척의 J/70, 끝까지 뒤바뀐 순위. 첫 Club Cup의 승부를 가른 것은 백전노장의 경험이었다.",
@@ -27,26 +27,26 @@ window.ASTERIA_ARTICLES = [
       {
         step: "01",
         label: "The Setup",
-        title: "세 척이 나란히 선 출발선",
+        title: "나란히 선 첫 출발선",
         text: "클럽 멤버와 초대 손님이 같은 J/70을 타고 맞붙은 아스테리아의 첫 자체 대회.",
-        image: "/images/mag-club-cup-2026-fleet.jpeg",
-        alt: "흰 세일을 올린 J/70 한 대가 아라마리나 수면을 항해하는 모습"
+        image: "/images/mag-club-cup-2026-spinnaker-duel.jpeg",
+        alt: "푸른 스피니커를 펼친 두 대의 J/70을 뒤에서 본 모습"
       },
       {
         step: "02",
         label: "On The Water",
         title: "끝까지 뒤바뀐 순위",
         text: "순위는 레이스 내내 엎치락뒤치락했다. 세 팀은 마지막까지 더 유리한 자리를 다퉜다.",
-        image: "/images/mag-club-cup-2026-hero.jpeg",
-        alt: "흰 세일을 올린 J/70이 정면 사선으로 물살을 가르는 모습"
+        image: "/images/mag-club-cup-2026-maneuver-blue.jpeg",
+        alt: "푸른 스피니커 옆에서 여러 크루가 로프와 세일을 조정하는 모습"
       },
       {
         step: "03",
         label: "The Upset",
         title: "경험이 만든 이변",
         text: "우승 후보였던 박정수 팀은 3위. 첫 컵은 고재영 스키퍼 팀에게 돌아갔다.",
-        image: "/images/mag-club-cup-2026-bow.jpeg",
-        alt: "J/70이 정면으로 다가오며 선수들이 각자의 포지션을 수행하는 모습"
+        image: "/images/mag-club-cup-2026-downwind-duel.jpeg",
+        alt: "흰 스피니커를 펼친 두 대의 J/70이 나란히 항해하는 모습"
       }
     ],
     results: [
@@ -67,9 +67,9 @@ window.ASTERIA_ARTICLES = [
         kicker: "02 / No Safe Bet",
         heading: "우승 후보는 3위였다",
         image: {
-          src: "/images/mag-club-cup-2026-signal.jpeg",
-          alt: "J/70 위에서 한 크루가 손짓하고 다른 크루들이 세일링에 집중하는 모습",
-          caption: "손짓 하나에 각자의 움직임이 이어졌다. 레이스는 그렇게 팀의 호흡으로 흘러갔다."
+          src: "/images/mag-club-cup-2026-team-blue.jpeg",
+          alt: "J/70 위에서 다섯 명의 크루가 세일과 전방을 살피는 모습",
+          caption: "한 방향을 바라보는 크루. 각자의 판단이 하나의 움직임으로 이어졌다."
         },
         body: [
           "대회 전 가장 유력한 우승 후보는 박정수 스키퍼 팀이었습니다. 그러나 최종 결과는 3위였습니다. 이동준 클럽 회장 스키퍼 팀이 2위에 올랐고, 예상 밖의 고재영 스키퍼 팀이 우승을 차지했습니다.",
@@ -80,9 +80,9 @@ window.ASTERIA_ARTICLES = [
         kicker: "03 / Position Fight",
         heading: "한 자리를 두고 끝까지",
         image: {
-          src: "/images/mag-club-cup-2026-sail-detail.jpeg",
-          alt: "큰 흰 세일 아래 J/70 크루들이 낮은 자세로 보트의 균형을 잡는 모습",
-          caption: "같은 J/70, 다른 판단. 작은 차이가 순위를 계속 흔들었다."
+          src: "/images/mag-club-cup-2026-race-course.jpeg",
+          alt: "앞선 J/70과 뒤따르는 J/70이 아라마리나 수면을 항해하는 모습",
+          caption: "같은 수면, 다른 선택. 보트 사이의 거리는 끝까지 좁혀지고 벌어졌다."
         },
         body: [
           "순위는 레이스 내내 계속 바뀌었습니다. 세 팀은 조금이라도 유리한 자리를 차지하려 치열하게 맞붙었고, 어느 팀도 마지막까지 긴장을 놓을 수 없었습니다.",
@@ -93,8 +93,8 @@ window.ASTERIA_ARTICLES = [
         kicker: "04 / Experience Wins",
         heading: "백전노장이 가져간 첫 컵",
         image: {
-          src: "/images/mag-club-cup-2026-focus.jpeg",
-          alt: "J/70 선수들이 세일과 전방을 바라보며 집중하는 모습",
+          src: "/images/mag-club-cup-2026-veteran.jpeg",
+          alt: "빨간 모자와 노란 구명조끼를 착용한 세일러가 보트 위에 앉아 있는 모습",
           caption: "나이는 승부를 가르지 않았다. 마지막까지 차이를 만든 것은 경험이었다."
         },
         body: [
@@ -113,21 +113,21 @@ window.ASTERIA_ARTICLES = [
     ],
     gallery: [
       {
-        src: "/images/mag-club-cup-2026-maneuver.jpeg",
-        alt: "J/70 크루들이 보트 위에서 세일과 로프를 조정하는 모습",
-        caption: "판단이 움직임으로 바뀌는 순간.",
+        src: "/images/mag-club-cup-2026-after-race.jpeg",
+        alt: "주황색 보트 옆에 선 두 사람이 물 위에서 웃고 있는 모습",
+        caption: "물 위에서 마주친 짧은 웃음.",
         layout: "large"
       },
       {
-        src: "/images/mag-club-cup-2026-crew.jpeg",
-        alt: "세일링 중인 J/70 위에서 여러 크루가 각자의 포지션을 수행하는 모습",
-        caption: "각자의 자리에서 하나의 보트를 움직였다.",
+        src: "/images/mag-club-cup-2026-fleet-portrait.jpeg",
+        alt: "흰 세일을 올린 J/70 두 대가 앞뒤로 항해하는 모습",
+        caption: "앞선 보트와 뒤따르는 보트. 끝까지 이어진 자리 싸움.",
         layout: "standard"
       },
       {
-        src: "/images/mag-club-cup-2026-wide.jpeg",
-        alt: "아라마리나 풍경을 배경으로 J/70과 크루 전체가 보이는 모습",
-        caption: "첫 Club Cup이 열린 2026년 6월 7일의 아라마리나.",
+        src: "/images/mag-club-cup-2026-spinnaker.jpeg",
+        alt: "푸른 스피니커를 펼친 J/70이 아라마리나 레이스 마크 옆을 지나는 모습",
+        caption: "푸른 스피니커가 채운 첫 Club Cup의 마지막 장면.",
         layout: "wide"
       }
     ]
