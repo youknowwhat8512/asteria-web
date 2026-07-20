@@ -118,6 +118,12 @@ window.ASTERIA_ARTICLES = [
     ],
     gallery: [
       {
+        src: "/images/mag-club-cup-2026-close-hauled.jpeg",
+        alt: "다섯 명의 크루가 탄 J/70이 세일을 올리고 정면으로 항해하는 모습",
+        caption: "마지막까지 이어진 항로 위의 집중.",
+        layout: "wide"
+      },
+      {
         src: "/images/mag-club-cup-2026-after-race.jpeg",
         alt: "주황색 보트 옆에 선 두 사람이 물 위에서 웃고 있는 모습",
         caption: "물 위에서 마주친 짧은 웃음.",
@@ -127,6 +133,12 @@ window.ASTERIA_ARTICLES = [
         src: "/images/mag-club-cup-2026-fleet-portrait.jpeg",
         alt: "흰 세일을 올린 J/70 두 대가 앞뒤로 항해하는 모습",
         caption: "앞선 보트와 뒤따르는 보트. 끝까지 이어진 자리 싸움.",
+        layout: "standard"
+      },
+      {
+        src: "/images/mag-club-cup-2026-prizes.jpeg",
+        alt: "아라마리나 수면을 배경으로 트로피와 여러 상품이 테이블 위에 진열된 모습",
+        caption: "첫 Club Cup을 위해 준비된 트로피와 상품.",
         layout: "standard"
       },
       {
