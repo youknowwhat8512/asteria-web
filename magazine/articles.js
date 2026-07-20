@@ -59,9 +59,9 @@ window.ASTERIA_ARTICLES = [
         kicker: "01 / First Running",
         heading: "다른 대회가 아닌, 우리의 대회",
         image: {
-          src: "/images/mag-club-cup-2026-crew-action.jpeg",
-          alt: "J/70 위에서 다섯 명의 크루가 세일과 로프를 조정하며 항해하는 모습",
-          caption: "첫 자체 대회의 출발점. 같은 보트 위에서 각자의 역할이 하나로 모였다."
+          src: "/images/mag-club-cup-2026-team-blue.jpeg",
+          alt: "J/70 위에서 다섯 명의 크루가 세일과 전방을 살피는 모습",
+          caption: "한 방향을 바라보는 크루. 각자의 판단이 하나의 움직임으로 이어졌다."
         },
         body: [
           "오전 11시, 아라마리나에 J/70 세 척이 나란히 섰습니다. 클럽 멤버와 초대 손님이 함께했고, 오후 4시까지 같은 J/70을 타고 판단과 팀워크로 승부를 겨뤘습니다.",
@@ -72,9 +72,9 @@ window.ASTERIA_ARTICLES = [
         kicker: "02 / No Safe Bet",
         heading: "우승 후보는 3위였다",
         image: {
-          src: "/images/mag-club-cup-2026-team-blue.jpeg",
-          alt: "J/70 위에서 다섯 명의 크루가 세일과 전방을 살피는 모습",
-          caption: "한 방향을 바라보는 크루. 각자의 판단이 하나의 움직임으로 이어졌다."
+          src: "/images/mag-club-cup-2026-crew-action.jpeg",
+          alt: "J/70 위에서 다섯 명의 크루가 세일과 로프를 조정하며 항해하는 모습",
+          caption: "출발 전의 예상과 달리, 물 위에서는 모든 팀이 다시 증명해야 했다."
         },
         body: [
           "대회 전 가장 유력한 우승 후보는 박정수 스키퍼 팀이었습니다. 그러나 최종 결과는 3위였습니다. 이동준 클럽 회장 스키퍼 팀이 2위에 올랐고, 예상 밖의 고재영 스키퍼 팀이 우승을 차지했습니다.",
