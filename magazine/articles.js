@@ -1,12 +1,14 @@
 window.ASTERIA_ARTICLES = [
   {
     slug: "asteria-club-cup-2026",
+    url: "/magazine/asteria-club-cup-2026/",
     category: "Club Race",
     title: "The First Cup, Won by Experience",
     titleKo: "첫 번째 컵, 경험이 예상을 뒤집다",
     publishedAt: "2026-07-20",
     eventDate: "2026-06-07",
     image: "/images/mag-club-cup-2026-spinnaker.jpeg",
+    ogImage: "/images/og-club-cup-2026.jpg",
     imageAlt: "푸른 스피니커를 펼친 J/70이 아라마리나 레이스 마크 옆을 지나는 모습",
     heroNote: "FIRST RUNNING · ARA MARINA · J/70",
     shape: "wide",
