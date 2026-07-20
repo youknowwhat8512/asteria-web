@@ -5,7 +5,7 @@
 
   function cardMarkup(article) {
     return `<a class="pin-card" data-category="${article.category}" data-shape="${article.shape}" href="${articleUrl(article.slug)}" aria-label="${article.titleKo} 아티클 열기">
-      <div class="pin-media"><img src="${article.image}" alt="${article.titleKo}" loading="lazy"><span class="pin-category">${article.category}</span></div>
+      <div class="pin-media"><img src="${article.image}" alt="${article.imageAlt || article.titleKo}" loading="lazy"><span class="pin-category">${article.category}</span></div>
       <div class="pin-body"><time datetime="${article.publishedAt}">${dateLabel(article.publishedAt)}</time><h2>${article.title}</h2><h3>${article.titleKo}</h3><p>${article.excerpt}</p><span class="pin-arrow">Read Story →</span></div>
     </a>`;
   }
@@ -21,7 +21,8 @@
     const render = () => {
       const visible = active === 'All' ? articles : articles.filter(article => article.category === active);
       masonry.innerHTML = visible.map(cardMarkup).join('');
-      count.textContent = `${visible.length} Stories`;
+      masonry.classList.toggle('single-story', visible.length === 1);
+      count.textContent = `${visible.length} ${visible.length === 1 ? 'Story' : 'Stories'}`;
       empty.classList.toggle('show', visible.length === 0);
     };
 
@@ -50,14 +51,25 @@
     document.title = `${article.titleKo} | Asteria Magazine`;
     const description = document.querySelector('meta[name="description"]');
     if (description) description.content = article.excerpt;
+    const facts = (article.facts || []).map(item => `<div class="article-fact"><small>${item.label}</small><strong>${item.value}</strong></div>`).join('');
+    const results = (article.results || []).map(item => `<li><span>${item.rank}</span><div><strong>${item.skipper}</strong><small>${item.detail}</small></div></li>`).join('');
+    const gallery = (article.gallery || []).map(item => `<figure><img src="${item.src}" alt="${item.alt}" loading="lazy"><figcaption>${item.caption}</figcaption></figure>`).join('');
+    const storyDate = article.eventDate || article.publishedAt;
     articleRoot.innerHTML = `<article>
-      <header class="article-head"><a class="article-back" href="/magazine/">← Magazine 전체보기</a><div class="article-meta"><span>${article.category}</span><time datetime="${article.publishedAt}">${dateLabel(article.publishedAt)}</time></div><h1>${article.title}</h1><h2>${article.titleKo}</h2></header>
-      <div class="article-hero"><img src="${article.image}" alt="${article.titleKo}"></div>
-      <div class="article-content"><p class="article-lead">${article.lead}</p><div class="article-body">${article.sections.map(section => `<section class="article-section"><h3>${section.heading}</h3>${section.body.map(paragraph => `<p>${paragraph}</p>`).join('')}</section>`).join('')}</div></div>
+      <header class="article-head"><a class="article-back" href="/magazine/">← Magazine 전체보기</a><div class="article-meta"><span>${article.category}</span><time datetime="${storyDate}">${dateLabel(storyDate)}</time></div><h1>${article.title}</h1><h2>${article.titleKo}</h2></header>
+      <div class="article-hero"><img src="${article.image}" alt="${article.imageAlt || article.titleKo}"></div>
+      ${facts ? `<div class="article-facts">${facts}</div>` : ''}
+      <div class="article-content"><p class="article-lead">${article.lead}</p><div class="article-body">
+        ${results ? `<section class="article-results"><div class="eyebrow">Final Standing</div><ol>${results}</ol></section>` : ''}
+        ${article.sections.map(section => `<section class="article-section"><h3>${section.heading}</h3>${section.body.map(paragraph => `<p>${paragraph}</p>`).join('')}</section>`).join('')}
+      </div></div>
+      ${gallery ? `<section class="article-gallery"><div class="eyebrow">Race Gallery</div><div>${gallery}</div></section>` : ''}
     </article>`;
 
     const related = articles.filter(item => item.slug !== article.slug).slice(0, 3);
     const relatedGrid = document.getElementById('relatedGrid');
-    relatedGrid.innerHTML = related.map(item => `<a class="related-card" href="${articleUrl(item.slug)}"><img src="${item.image}" alt="${item.titleKo}"><div><small>${item.category}</small><h3>${item.titleKo}</h3></div></a>`).join('');
+    const relatedSection = document.getElementById('relatedSection');
+    relatedSection.hidden = related.length === 0;
+    relatedGrid.innerHTML = related.map(item => `<a class="related-card" href="${articleUrl(item.slug)}"><img src="${item.image}" alt="${item.imageAlt || item.titleKo}"><div><small>${item.category}</small><h3>${item.titleKo}</h3></div></a>`).join('');
   }
 })();
