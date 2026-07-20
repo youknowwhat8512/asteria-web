@@ -53,18 +53,40 @@
     if (description) description.content = article.excerpt;
     const facts = (article.facts || []).map(item => `<div class="article-fact"><small>${item.label}</small><strong>${item.value}</strong></div>`).join('');
     const results = (article.results || []).map(item => `<li><span>${item.rank}</span><div><strong>${item.skipper}</strong><small>${item.detail}</small></div></li>`).join('');
-    const gallery = (article.gallery || []).map(item => `<figure><img src="${item.src}" alt="${item.alt}" loading="lazy"><figcaption>${item.caption}</figcaption></figure>`).join('');
+    const raceFlow = (article.raceFlow || []).map(item => `<article class="race-flow-card"><img src="${item.image}" alt="${item.alt}" loading="lazy"><div><span>${item.step} / ${item.label}</span><h3>${item.title}</h3><p>${item.text}</p></div></article>`).join('');
+    const gallery = (article.gallery || []).map(item => `<figure class="gallery-${item.layout || 'standard'}"><img src="${item.src}" alt="${item.alt}" loading="lazy"><figcaption>${item.caption}</figcaption></figure>`).join('');
+    const sectionMarkup = section => `<section class="article-section">
+      ${section.kicker ? `<div class="section-kicker">${section.kicker}</div>` : ''}
+      <h3>${section.heading}</h3>
+      ${section.image ? `<figure class="article-section-visual"><img src="${section.image.src}" alt="${section.image.alt}" loading="lazy"><figcaption>${section.image.caption}</figcaption></figure>` : ''}
+      ${section.body.map(paragraph => `<p>${paragraph}</p>`).join('')}
+    </section>`;
     const storyDate = article.eventDate || article.publishedAt;
     articleRoot.innerHTML = `<article>
       <header class="article-head"><a class="article-back" href="/magazine/">← Magazine 전체보기</a><div class="article-meta"><span>${article.category}</span><time datetime="${storyDate}">${dateLabel(storyDate)}</time></div><h1>${article.title}</h1><h2>${article.titleKo}</h2></header>
-      <div class="article-hero"><img src="${article.image}" alt="${article.imageAlt || article.titleKo}"></div>
+      <div class="article-hero"><img src="${article.image}" alt="${article.imageAlt || article.titleKo}">${article.heroNote ? `<span>${article.heroNote}</span>` : ''}</div>
       ${facts ? `<div class="article-facts">${facts}</div>` : ''}
+      ${raceFlow ? `<section class="article-race-flow"><div class="eyebrow">Race in Three Acts</div><div class="race-flow-grid">${raceFlow}</div></section>` : ''}
+      ${article.pullQuote ? `<blockquote class="article-pullquote">${article.pullQuote}</blockquote>` : ''}
       <div class="article-content"><p class="article-lead">${article.lead}</p><div class="article-body">
         ${results ? `<section class="article-results"><div class="eyebrow">Final Standing</div><ol>${results}</ol></section>` : ''}
-        ${article.sections.map(section => `<section class="article-section"><h3>${section.heading}</h3>${section.body.map(paragraph => `<p>${paragraph}</p>`).join('')}</section>`).join('')}
+        ${article.sections.map(sectionMarkup).join('')}
       </div></div>
-      ${gallery ? `<section class="article-gallery"><div class="eyebrow">Race Gallery</div><div>${gallery}</div></section>` : ''}
+      ${gallery ? `<section class="article-gallery"><div class="eyebrow">Final Frames</div><div>${gallery}</div></section>` : ''}
     </article>`;
+
+    const motionItems = articleRoot.querySelectorAll('.race-flow-card, .article-section, .article-gallery figure');
+    if (!matchMedia('(prefers-reduced-motion: reduce)').matches && 'IntersectionObserver' in window) {
+      articleRoot.classList.add('article-motion-ready');
+      const observer = new IntersectionObserver(entries => {
+        entries.forEach(entry => {
+          if (!entry.isIntersecting) return;
+          entry.target.classList.add('is-active');
+          observer.unobserve(entry.target);
+        });
+      }, { threshold: .12, rootMargin: '0px 0px -8%' });
+      motionItems.forEach(item => observer.observe(item));
+    }
 
     const related = articles.filter(item => item.slug !== article.slug).slice(0, 3);
     const relatedGrid = document.getElementById('relatedGrid');
