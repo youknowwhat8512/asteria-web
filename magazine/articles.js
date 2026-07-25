@@ -220,9 +220,10 @@ window.ASTERIA_ARTICLES = [
         kicker: "03 / Trouble Ahead",
         heading: "클루 시트가 빠졌고 앞에는 어망이 있었습니다",
         image: {
-          src: "/images/mag-wangsan-2026-spinnaker-rig.jpeg",
-          alt: "흰 세일과 여러 로프 아래에서 크루가 장비를 다루는 모습",
-          caption: "흰 세일과 여러 시트 아래에서 장비를 다루는 크루."
+          src: "/images/mag-wangsan-2026-under-sail.jpeg",
+          alt: "푸른 하늘 아래 펼쳐진 흰 메인세일과 보트에 앉아 있는 크루들",
+          caption: "메인세일 아래에서 왕산 앞바다를 항해하는 크루.",
+          position: "center 55%"
         },
         body: [
           "큰 스피네이커를 운용하던 중 클루 시트가 폴에서 빠졌습니다. 세일을 원하는 대로 움직이기 어려워졌고 전방에는 어망이 있었습니다. 처음에는 스피네이커를 내리는 방안도 검토했습니다.",
@@ -234,10 +235,9 @@ window.ASTERIA_ARTICLES = [
         kicker: "04 / Bowmen",
         heading: "멀미 중에도 바우를 지킨 두 사람",
         image: {
-          src: "/images/mag-wangsan-2026-under-sail.jpeg",
-          alt: "푸른 하늘 아래 펼쳐진 흰 메인세일과 보트에 앉아 있는 크루들",
-          caption: "메인세일 아래에서 왕산 앞바다를 항해하는 크루.",
-          position: "center 55%"
+          src: "/images/mag-wangsan-2026-spinnaker-rig.jpeg",
+          alt: "흰 세일과 여러 로프 아래에서 크루가 장비를 다루는 모습",
+          caption: "흰 세일과 여러 시트 아래에서 장비를 다루는 크루."
         },
         midImage: {
           src: "/images/mag-wangsan-2026-cockpit-crew.jpeg",
