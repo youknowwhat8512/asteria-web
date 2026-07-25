@@ -252,7 +252,7 @@ window.ASTERIA_ARTICLES = [
       },
       {
         kicker: "05 / After Sailing",
-        heading: "식사 자리에서 다시 나온 장면",
+        heading: "오늘의 최고 속도는 11.4노트였습니다",
         image: {
           src: "/images/mag-wangsan-2026-foam-under-sail.jpeg",
           alt: "붉은 세일 커버 아래로 물살과 흰 포말, 멀리 섬이 보이는 항해 장면",
