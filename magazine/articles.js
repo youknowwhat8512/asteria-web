@@ -181,9 +181,10 @@ window.ASTERIA_ARTICLES = [
         kicker: "01 / Before Departure",
         heading: "출항 전에 토핑 리프트부터 바꿨습니다",
         image: {
-          src: "/images/mag-wangsan-2026-under-sail.jpeg",
-          alt: "푸른 하늘 아래 펼쳐진 흰 메인세일과 보트에 앉아 있는 크루들",
-          caption: "메인세일 아래에서 왕산 앞바다를 항해하는 크루."
+          src: "/images/mag-wangsan-2026-line-work.jpeg",
+          alt: "두 크루가 테이블 위 금속 피팅과 붉은 로프의 끝단을 맞추는 모습",
+          caption: "출항 전, 두 크루가 새 로프의 끝단과 금속 피팅을 맞추고 있습니다.",
+          position: "center 72%"
         },
         body: [
           "이동준 회장님과 김종명은 출항 전에 토핑 리프트를 교체했습니다. 당장 고장이 난 것은 아니었지만 로프에서 경화와 노후의 기미가 보였습니다.",
@@ -243,6 +244,41 @@ window.ASTERIA_ARTICLES = [
       }
     ],
     gallery: [
+      {
+        src: "/images/mag-wangsan-2026-sail-detail.jpeg",
+        alt: "푸른 하늘 아래 붉은 세일 커버와 흰 세일, 붐과 여러 로프가 보이는 모습",
+        caption: "푸른 하늘 아래 선명하게 이어진 붉은 세일 커버와 리깅.",
+        layout: "wide",
+        position: "center 48%"
+      },
+      {
+        src: "/images/mag-wangsan-2026-preflight-mast.jpeg",
+        alt: "마리나에 정박한 요트에서 두 크루가 마스트 주변 장비와 세일을 정리하는 모습",
+        caption: "출항 전 마스트 주변 장비와 세일을 정리하는 크루.",
+        layout: "tall",
+        position: "center 55%"
+      },
+      {
+        src: "/images/mag-wangsan-2026-foam-under-sail.jpeg",
+        alt: "붉은 세일 커버 아래로 물살과 흰 포말, 멀리 섬이 보이는 항해 장면",
+        caption: "붐 아래로 보인 물살과 백파.",
+        layout: "standard",
+        position: "center 62%"
+      },
+      {
+        src: "/images/mag-wangsan-2026-watch-log.jpeg",
+        alt: "검은 장갑을 낀 손목의 항해 기기에 SOG 7.2가 표시된 모습",
+        caption: "손목형 항해 기기 화면에 표시된 SOG 7.2.",
+        layout: "standard",
+        position: "center 72%"
+      },
+      {
+        src: "/images/mag-wangsan-2026-cockpit-crew.jpeg",
+        alt: "요트 콕핏에 앉은 크루와 휠, 블록, 여러 색의 로프가 보이는 모습",
+        caption: "휠과 블록, 여러 시트가 모인 콕핏의 한 장면.",
+        layout: "wide",
+        position: "center 45%"
+      },
       {
         src: "/images/mag-wangsan-2026-route.png",
         alt: "왕산 앞바다의 항해 경로와 거리 10.4해리, 시간 1시간 57분이 표시된 기록 화면",

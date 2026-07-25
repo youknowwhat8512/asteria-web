@@ -74,11 +74,11 @@
     const facts = (article.facts || []).map(item => `<div class="article-fact"><small>${item.label}</small><strong>${item.value}</strong></div>`).join('');
     const results = (article.results || []).map(item => `<li><span>${item.rank}</span><div><div class="result-name"><strong>${item.skipper}</strong>${(item.badges || []).map(badge => `<em>${badge}</em>`).join('')}</div><small>${item.detail}</small></div></li>`).join('');
     const raceFlow = (article.raceFlow || []).map(item => `<article class="race-flow-card"><img src="${item.image}" alt="${item.alt}" loading="lazy"><div><span>${item.step} / ${item.label}</span><h3>${item.title}</h3><p>${item.text}</p></div></article>`).join('');
-    const gallery = (article.gallery || []).map(item => `<figure class="gallery-${item.layout || 'standard'}"><img src="${item.src}" alt="${item.alt}" loading="lazy"><figcaption>${item.caption}</figcaption></figure>`).join('');
+    const gallery = (article.gallery || []).map(item => `<figure class="gallery-${item.layout || 'standard'}"><img src="${item.src}" alt="${item.alt}" loading="lazy"${item.position ? ` style="object-position:${item.position}"` : ''}><figcaption>${item.caption}</figcaption></figure>`).join('');
     const sectionMarkup = section => `<section class="article-section">
       ${section.kicker ? `<div class="section-kicker">${section.kicker}</div>` : ''}
       <h3>${section.heading}</h3>
-      ${section.image ? `<figure class="article-section-visual"><img src="${section.image.src}" alt="${section.image.alt}" loading="lazy"><figcaption>${section.image.caption}</figcaption></figure>` : ''}
+      ${section.image ? `<figure class="article-section-visual"><img src="${section.image.src}" alt="${section.image.alt}" loading="lazy"${section.image.position ? ` style="object-position:${section.image.position}"` : ''}><figcaption>${section.image.caption}</figcaption></figure>` : ''}
       ${section.body.map(paragraph => `<p>${paragraph}</p>`).join('')}
     </section>`;
     const storyDate = article.eventDate || article.publishedAt;
