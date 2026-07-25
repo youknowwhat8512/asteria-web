@@ -18,4 +18,6 @@
 .article-gallery figure.gallery-record{display:flex;grid-column:1/-1!important;grid-row:5!important;flex-direction:column;align-items:center;background:var(--ink)}
 .article-gallery figure.gallery-record img{width:auto;max-width:100%;height:auto;max-height:980px;aspect-ratio:auto;object-fit:contain}
 .article-gallery figure.gallery-record figcaption{width:100%}
+.article-gallery>div:not(.eyebrow):has(> figure.gallery-record:only-child){display:block}
+.article-gallery figure.gallery-record:only-child{grid-row:auto!important}
 @media(max-width:760px){.article-gallery>div:not(.eyebrow):has(> figure.gallery-record){display:grid;grid-template-rows:none}.article-gallery figure.gallery-record{grid-row:auto!important}.article-gallery figure.gallery-record img{aspect-ratio:auto}}
