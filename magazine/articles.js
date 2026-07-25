@@ -274,6 +274,12 @@ window.ASTERIA_ARTICLES = [
       {
         kicker: "Crew / On Board",
         heading: "여섯 명이 맡은 자리",
+        image: {
+          src: "/images/mag-wangsan-2026-cockpit-group.jpeg",
+          alt: "푸른 하늘 아래 요트 콕핏에서 세 명의 크루가 항해 중인 모습",
+          caption: "왕산 앞바다를 항해 중인 콕핏의 크루.",
+          position: "center 56%"
+        },
         body: [
           "엄주범 단장이 스키퍼를 맡았고 조윤호 회원이 피트맨, 박정수 회원이 지브 트리머, 이동준 회장이 메인 트리머로 탔습니다. 김종명 회원과 이주환 회원은 바우맨으로 참가했습니다."
         ]
