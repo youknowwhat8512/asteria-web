@@ -44,6 +44,12 @@ export async function onRequest(context) {
 export default {
   fetch(request, env) {
     const pathname = new URL(request.url).pathname;
+    if (!pathname.startsWith("/api/veronica")) {
+      return new Response("Not Found", {
+        status: 404,
+        headers: { "content-type": "text/plain; charset=utf-8", "cache-control": "no-store" },
+      });
+    }
     const rawPath = pathname.replace(/^\/api\/veronica\/?/, "");
     return onRequest({
       request,
