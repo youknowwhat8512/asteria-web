@@ -338,7 +338,7 @@ window.ASTERIA_ARTICLES = [
           src: "/images/mag-ilca7-ara-single-boat.jpeg",
           alt: "넓은 수면 위에서 흰 세일을 올린 1인승 딩기 한 척이 항해하는 모습",
           caption: "아라마리나 수면 위의 ILCA 7 한 척. 한 사람이 보트의 모든 조작을 맡습니다.",
-          position: "center 72%"
+          position: "center bottom"
         },
         body: [
           "킬보트에서는 한 포지션을 오래 맡을수록 그 자리의 동작과 타이밍은 정교해집니다. 대신 다른 포지션에서 시작된 변화가 자기 자리까지 어떻게 이어지는지는 놓치기 쉽습니다. 트리머의 조절이 헬름의 압력을 바꾸고, 무게 배치와 바우의 타이밍이 다음 가속에 영향을 줍니다.",
