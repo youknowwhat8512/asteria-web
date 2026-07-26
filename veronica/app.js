@@ -1,4 +1,4 @@
-// Veronica charter booking — staging client.
+// Veronica charter booking — production client.
 //
 // Security notes:
 //  * The session lives in an HttpOnly cookie the API sets; JS never reads or
