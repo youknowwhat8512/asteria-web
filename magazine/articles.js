@@ -174,7 +174,8 @@ window.ASTERIA_ARTICLES = [
       { label: "Gust", value: "16–18 kt" },
       { label: "Tide", value: "3물 · 13:34 만조" },
       { label: "Boat Speed", value: "풍상 7+ kt · 풍하 최고 11.4 kt" },
-      { label: "Crew", value: "6명" }
+      { label: "Crew", value: "6명" },
+      { label: "Yacht", value: "PoleStar · Beneteau First 36.7" }
     ],
     sections: [
       {
