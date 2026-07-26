@@ -38,3 +38,17 @@ export async function onRequest(context) {
     headers: response.headers,
   });
 }
+
+// Cloudflare Worker entrypoint for sites whose static origin is not Pages.
+// The route is scoped to /api/veronica* at the zone edge.
+export default {
+  fetch(request, env) {
+    const pathname = new URL(request.url).pathname;
+    const rawPath = pathname.replace(/^\/api\/veronica\/?/, "");
+    return onRequest({
+      request,
+      env,
+      params: { path: rawPath ? rawPath.split("/") : [] },
+    });
+  },
+};
