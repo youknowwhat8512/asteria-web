@@ -1,2 +1,13 @@
 .DS_Store
 *.log
+
+# Local Cloudflare state and generated deployment output
+.wrangler/
+.pages-dist/
+
+# Local planning, prototypes, backend schema/tests, and member seed data.
+# This repository is public; deploy backend source separately.
+.hermes/
+prototypes/
+supabase/
+tests/
