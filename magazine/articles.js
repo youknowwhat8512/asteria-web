@@ -347,7 +347,7 @@ window.ASTERIA_ARTICLES = [
       },
       {
         kicker: "03 / Racecraft",
-        heading: "레이싱에서는 보트 밖까지 혼자 봐야 합니다",
+        heading: "레이싱에서는 보트 밖까지 봐야 합니다",
         midImage: {
           src: "/images/mag-ilca7-ara-two-boats.jpeg",
           alt: "아라마리나 수면에서 흰 세일을 올린 ILCA 7 두 척이 앞뒤로 항해하는 모습",
