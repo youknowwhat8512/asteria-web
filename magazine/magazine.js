@@ -4,9 +4,9 @@
   const dateLabel = value => new Intl.DateTimeFormat('ko-KR', {year:'numeric',month:'long',day:'numeric'}).format(new Date(`${value}T00:00:00`));
 
   function cardMarkup(article) {
-    return `<a class="pin-card" data-category="${article.category}" data-shape="${article.shape}" href="${articleUrl(article)}" aria-label="${article.titleKo} 아티클 열기">
+    return `<a class="pin-card" data-category="${article.category}" data-shape="${article.shape}" href="${articleUrl(article)}" aria-label="${article.titleKo} 에피소드 열기">
       <div class="pin-media"><img src="${article.image}" alt="${article.imageAlt || article.titleKo}" loading="lazy"><span class="pin-category">${article.category}</span></div>
-      <div class="pin-body"><time datetime="${article.publishedAt}">${dateLabel(article.publishedAt)}</time><h2>${article.title}</h2><h3>${article.titleKo}</h3><p>${article.excerpt}</p><span class="pin-arrow">Read Story →</span></div>
+      <div class="pin-body"><time datetime="${article.publishedAt}">${dateLabel(article.publishedAt)}</time><h2>${article.title}</h2><h3>${article.titleKo}</h3><p>${article.excerpt}</p><span class="pin-arrow">Read Episode →</span></div>
     </a>`;
   }
 
@@ -22,7 +22,7 @@
       const visible = active === 'All' ? articles : articles.filter(article => article.category === active);
       masonry.innerHTML = visible.map(cardMarkup).join('');
       masonry.classList.toggle('single-story', visible.length === 1);
-      count.textContent = `${visible.length} ${visible.length === 1 ? 'Story' : 'Stories'}`;
+      count.textContent = `${visible.length} ${visible.length === 1 ? 'Episode' : 'Episodes'}`;
       empty.classList.toggle('show', visible.length === 0);
     };
 
@@ -42,8 +42,8 @@
     const slug = articleRoot.dataset.articleSlug || new URLSearchParams(location.search).get('slug');
     const article = articles.find(item => item.slug === slug);
     if (!article) {
-      document.title = '아티클을 찾을 수 없습니다 | Asteria Magazine';
-      articleRoot.innerHTML = `<div class="article-not-found"><h1>Story<br>Not Found.</h1><p>요청한 매거진 아티클을 찾을 수 없습니다.</p><a href="/magazine/">Magazine 전체보기</a></div>`;
+      document.title = '에피소드를 찾을 수 없습니다 | Asteria Magazine';
+      articleRoot.innerHTML = `<div class="article-not-found"><h1>Episode<br>Not Found.</h1><p>요청한 매거진 에피소드를 찾을 수 없습니다.</p><a href="/magazine/">Magazine 전체보기</a></div>`;
       document.getElementById('relatedSection').hidden = true;
       return;
     }
@@ -92,7 +92,7 @@
       <header class="article-head"><a class="article-back" href="/magazine/">← Magazine 전체보기</a><div class="article-meta"><span>${article.category}</span><time datetime="${storyDate}">${dateLabel(storyDate)}</time></div><h1>${article.title}</h1><h2>${article.titleKo}</h2></header>
       <div class="article-hero"><img src="${article.image}" alt="${article.imageAlt || article.titleKo}">${article.heroNote ? `<span>${article.heroNote}</span>` : ''}</div>
       ${facts ? `<div class="article-facts">${facts}</div>` : ''}
-      <section class="article-share" aria-label="아티클 공유"><div><span>Share This Story</span><strong>${article.titleKo}</strong></div><div class="article-share-actions"><button class="share-primary" type="button" data-share>바로 공유하기 <b aria-hidden="true">↗</b></button><button type="button" data-copy>링크 복사</button></div><p class="share-status" role="status" aria-live="polite"></p></section>
+      <section class="article-share" aria-label="에피소드 공유"><div><span>Share This Episode</span><strong>${article.titleKo}</strong></div><div class="article-share-actions"><button class="share-primary" type="button" data-share>바로 공유하기 <b aria-hidden="true">↗</b></button><button type="button" data-copy>링크 복사</button></div><p class="share-status" role="status" aria-live="polite"></p></section>
       ${raceFlow ? `<section class="article-race-flow"><div class="eyebrow">Race in Three Acts</div><div class="race-flow-grid">${raceFlow}</div></section>` : ''}
       ${article.pullQuote ? `<blockquote class="article-pullquote">${article.pullQuote}</blockquote>` : ''}
       <div class="article-content"><p class="article-lead">${article.lead}</p><div class="article-body">
