@@ -322,10 +322,18 @@
     for (let i = 0; i < firstDow; i++) row.appendChild(el("div", { class: "cal-cell empty", attrs: { role: "gridcell" } }));
     for (let day = 1; day <= daysInMonth; day++) {
       const key = `${calYear}-${pad(calMonth + 1)}-${pad(day)}`;
-      const cell = el("div", { class: `cal-cell${key === todayKey ? " today" : ""}`, attrs: { role: "gridcell", "aria-label": `${calMonth + 1}월 ${day}일` } });
+      const dayBookings = byDate.get(key) || [];
+      const dow = new Date(Date.UTC(calYear, calMonth, day)).getUTCDay();
+      // `has-bookings` drives the mobile agenda view: unbooked/empty days are
+      // hidden and only these cells remain, full-width, in a single column.
+      const cls = `cal-cell${key === todayKey ? " today" : ""}${dayBookings.length ? " has-bookings" : ""}`;
+      const cell = el("div", { class: cls, attrs: { role: "gridcell", "aria-label": `${calMonth + 1}월 ${day}일` } });
       cell.appendChild(el("div", { class: "cal-daynum", text: String(day) }));
-      for (const b of (byDate.get(key) || [])) {
-        const label = `${kstTime(b.startsAt)} ${b.destination || ""}`.trim();
+      // Full Korean date label (month/day/weekday) shown only in the agenda view.
+      cell.appendChild(el("div", { class: "cal-datelabel", text: `${calMonth + 1}월 ${day}일 (${WEEKDAYS[dow]})` }));
+      for (const b of dayBookings) {
+        const bookerName = b.bookerName || memberName(b.bookerMemberId);
+        const label = `${kstTime(b.startsAt)}–${kstTime(b.endsAt)} · ${bookerName} · ${b.departure} → ${b.destination}`;
         const pill = el("button", {
           class: `cal-pill${b.status === "cancelled" ? " cancelled" : ""}`,
           text: label,
@@ -461,8 +469,10 @@
   }
 
   function updatePaxCount() {
+    // The visible list holds companions only; the requester is always counted
+    // as the first passenger, so total = 1 (requester) + companions.
     const n = $("paxList").querySelectorAll(".pax-row").length;
-    $("paxCount").textContent = `현재 탑승자 ${n}명 — 총 승선 인원과 정확히 일치해야 합니다.`;
+    $("paxCount").textContent = `현재 동승자 ${n}명 · 예약자 포함 총 ${n + 1}명이 탑승합니다.`;
   }
 
   function collectPassengers() {
@@ -505,10 +515,19 @@
       $("startHour").value = String(Number(new Intl.DateTimeFormat("en-GB", { timeZone: "Asia/Seoul", hour: "2-digit", hour12: false }).format(start)) % 24);
       $("endHour").value = String(Number(new Intl.DateTimeFormat("en-GB", { timeZone: "Asia/Seoul", hour: "2-digit", hour12: false }).format(end)) % 24 || 24);
       $("destination").value = prefill.destination || "";
-      for (const p of prefill.passengers || []) addPaxRow(p.type, p);
-    } else {
-      addPaxRow("member");
+      // The requester is stored as a member passenger in the payload, but the
+      // visible list is companions only — drop the first passenger matching the
+      // requester member id so it isn't shown (and later re-added) twice.
+      let requesterDropped = false;
+      for (const p of prefill.passengers || []) {
+        if (!requesterDropped && p.type === "member" && p.memberId === prefill.bookerMemberId) {
+          requesterDropped = true;
+          continue;
+        }
+        addPaxRow(p.type, p);
+      }
     }
+    // Create starts with an empty companion list (solo booking is valid).
     updatePaxCount();
   }
 
@@ -533,8 +552,14 @@
     if (!$("privacyAgree").checked) return setError("formError", "개인정보 수집 동의 확인이 필요합니다.");
     const collected = collectPassengers();
     if (collected.error) return setError("formError", collected.error);
-    const passengers = collected.pax;
-    if (!passengers.some((p) => p.type === "member")) return setError("formError", "회원 탑승자가 최소 1명 필요합니다.");
+    const companions = collected.pax;
+    // The requester is the mandatory first member passenger; the visible list is
+    // companions only. Reject a companion row that re-uses the requester member
+    // id so the same person can't be booked twice.
+    if (companions.some((p) => p.type === "member" && p.memberId === bookerMemberId)) {
+      return setError("formError", "예약자는 이미 포함되어 있어 동승자로 다시 추가할 수 없습니다.");
+    }
+    const passengers = [{ type: "member", memberId: bookerMemberId }, ...companions];
 
     const payload = {
       startsAt: isoFromDateHour(date, startH),
@@ -597,6 +622,19 @@
     }
     initDates();
     $("availBtn").addEventListener("click", loadAvailability);
+    // One-way default: choosing a start date copies it into the end date at that
+    // moment. The end date stays freely editable and never drives the start date
+    // (no listener on #availTo), so there is no reverse synchronization.
+    $("availFrom").addEventListener("change", () => {
+      $("availTo").value = $("availFrom").value;
+    });
+    // One-way default: choosing a start hour sets the end hour to start + 3h,
+    // capped at 24:00. The end hour stays freely editable and never drives the
+    // start hour (no listener on #endHour). Programmatic prefill sets values
+    // directly, which does not fire "change", so edit prefill is never clobbered.
+    $("startHour").addEventListener("change", () => {
+      $("endHour").value = String(Math.min(Number($("startHour").value) + 3, 24));
+    });
     $("loginBtn").addEventListener("click", doLogin);
     $("loginPw").addEventListener("keydown", (e) => { if (e.key === "Enter") doLogin(); });
     $("logoutBtn").addEventListener("click", doLogout);
