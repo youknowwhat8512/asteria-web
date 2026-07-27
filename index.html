@@ -267,6 +267,15 @@
     @media(max-width:600px){.motion-ready .motion-item.motion-from-left:not(.is-active){transform:translate3d(-24px,10px,0) scale(.99)}.motion-ready .motion-item.motion-from-right:not(.is-active){transform:translate3d(24px,10px,0) scale(.99)}}
     @media(prefers-reduced-motion:reduce){.motion-ready .motion-item,.motion-ready .hybrid-step,.motion-ready .section-head,.hero-inner,.motion-ready .coach-card:before,.motion-ready .mag:before{opacity:1!important;filter:none!important;transform:none!important;transition:none!important}.scroll-progress{display:none}}
 
+    /* Persistent member booking CTA */
+    .booking-fab{position:fixed;right:clamp(16px,2.4vw,34px);bottom:calc(18px + env(safe-area-inset-bottom,0px));z-index:90;display:flex;align-items:center;gap:12px;min-height:58px;padding:10px 17px 10px 12px;border:1px solid rgba(248,247,242,.26);border-radius:999px;background:linear-gradient(135deg,rgba(230,66,46,.98),rgba(186,40,27,.98));color:#fff;box-shadow:0 18px 48px rgba(0,0,0,.42),0 0 0 1px rgba(230,66,46,.2);backdrop-filter:blur(14px);transition:transform .22s ease,box-shadow .22s ease,border-color .22s ease}
+    .booking-fab:hover,.booking-fab:focus-visible{transform:translateY(-3px);border-color:rgba(248,247,242,.58);box-shadow:0 24px 56px rgba(0,0,0,.5),0 0 0 4px rgba(230,66,46,.18);outline:none}
+    .booking-fab-icon{display:grid;place-items:center;width:38px;height:38px;flex:0 0 38px;border-radius:50%;background:rgba(2,9,15,.28);font-size:20px}
+    .booking-fab-copy{display:grid;gap:2px;line-height:1}
+    .booking-fab-copy small{font-size:8px;font-weight:900;letter-spacing:.16em;color:rgba(255,255,255,.72)}
+    .booking-fab-copy strong{font-size:14px;font-weight:900;letter-spacing:-.03em;white-space:nowrap}
+    @media(max-width:600px){.booking-fab{right:14px;bottom:calc(14px + env(safe-area-inset-bottom,0px));min-height:54px;padding:8px 15px 8px 9px;gap:10px}.booking-fab-icon{width:36px;height:36px;flex-basis:36px;font-size:18px}.booking-fab-copy strong{font-size:13px}}
+
 </style>
 </head>
 <body>
@@ -277,6 +286,10 @@
     <div class="nav"><a href="#fleet">Club Yachts</a><a href="#training">Race Crew</a><a href="#coaches">Level Up</a><a href="#alliance">Exp Up</a><a href="#club-guide">Apply</a><a href="#magazine">Magazine</a></div>
     <a class="apply" href="#club-guide">클럽 가입 안내</a>
   </nav>
+  <a class="booking-fab" href="/veronica/" aria-label="베로니카 차터 예약 페이지 열기">
+    <span class="booking-fab-icon" aria-hidden="true">⛵</span>
+    <span class="booking-fab-copy"><small>MEMBER ONLY</small><strong>베로니카 예약</strong></span>
+  </a>
   <header class="hero apple-panel" id="hero">
     <div class="hero-visual-orbit" aria-hidden="true"></div>
     <div class="hero-inner">
