@@ -70,6 +70,22 @@
     .hidden{display:none!important}
     .detail-row{display:grid;grid-template-columns:120px 1fr;gap:14px;padding:11px 0;border-bottom:1px solid rgba(251,250,246,.08);font-size:13px}
     .detail-row span{color:var(--muted)}
+    .view-toggle{display:flex;gap:6px}
+    .view-toggle .btn{min-height:36px;padding:0 14px}
+    .view-toggle .btn[aria-pressed="true"]{border-color:var(--blue);color:var(--blue)}
+    .cal-nav{display:flex;align-items:center;justify-content:space-between;gap:10px;margin:14px 0 10px}
+    .cal-nav .btn{min-height:38px;padding:0 16px;font-size:18px}
+    .cal-title{font-weight:800;font-size:15px}
+    .cal-grid{display:grid;gap:5px}
+    .cal-row{display:grid;grid-template-columns:repeat(7,1fr);gap:5px}
+    .cal-th{text-align:center;font-size:11px;font-weight:800;color:var(--muted);padding:5px 0}
+    .cal-cell{min-height:76px;border:1px solid var(--line);border-radius:8px;background:rgba(255,255,255,.03);padding:5px;display:flex;flex-direction:column;gap:3px;overflow:hidden}
+    .cal-cell.empty{border-color:transparent;background:transparent}
+    .cal-cell.today{border-color:var(--blue)}
+    .cal-daynum{font-size:11px;color:var(--muted);font-weight:700}
+    .cal-pill{display:block;width:100%;text-align:left;border:0;border-radius:5px;padding:3px 6px;font-size:10.5px;font-weight:700;line-height:1.3;background:rgba(78,163,200,.18);color:var(--white);white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
+    .cal-pill:hover{background:rgba(78,163,200,.32)}
+    .cal-pill.cancelled{background:rgba(235,68,47,.16);color:#f6b4a9;text-decoration:line-through}
     .spinner{display:inline-block;width:15px;height:15px;border:2px solid rgba(255,255,255,.3);border-top-color:#fff;border-radius:50%;animation:spin .7s linear infinite;vertical-align:-2px}
     @keyframes spin{to{transform:rotate(360deg)}}
     @media(max-width:430px){
@@ -126,8 +142,15 @@
 
       <!-- booking list -->
       <section class="card hidden" id="bookingListSection">
-        <h2 style="margin-top:0">예약 목록</h2>
+        <div style="display:flex;justify-content:space-between;align-items:center;gap:10px;flex-wrap:wrap">
+          <h2 style="margin:0">예약 목록</h2>
+          <div class="view-toggle" role="group" aria-label="예약 보기 전환">
+            <button class="btn btn-ghost" id="listViewBtn" type="button" aria-pressed="true">목록</button>
+            <button class="btn btn-ghost" id="calendarViewBtn" type="button" aria-pressed="false">달력</button>
+          </div>
+        </div>
         <div id="bookingListResult"></div>
+        <div id="bookingCalendar" class="hidden"></div>
       </section>
 
       <!-- booking detail -->
@@ -145,8 +168,7 @@
       <!-- booking form (create + edit) -->
       <section class="card hidden" id="bookingFormSection">
         <h2 style="margin-top:0" id="formTitle">새 예약 등록</h2>
-        <div class="field"><label for="bookerName">예약자 성명</label><input id="bookerName" autocomplete="name"></div>
-        <div class="field"><label for="bookerPhone">예약자 전화번호</label><input id="bookerPhone" type="tel" inputmode="numeric" placeholder="010-1234-5678"></div>
+        <div class="field"><label for="bookerMember">예약자 (회원)</label><select id="bookerMember"></select></div>
         <div class="field"><label for="destination">목적지</label><input id="destination" placeholder="예: 덕적도"></div>
         <div class="field"><label>출발지</label><input value="아라마리나 (고정)" disabled></div>
         <div class="row3">

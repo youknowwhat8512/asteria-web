@@ -22,6 +22,13 @@
   let editingId = null;
   let createIdempotencyKey = null;
 
+  // Booking view state: "list" | "calendar", plus the month the calendar shows.
+  let cachedBookings = [];
+  let bookingView = "list";
+  let calYear = 0;
+  let calMonth = 0; // 0-indexed
+  const WEEKDAYS = ["일", "월", "화", "수", "목", "금", "토"];
+
   const $ = (id) => document.getElementById(id);
   const show = (elm) => elm.classList.remove("hidden");
   const hide = (elm) => elm.classList.add("hidden");
@@ -96,6 +103,18 @@
     const e = new Intl.DateTimeFormat("ko-KR", { hour: "2-digit", minute: "2-digit", hour12: false, timeZone: "Asia/Seoul" }).format(new Date(endIso));
     return `${s} – ${e}`;
   }
+
+  const kstDate = (iso) =>
+    new Intl.DateTimeFormat("en-CA", { timeZone: "Asia/Seoul", year: "numeric", month: "2-digit", day: "2-digit" }).format(new Date(iso));
+  const kstTime = (iso) =>
+    new Intl.DateTimeFormat("ko-KR", { timeZone: "Asia/Seoul", hour: "2-digit", minute: "2-digit", hour12: false }).format(new Date(iso));
+
+  // Resolve a member id to its display name from the active-member list. Booking
+  // requester/responsible are always member references, never typed strings.
+  const memberName = (id) => {
+    const m = members.find((x) => x.id === id);
+    return m ? m.displayName : id || "";
+  };
 
   // -------------------------------------------------------------------------
   // Public availability
@@ -213,28 +232,127 @@
     switchView($("bookingListSection"));
     const result = $("bookingListResult");
     result.replaceChildren(el("div", { class: "state", text: "불러오는 중…" }));
+    hide($("bookingCalendar"));
     try {
       const data = await api("GET", "/bookings");
-      const bookings = data.bookings || [];
-      if (!bookings.length) {
-        result.replaceChildren(el("div", { class: "state", text: "등록된 예약이 없습니다." }));
-        return;
-      }
-      const list = el("div", { class: "list" });
-      for (const b of bookings) {
-        const tag = el("span", { class: `tag ${b.status === "cancelled" ? "cancelled" : "confirmed"}`, text: b.status === "cancelled" ? "취소됨" : "확정" });
-        const item = el("div", { class: "item" }, [
-          el("div", { class: "when", text: fmtRange(b.startsAt, b.endsAt) }),
-          el("div", { class: "meta", text: `${b.bookerName} · ${b.departure} → ${b.destination} · ${b.totalPeople}명` }),
-          el("div", {}, [tag]),
-        ]);
-        item.addEventListener("click", () => showDetail(b.id));
-        list.appendChild(item);
-      }
-      result.replaceChildren(list);
+      cachedBookings = data.bookings || [];
+      renderBookingView();
     } catch (e) {
+      cachedBookings = [];
       result.replaceChildren(el("div", { class: "state", text: msg(e) }));
+      hide($("bookingCalendar"));
     }
+  }
+
+  // Toggle list <-> calendar. Both render from the same cached bookings, so
+  // switching views never refetches.
+  function setBookingView(view) {
+    bookingView = view;
+    $("listViewBtn").setAttribute("aria-pressed", String(view === "list"));
+    $("calendarViewBtn").setAttribute("aria-pressed", String(view === "calendar"));
+    renderBookingView();
+  }
+
+  function renderBookingView() {
+    if (bookingView === "calendar") {
+      hide($("bookingListResult"));
+      show($("bookingCalendar"));
+      renderCalendar();
+    } else {
+      hide($("bookingCalendar"));
+      show($("bookingListResult"));
+      renderList();
+    }
+  }
+
+  function renderList() {
+    const result = $("bookingListResult");
+    if (!cachedBookings.length) {
+      result.replaceChildren(el("div", { class: "state", text: "등록된 예약이 없습니다." }));
+      return;
+    }
+    const list = el("div", { class: "list" });
+    for (const b of cachedBookings) {
+      const tag = el("span", { class: `tag ${b.status === "cancelled" ? "cancelled" : "confirmed"}`, text: b.status === "cancelled" ? "취소됨" : "확정" });
+      const item = el("div", { class: "item" }, [
+        el("div", { class: "when", text: fmtRange(b.startsAt, b.endsAt) }),
+        el("div", { class: "meta", text: `${b.bookerName || memberName(b.bookerMemberId)} · ${b.departure} → ${b.destination} · ${b.totalPeople}명` }),
+        el("div", {}, [tag]),
+      ]);
+      item.addEventListener("click", () => showDetail(b.id));
+      list.appendChild(item);
+    }
+    result.replaceChildren(list);
+  }
+
+  // Accessible month grid, built entirely in-DOM (no CDN / external deps).
+  function renderCalendar() {
+    const cal = $("bookingCalendar");
+    const monthLabel = `${calYear}년 ${calMonth + 1}월`;
+
+    const prevBtn = el("button", { class: "btn btn-ghost", text: "‹", attrs: { id: "calPrevBtn", type: "button", "aria-label": "이전 달" } });
+    const nextBtn = el("button", { class: "btn btn-ghost", text: "›", attrs: { id: "calNextBtn", type: "button", "aria-label": "다음 달" } });
+    prevBtn.addEventListener("click", () => shiftMonth(-1));
+    nextBtn.addEventListener("click", () => shiftMonth(1));
+    const nav = el("div", { class: "cal-nav" }, [
+      prevBtn,
+      el("div", { class: "cal-title", text: monthLabel, attrs: { "aria-live": "polite" } }),
+      nextBtn,
+    ]);
+
+    const grid = el("div", { class: "cal-grid", attrs: { role: "grid", "aria-label": `${monthLabel} 예약 달력` } });
+    const headRow = el("div", { class: "cal-row", attrs: { role: "row" } });
+    for (const w of WEEKDAYS) headRow.appendChild(el("div", { class: "cal-th", text: w, attrs: { role: "columnheader" } }));
+    grid.appendChild(headRow);
+
+    // Bucket bookings by their KST calendar date.
+    const byDate = new Map();
+    for (const b of cachedBookings) {
+      const key = kstDate(b.startsAt);
+      if (!byDate.has(key)) byDate.set(key, []);
+      byDate.get(key).push(b);
+    }
+
+    const pad = (n) => String(n).padStart(2, "0");
+    const firstDow = new Date(Date.UTC(calYear, calMonth, 1)).getUTCDay();
+    const daysInMonth = new Date(Date.UTC(calYear, calMonth + 1, 0)).getUTCDate();
+    const todayKey = kstDate(new Date().toISOString());
+
+    let row = el("div", { class: "cal-row", attrs: { role: "row" } });
+    for (let i = 0; i < firstDow; i++) row.appendChild(el("div", { class: "cal-cell empty", attrs: { role: "gridcell" } }));
+    for (let day = 1; day <= daysInMonth; day++) {
+      const key = `${calYear}-${pad(calMonth + 1)}-${pad(day)}`;
+      const cell = el("div", { class: `cal-cell${key === todayKey ? " today" : ""}`, attrs: { role: "gridcell", "aria-label": `${calMonth + 1}월 ${day}일` } });
+      cell.appendChild(el("div", { class: "cal-daynum", text: String(day) }));
+      for (const b of (byDate.get(key) || [])) {
+        const label = `${kstTime(b.startsAt)} ${b.destination || ""}`.trim();
+        const pill = el("button", {
+          class: `cal-pill${b.status === "cancelled" ? " cancelled" : ""}`,
+          text: label,
+          attrs: { type: "button", title: label, "aria-label": `${label} 예약 상세` },
+        });
+        pill.addEventListener("click", () => showDetail(b.id));
+        cell.appendChild(pill);
+      }
+      row.appendChild(cell);
+      if ((firstDow + day) % 7 === 0) {
+        grid.appendChild(row);
+        row = el("div", { class: "cal-row", attrs: { role: "row" } });
+      }
+    }
+    if (row.childNodes.length) {
+      while (row.childNodes.length < 7) row.appendChild(el("div", { class: "cal-cell empty", attrs: { role: "gridcell" } }));
+      grid.appendChild(row);
+    }
+
+    cal.replaceChildren(nav, grid);
+  }
+
+  function shiftMonth(delta) {
+    const m = calMonth + delta;
+    calYear += Math.floor(m / 12);
+    calMonth = ((m % 12) + 12) % 12;
+    renderCalendar();
   }
 
   function detailRow(label, value) {
@@ -256,8 +374,8 @@
         detailRow("상태", b.status === "cancelled" ? "취소됨" : "확정"),
         detailRow("운항", fmtRange(b.startsAt, b.endsAt)),
         detailRow("항로", `${b.departure} → ${b.destination}`),
-        detailRow("예약자", b.bookerName),
-        detailRow("연락처", b.bookerPhone),
+        detailRow("예약자", b.bookerName || memberName(b.bookerMemberId)),
+        detailRow("책임 운항자", memberName(b.responsibleMemberId)),
         detailRow("총 인원", `${b.totalPeople}명`),
       ];
       const paxNodes = (b.passengers || []).map((p) =>
@@ -370,6 +488,7 @@
     switchView($("bookingFormSection"));
     setError("formError", "");
     fillHourOptions();
+    fillMemberSelect($("bookerMember"), prefill ? prefill.bookerMemberId : "");
     fillMemberSelect($("responsibleMember"), prefill ? prefill.responsibleMemberId : "");
     $("paxList").replaceChildren();
     editingId = prefill ? prefill.id : null;
@@ -385,8 +504,6 @@
       $("bookDate").value = kstDate;
       $("startHour").value = String(Number(new Intl.DateTimeFormat("en-GB", { timeZone: "Asia/Seoul", hour: "2-digit", hour12: false }).format(start)) % 24);
       $("endHour").value = String(Number(new Intl.DateTimeFormat("en-GB", { timeZone: "Asia/Seoul", hour: "2-digit", hour12: false }).format(end)) % 24 || 24);
-      $("bookerName").value = prefill.bookerName || "";
-      $("bookerPhone").value = prefill.bookerPhone || "";
       $("destination").value = prefill.destination || "";
       for (const p of prefill.passengers || []) addPaxRow(p.type, p);
     } else {
@@ -407,12 +524,11 @@
     const endH = Number($("endHour").value);
     if (!date) return setError("formError", "운항일을 선택하세요.");
     if (endH <= startH) return setError("formError", "종료 시각은 시작 시각보다 뒤여야 합니다.");
+    const bookerMemberId = $("bookerMember").value;
+    if (!bookerMemberId) return setError("formError", "예약자(회원)를 선택하세요.");
     const responsibleMemberId = $("responsibleMember").value;
     if (!responsibleMemberId) return setError("formError", "책임 운항자를 선택하세요.");
-    const bookerPhoneDigits = $("bookerPhone").value.replace(/[^0-9]/g, "");
-    if (!/^01[0-9]{8,9}$/.test(bookerPhoneDigits)) return setError("formError", "예약자 전화번호를 확인하세요.");
     if (!$("destination").value.trim()) return setError("formError", "목적지를 입력하세요.");
-    if (!$("bookerName").value.trim()) return setError("formError", "예약자 성명을 입력하세요.");
     if (!$("waiverAgree").checked) return setError("formError", "안전·파손 책임 서약에 동의해야 합니다.");
     if (!$("privacyAgree").checked) return setError("formError", "개인정보 수집 동의 확인이 필요합니다.");
     const collected = collectPassengers();
@@ -425,9 +541,8 @@
       endsAt: isoFromDateHour(date, endH),
       destination: $("destination").value.trim(),
       totalPeople: passengers.length,
+      bookerMemberId,
       responsibleMemberId,
-      bookerName: $("bookerName").value.trim(),
-      bookerPhone: bookerPhoneDigits,
       passengers,
       waiverVersion: WAIVER_VERSION,
       waiverAccepted: true,
@@ -468,14 +583,10 @@
     $("availFrom").value = iso(today);
     $("availTo").value = iso(week);
     $("bookDate").min = iso(today);
-  }
-
-  function bindPhoneFormatting(input) {
-    input.addEventListener("input", (ev) => {
-      const d = ev.target.value.replace(/\D/g, "").slice(0, 11);
-      ev.target.value = d.length > 7 ? `${d.slice(0, 3)}-${d.slice(3, 7)}-${d.slice(7)}`
-        : d.length > 3 ? `${d.slice(0, 3)}-${d.slice(3)}` : d;
-    });
+    // Calendar opens on the current KST month.
+    const kstNow = kstDate(today.toISOString()).split("-");
+    calYear = Number(kstNow[0]);
+    calMonth = Number(kstNow[1]) - 1;
   }
 
   function init() {
@@ -485,13 +596,20 @@
       $("loginBtn").disabled = true;
     }
     initDates();
-    bindPhoneFormatting($("bookerPhone"));
     $("availBtn").addEventListener("click", loadAvailability);
     $("loginBtn").addEventListener("click", doLogin);
     $("loginPw").addEventListener("keydown", (e) => { if (e.key === "Enter") doLogin(); });
     $("logoutBtn").addEventListener("click", doLogout);
     $("showListBtn").addEventListener("click", showList);
     $("showNewBtn").addEventListener("click", () => openForm(null));
+    $("listViewBtn").addEventListener("click", () => setBookingView("list"));
+    $("calendarViewBtn").addEventListener("click", () => setBookingView("calendar"));
+    // One-way default: picking the requester copies that member into the
+    // responsible-operator select at that moment. Changing the responsible
+    // operator afterwards never touches the requester (no listener on it).
+    $("bookerMember").addEventListener("change", () => {
+      $("responsibleMember").value = $("bookerMember").value;
+    });
     $("detailBackBtn").addEventListener("click", showList);
     $("detailCancelBtn").addEventListener("click", cancelCurrent);
     $("detailEditBtn").addEventListener("click", () => currentDetail && openForm(currentDetail));
