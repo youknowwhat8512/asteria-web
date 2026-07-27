@@ -1,38 +1,48 @@
 #!/usr/bin/env python3
-"""Deterministic two-leg delivery wrapper for one Asteria booking alert.
+"""Deterministic three-leg delivery wrapper for one Asteria booking alert.
 
 The outbox consumer (``scripts/consume_booking_outbox.py``) invokes THIS wrapper
-instead of a single sender. The wrapper runs the two idempotent delivery legs in
-a fixed order:
+instead of a single sender. The wrapper runs the three idempotent delivery legs
+in a fixed order:
 
   1. Google Calendar  (``scripts/send_google_calendar_booking.py``)
   2. Discord          (``scripts/send_discord_booking_alert.py``)
+  3. Kakao (UI)       (SSoT ``22_2_tools/.../scripts/send_booking_alert.py``)
 
-Calendar runs FIRST and Discord runs ONLY if Calendar verified (exit 0). This
-ordering means a human who sees the Discord alert can trust the calendar already
-holds the matching event. Both legs receive the SAME common booking CLI fields
-(including ``--idempotency-key``); each leg reads its own hard-pinned target
-config.
+Calendar runs FIRST, Discord runs ONLY if Calendar verified (exit 0), and Kakao
+runs ONLY if BOTH Calendar and Discord verified. This ordering means the durable
+Calendar event and the Discord thread alert are both committed before the
+KakaoTalk UI leg is attempted — a human who sees the Kakao message can trust the
+calendar and Discord already hold the matching event. A non-OK leg
+short-circuits: later legs are never attempted.
+
+Every leg receives the SAME common booking CLI fields (including
+``--idempotency-key``); each leg reads its own hard-pinned target config. The
+Kakao leg additionally receives fixed, non-secret extras it needs and the other
+legs do not: ``--member-included unknown`` and a fixed Google Calendar URL.
 
 Design guarantees:
   * stdlib only; no third-party dependencies.
-  * Each leg is a hard-pinned absolute script path; no other program runs.
+  * Each leg is a hard-pinned absolute script path; no other program runs. The
+    Kakao leg is pinned to the 22_2_tools SSoT sender and its config to
+    ``~/.config/asteria-kakao/booking-alert.json``.
   * Child stdout/stderr is CAPTURED and never re-emitted, so the message body,
-    booker name, route, booking code, tokens, and credentials in a child cannot
-    leak through the wrapper. Only stable, opaque status codes reach the
-    wrapper's own stdout/stderr.
-  * Delivery is reported successful ONLY when BOTH legs verify.
+    booker name, route, booking code, chat id, tokens, and credentials in a
+    child cannot leak through the wrapper. Only stable, opaque status codes
+    reach the wrapper's own stdout/stderr.
+  * Delivery is reported successful ONLY when ALL THREE legs verify.
 
 Exit codes (consumed by the outbox consumer, matching the single-sender
 contract it already understands):
-  0  Both legs written AND verified. Safe to mark the row delivered.
+  0  All legs written AND verified. Safe to mark the row delivered.
   2  A leg failed in a provably safe / retryable way (exit 2, or the child
      could not be started at all). Because every leg is deterministic and
      idempotent, retrying the WHOLE wrapper is safe — Calendar re-addresses the
-     same event id and Discord re-uses the same enforce_nonce.
+     same event id, Discord re-uses the same enforce_nonce, and Kakao is a no-op
+     when its exact message is already present (pre-read idempotency).
   3  A leg was uncertain (exit 3, an unexpected child exit code, or a child
-     timeout): a write may have happened but could not be confirmed. Terminal
-     manual review; never auto-retry.
+     timeout): a write/click may have happened but could not be confirmed.
+     Terminal manual review; never auto-retry.
 """
 
 from __future__ import annotations
@@ -50,6 +60,11 @@ REPO_SCRIPTS = Path("/Users/ja/repos/55_MyLabs/asteria-web/scripts")
 # execute any other program.
 EXPECTED_CALENDAR_SENDER = REPO_SCRIPTS / "send_google_calendar_booking.py"
 EXPECTED_DISCORD_SENDER = REPO_SCRIPTS / "send_discord_booking_alert.py"
+# The Kakao leg lives in the 22_2_tools SSoT skill, NOT this repo. It is
+# hard-pinned to the absolute SSoT path; the wrapper runs no other program.
+EXPECTED_KAKAO_SENDER = Path(
+    "/Users/ja/repos/22_2_tools/skills/asteria-kakao-booking-alerts/scripts/send_booking_alert.py"
+)
 
 DEFAULT_CALENDAR_CONFIG = (
     Path.home() / ".config" / "asteria-google-calendar" / "booking-alert.json"
@@ -57,15 +72,26 @@ DEFAULT_CALENDAR_CONFIG = (
 DEFAULT_DISCORD_CONFIG = (
     Path.home() / ".config" / "asteria-discord" / "booking-alert.json"
 )
+DEFAULT_KAKAO_CONFIG = (
+    Path.home() / ".config" / "asteria-kakao" / "booking-alert.json"
+)
 
-# Ordered so Calendar (the durable, deterministic-idempotent leg) commits first.
-LEG_ORDER = ("calendar", "discord")
+# Fixed, non-secret extras the Kakao leg requires and the other legs do not.
+# Kakao links back to the fixed Veronica booking page; Calendar remains an
+# internal integration leg but its Google URL is not exposed in chat messages.
+KAKAO_MEMBER_INCLUDED = "unknown"
+KAKAO_BOOKING_URL = "https://asteria.club/veronica/"
 
-# Per-leg cap. Each leg's own HTTP calls are bounded (20s each), so a healthy
-# leg finishes well under this; the ceiling only bounds a hung leg. The
-# consumer's outer SENDER_TIMEOUT sits above two of these so a slow-but-
-# progressing wrapper is not killed mid-flight.
+# Ordered so Calendar (the durable, deterministic-idempotent leg) commits first,
+# Discord second, and the KakaoTalk UI leg last.
+LEG_ORDER = ("calendar", "discord", "kakao")
+
+# Per-leg cap. Calendar/Discord make bounded HTTP calls (20s each), so a healthy
+# leg finishes well under CHILD_TIMEOUT; the ceiling only bounds a hung leg. The
+# Kakao leg drives the KakaoTalk UI (window recovery + read-backs), which is
+# slower, so it gets a larger dedicated cap.
 CHILD_TIMEOUT = 90
+KAKAO_CHILD_TIMEOUT = 150
 
 # Stable, non-secret result codes emitted to the wrapper's own logs.
 CODE_OK = "ok"
@@ -85,10 +111,12 @@ def log_error(code: str) -> None:
 # --- Child leg invocation --------------------------------------------------
 
 
-def build_child_argv(sender: Path, config: Path, args: argparse.Namespace) -> list:
+def build_child_argv(
+    sender: Path, config: Path, args: argparse.Namespace, extra: list | None = None
+) -> list:
     """Build one leg's argv from the common booking fields plus that leg's own
-    target config. No shell is used."""
-    return [
+    target config and any leg-specific fixed extras. No shell is used."""
+    argv = [
         sys.executable,
         str(sender),
         "--event",
@@ -107,27 +135,39 @@ def build_child_argv(sender: Path, config: Path, args: argparse.Namespace) -> li
         args.name,
         "--party-size",
         str(args.party_size),
+        # Deterministic dedupe key shared by every leg. Passing the SAME row key
+        # to each leg keeps a whole-wrapper retry idempotent.
         "--idempotency-key",
         args.idempotency_key,
         "--config",
         str(config),
     ]
+    if extra:
+        argv.extend(extra)
+    return argv
 
 
-def run_leg(sender: Path, config: Path, args: argparse.Namespace) -> str:
+def run_leg(
+    sender: Path,
+    config: Path,
+    args: argparse.Namespace,
+    *,
+    extra: list | None = None,
+    timeout: int = CHILD_TIMEOUT,
+) -> str:
     """Run one delivery leg and reduce it to a stable result code. The child's
     stdout/stderr are captured and discarded so no message content can leak
     through the wrapper.
 
     Returns one of CODE_OK / CODE_RETRYABLE / CODE_UNCERTAIN / CODE_START_FAILED."""
-    argv = build_child_argv(sender, config, args)
+    argv = build_child_argv(sender, config, args, extra)
     try:
         proc = subprocess.run(
             argv,
             stdin=subprocess.DEVNULL,
             stdout=subprocess.PIPE,
             stderr=subprocess.PIPE,
-            timeout=CHILD_TIMEOUT,
+            timeout=timeout,
             check=False,
         )
     except subprocess.TimeoutExpired:
@@ -177,18 +217,30 @@ def main(argv=None) -> int:
     parser.add_argument(
         "--discord-config", type=Path, default=DEFAULT_DISCORD_CONFIG
     )
+    parser.add_argument(
+        "--kakao-config", type=Path, default=DEFAULT_KAKAO_CONFIG
+    )
     args = parser.parse_args(argv)
 
+    kakao_extra = [
+        "--member-included",
+        KAKAO_MEMBER_INCLUDED,
+        "--booking-url",
+        KAKAO_BOOKING_URL,
+    ]
+
+    # Each leg: (pinned sender, target config, fixed extras, per-leg timeout).
     legs = {
-        "calendar": (EXPECTED_CALENDAR_SENDER, args.calendar_config),
-        "discord": (EXPECTED_DISCORD_SENDER, args.discord_config),
+        "calendar": (EXPECTED_CALENDAR_SENDER, args.calendar_config, None, CHILD_TIMEOUT),
+        "discord": (EXPECTED_DISCORD_SENDER, args.discord_config, None, CHILD_TIMEOUT),
+        "kakao": (EXPECTED_KAKAO_SENDER, args.kakao_config, kakao_extra, KAKAO_CHILD_TIMEOUT),
     }
 
-    # Calendar first, Discord only if Calendar verified. A non-OK leg
-    # short-circuits: the later leg is never attempted.
+    # Calendar first, Discord only if Calendar verified, Kakao only if both
+    # verified. A non-OK leg short-circuits: later legs are never attempted.
     for name in LEG_ORDER:
-        sender, config = legs[name]
-        result = run_leg(sender, config, args)
+        sender, config, extra, timeout = legs[name]
+        result = run_leg(sender, config, args, extra=extra, timeout=timeout)
         if result != CODE_OK:
             exit_code = _RESULT_EXIT.get(result, 3)
             log_error(f"leg={name} result={result} exit={exit_code}")

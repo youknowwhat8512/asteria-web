@@ -117,13 +117,12 @@ FETCH_LIMIT = 100  # bounded superset fetch; eligibility is filtered in Python
 
 HTTP_TIMEOUT = 20
 KEYCHAIN_TIMEOUT = 15
-# The delivery leg is the two-leg wrapper, which runs the Calendar and Discord
-# senders sequentially. Each leg makes several HTTP calls (each bounded at 20s)
-# plus an OAuth/keychain step, so the wrapper's own per-leg cap is ~90s; this
-# outer cap sits above the wrapper's worst case so a slow-but-progressing
-# delivery is not spuriously killed. A genuine kill is still safe: both legs
-# are deterministic-idempotent, so the retry re-addresses the same event/nonce.
-SENDER_TIMEOUT = 200
+# The integration wrapper runs Calendar, Discord, then the Kakao UI leg. The
+# Kakao leg may need a bounded deep-recovery read, UI click, and read-back, so
+# the outer cap must sit above the wrapper's 150s Kakao cap plus the two 90s
+# network-leg caps. A genuine kill is still conservative: Calendar/Discord are
+# deterministic-idempotent and Kakao pre-reads the exact message before click.
+SENDER_TIMEOUT = 360
 
 # Stable error codes persisted to last_error / emitted to logs. No PII, ever.
 CODE_RETRYABLE = "delivery_failed_retryable"

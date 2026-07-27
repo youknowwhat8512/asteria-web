@@ -61,6 +61,8 @@ class FakeRunner:
             return "calendar"
         if script == str(wrap.EXPECTED_DISCORD_SENDER):
             return "discord"
+        if script == str(wrap.EXPECTED_KAKAO_SENDER):
+            return "kakao"
         raise AssertionError(f"unexpected sender {script}")
 
     def __call__(self, argv, **kwargs):
@@ -70,7 +72,7 @@ class FakeRunner:
             raise self.raise_for[leg]
         # The child prints PII; the wrapper must capture and never echo it.
         return types.SimpleNamespace(
-            returncode=self.rc_by_leg[leg],
+            returncode=self.rc_by_leg.get(leg, 0),
             stdout=b"booker=\xed\x99\x8d\xea\xb8\xb8 route=leaked",
             stderr=b"VER-260815 secret",
         )
@@ -90,25 +92,34 @@ def run_wrapper(rc_by_leg, raise_for=None, argv_overrides=None):
 
 
 class OrderingTests(unittest.TestCase):
-    def test_calendar_runs_before_discord(self):
-        rc, runner, logs = run_wrapper({"calendar": 0, "discord": 0})
+    def test_legs_run_in_fixed_order(self):
+        rc, runner, logs = run_wrapper({"calendar": 0, "discord": 0, "kakao": 0})
         self.assertEqual(rc, 0)
-        self.assertEqual(runner.legs, ["calendar", "discord"])
+        self.assertEqual(runner.legs, ["calendar", "discord", "kakao"])
 
-    def test_calendar_failure_short_circuits_discord(self):
-        rc, runner, logs = run_wrapper({"calendar": 2, "discord": 0})
+    def test_calendar_failure_short_circuits_rest(self):
+        rc, runner, logs = run_wrapper({"calendar": 2, "discord": 0, "kakao": 0})
         self.assertEqual(rc, 2)
-        self.assertEqual(runner.legs, ["calendar"])  # Discord never attempted
+        self.assertEqual(runner.legs, ["calendar"])  # Discord/Kakao never attempted
 
-    def test_calendar_uncertain_short_circuits_discord(self):
-        rc, runner, logs = run_wrapper({"calendar": 3, "discord": 0})
+    def test_calendar_uncertain_short_circuits_rest(self):
+        rc, runner, logs = run_wrapper({"calendar": 3, "discord": 0, "kakao": 0})
         self.assertEqual(rc, 3)
         self.assertEqual(runner.legs, ["calendar"])
 
+    def test_discord_failure_short_circuits_kakao(self):
+        rc, runner, logs = run_wrapper({"calendar": 0, "discord": 2, "kakao": 0})
+        self.assertEqual(rc, 2)
+        self.assertEqual(runner.legs, ["calendar", "discord"])  # Kakao never attempted
+
+    def test_kakao_runs_only_after_both_verify(self):
+        rc, runner, logs = run_wrapper({"calendar": 0, "discord": 0, "kakao": 0})
+        self.assertEqual(runner.legs[-1], "kakao")
+
 
 class ExitMappingTests(unittest.TestCase):
-    def test_both_ok_is_zero(self):
-        rc, runner, logs = run_wrapper({"calendar": 0, "discord": 0})
+    def test_all_ok_is_zero(self):
+        rc, runner, logs = run_wrapper({"calendar": 0, "discord": 0, "kakao": 0})
         self.assertEqual(rc, 0)
 
     def test_discord_retryable_is_two(self):
@@ -119,6 +130,16 @@ class ExitMappingTests(unittest.TestCase):
     def test_discord_uncertain_is_three(self):
         rc, runner, logs = run_wrapper({"calendar": 0, "discord": 3})
         self.assertEqual(rc, 3)
+
+    def test_kakao_retryable_is_two(self):
+        rc, runner, logs = run_wrapper({"calendar": 0, "discord": 0, "kakao": 2})
+        self.assertEqual(rc, 2)
+        self.assertEqual(runner.legs, ["calendar", "discord", "kakao"])
+
+    def test_kakao_uncertain_is_three(self):
+        rc, runner, logs = run_wrapper({"calendar": 0, "discord": 0, "kakao": 3})
+        self.assertEqual(rc, 3)
+        self.assertEqual(runner.legs, ["calendar", "discord", "kakao"])
 
     def test_unexpected_child_code_is_uncertain(self):
         rc, runner, logs = run_wrapper({"calendar": 7, "discord": 0})
@@ -143,9 +164,10 @@ class ExitMappingTests(unittest.TestCase):
 
 
 class ArgvForwardingTests(unittest.TestCase):
-    def test_common_args_and_idempotency_reach_both_legs(self):
-        rc, runner, logs = run_wrapper({"calendar": 0, "discord": 0})
+    def test_common_args_and_idempotency_reach_all_legs(self):
+        rc, runner, logs = run_wrapper({"calendar": 0, "discord": 0, "kakao": 0})
         self.assertEqual(rc, 0)
+        self.assertEqual(len(runner.calls), 3)
         for leg, argv, _kw in runner.calls:
             self.assertEqual(argv[0], sys.executable)
             self.assertIn("--idempotency-key", argv)
@@ -155,14 +177,40 @@ class ArgvForwardingTests(unittest.TestCase):
             self.assertIn("--config", argv)
 
     def test_each_leg_targets_its_pinned_sender_and_config(self):
-        rc, runner, logs = run_wrapper({"calendar": 0, "discord": 0})
+        rc, runner, logs = run_wrapper({"calendar": 0, "discord": 0, "kakao": 0})
         by_leg = {leg: argv for leg, argv, _kw in runner.calls}
         self.assertEqual(by_leg["calendar"][1], str(wrap.EXPECTED_CALENDAR_SENDER))
         self.assertEqual(by_leg["discord"][1], str(wrap.EXPECTED_DISCORD_SENDER))
+        self.assertEqual(by_leg["kakao"][1], str(wrap.EXPECTED_KAKAO_SENDER))
         cal_cfg = by_leg["calendar"][by_leg["calendar"].index("--config") + 1]
         dis_cfg = by_leg["discord"][by_leg["discord"].index("--config") + 1]
+        kak_cfg = by_leg["kakao"][by_leg["kakao"].index("--config") + 1]
         self.assertEqual(cal_cfg, str(wrap.DEFAULT_CALENDAR_CONFIG))
         self.assertEqual(dis_cfg, str(wrap.DEFAULT_DISCORD_CONFIG))
+        self.assertEqual(kak_cfg, str(wrap.DEFAULT_KAKAO_CONFIG))
+
+    def test_kakao_gets_fixed_member_and_calendar_extras(self):
+        rc, runner, logs = run_wrapper({"calendar": 0, "discord": 0, "kakao": 0})
+        by_leg = {leg: argv for leg, argv, _kw in runner.calls}
+        kak = by_leg["kakao"]
+        self.assertEqual(kak[kak.index("--member-included") + 1], "unknown")
+        self.assertEqual(kak[kak.index("--booking-url") + 1], wrap.KAKAO_BOOKING_URL)
+        # The booking link is pinned to the public Veronica page.
+        self.assertEqual(wrap.KAKAO_BOOKING_URL, "https://asteria.club/veronica/")
+
+    def test_only_kakao_gets_the_extras(self):
+        rc, runner, logs = run_wrapper({"calendar": 0, "discord": 0, "kakao": 0})
+        by_leg = {leg: argv for leg, argv, _kw in runner.calls}
+        for leg in ("calendar", "discord"):
+            self.assertNotIn("--member-included", by_leg[leg])
+            self.assertNotIn("--booking-url", by_leg[leg])
+
+    def test_kakao_gets_larger_timeout(self):
+        rc, runner, logs = run_wrapper({"calendar": 0, "discord": 0, "kakao": 0})
+        by_leg = {leg: kw for leg, _argv, kw in runner.calls}
+        self.assertEqual(by_leg["calendar"]["timeout"], wrap.CHILD_TIMEOUT)
+        self.assertEqual(by_leg["kakao"]["timeout"], wrap.KAKAO_CHILD_TIMEOUT)
+        self.assertGreater(wrap.KAKAO_CHILD_TIMEOUT, wrap.CHILD_TIMEOUT)
 
 
 class RedactionTests(unittest.TestCase):
@@ -176,7 +224,8 @@ class RedactionTests(unittest.TestCase):
     def test_wrapper_output_has_no_pii(self):
         # Even though every child emits PII on stdout/stderr, the wrapper only
         # ever prints its own stable status codes.
-        rc, runner, logs = run_wrapper({"calendar": 0, "discord": 3})
+        rc, runner, logs = run_wrapper({"calendar": 0, "discord": 0, "kakao": 3})
+        self.assertEqual(runner.legs, ["calendar", "discord", "kakao"])
         for pii in PII_STRINGS + [IDEMPOTENCY_KEY]:
             self.assertNotIn(pii, logs)
         self.assertIn("result=", logs)

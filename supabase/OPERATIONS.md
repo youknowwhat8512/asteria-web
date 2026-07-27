@@ -6,8 +6,8 @@
 
 - 구현됨: 공용 로그인, 30일 서버 세션, 공개 예약 현황, 회원·예약 조회, 예약 생성·변경·취소, 암호화 연락처, 감사 이력, 개인정보를 제거한 알림 outbox.
 - 아직 미연동: Edge Function 쪽 Google Calendar 생성·변경·취소와 `[예약불가]` 조회. 설정 전에는 API가 `calendarAvailable: false`를 명시한다. (Mac 소비기 쪽 Calendar 발송 레그는 아래에 구현됨.)
-- 구현·활성: Mac의 예약 outbox 소비기(`scripts/consume_booking_outbox.py`)와 2단 발송 래퍼(`scripts/send_booking_integrations.py`)가 LaunchAgent로 30초마다 실행된다. 래퍼는 두 개의 멱등 발송 레그를 순서대로 실행한다 — 먼저 Google Calendar 발송기(`scripts/send_google_calendar_booking.py`), 그다음 Discord 발송기(`scripts/send_discord_booking_alert.py`). **두 레그가 모두 쓰기 후 재조회 검증에 성공해야만** 해당 행을 delivered로 표시한다. Edge Function은 개인정보를 제거한 outbox 행만 만들고, 소비기는 Mac에서 그 행을 읽어 래퍼로 넘긴다. 전화번호·탑승자 명단·취소코드·서약 원문을 payload에 넣지 않는다.
-- 일시 중단: 카카오 발송 채널은 현재 **중단(paused)** 상태이며 이 저장소에서 사용하지 않는다. 카카오 SSoT 스킬(`22_2_tools/skills/asteria-kakao-booking-alerts`)은 별개의 중단된 채널로 보존만 하며, 예약 알림 대상은 Discord 스레드다.
+- 구현·활성: Mac의 예약 outbox 소비기(`scripts/consume_booking_outbox.py`)와 3단 발송 래퍼(`scripts/send_booking_integrations.py`)가 LaunchAgent로 30초마다 실행된다. 래퍼는 세 개의 멱등 발송 레그를 고정 순서로 실행한다 — ① Google Calendar 발송기(`scripts/send_google_calendar_booking.py`) → ② Discord 발송기(`scripts/send_discord_booking_alert.py`) → ③ 카카오 UI 발송기(SSoT `22_2_tools/skills/asteria-kakao-booking-alerts/scripts/send_booking_alert.py`). **세 레그가 모두 쓰기/전송 후 재조회 검증에 성공해야만** 해당 행을 delivered로 표시한다. Edge Function은 개인정보를 제거한 outbox 행만 만들고, 소비기는 Mac에서 그 행을 읽어 래퍼로 넘긴다. 전화번호·탑승자 명단·취소코드·서약 원문을 payload에 넣지 않는다.
+- 카카오 레그: 예약 알림을 허용된 카카오톡 단톡방 한 곳에 **카카오톡 UI 클릭**으로 전송한다(kmsg `send` 미사용). 래퍼는 카카오 발송기를 22_2_tools SSoT 절대 경로로, 설정을 `~/.config/asteria-kakao/booking-alert.json`으로 하드핀하고, 공통 필드에 더해 `--member-included unknown`과 고정 베로니카 예약 페이지 URL, 행의 idempotency key를 넘긴다. 카카오는 전송 전 정확 메시지 재조회로 멱등하므로 카카오 exit 2는 재시도 가능, exit 3은 자동 재전송 금지(수동 검토)다. 개인 계정 사용에 따른 계정 제한 위험을 운영자가 인지한다.
 - `/veronica/`는 staging 경로이며 운영 홈페이지 내비게이션에서 아직 연결하지 않는다.
 
 ## Secret 이름
@@ -47,7 +47,7 @@ Calendar 연동 시에만 추가:
 5. Cloudflare Pages에 같은 출처 `/api/veronica` 프록시와 `/veronica/` UI를 배포한다. preview upstream을 바꿀 때만 `VERONICA_UPSTREAM_BASE`를 등록하며 서비스 키는 절대 넣지 않는다.
 6. staging Origin이 `ASTERIA_ORIGIN_ALLOWLIST`와 정확히 일치하는지 확인한다. 브라우저가 `supabase.co`를 직접 호출하지 않는지도 확인한다.
 7. 공개 availability, 로그인, 새로고침 후 세션 재개, 예약 생성·조회·변경·취소를 순서대로 검증한다.
-8. Calendar와 Discord 알림은 별도 승인과 dry-run을 통과할 때까지 운영 공개의 차단 조건이다. 카카오 채널은 중단 상태로 사용하지 않는다.
+8. Calendar·Discord·카카오 세 알림 레그는 각각 별도 승인과 dry-run을 통과할 때까지 운영 공개의 차단 조건이다. 카카오는 대상 방을 고정(pin)·최근 노출해 창 제목이 정확히 `chat_name`이 되도록 하고 dry-run과 수동 테스트를 통과한 뒤에만 활성화한다.
 
 ## 로컬 검증
 
@@ -70,17 +70,17 @@ git diff --check
 - 동일 시간 예약은 하나만 성공하고 충돌 요청은 `409`다.
 - 공개 availability에는 점유 시작·종료 시각만 있으며 예약자명·목적지·내부 ID·전화번호·탑승자·Calendar ID가 없다.
 - outbox payload에 전화번호·탑승자·취소코드·서약 원문이 없다.
-- 실제 Calendar/Discord가 미설정인 동안 연동 성공 문구를 표시하거나 전송을 재시도하지 않는다. 카카오는 중단 채널로 전송하지 않는다.
+- 실제 Calendar/Discord가 미설정인 동안 연동 성공 문구를 표시하거나 전송을 재시도하지 않는다. 카카오 레그도 설정·수동 테스트 전에는 활성화하지 않는다.
 
-## Mac 예약 outbox 소비기 (Calendar + Discord)
+## Mac 예약 outbox 소비기 (Calendar + Discord + Kakao)
 
-웹 백엔드는 `public.notification_outbox`에 개인정보를 제거한 행만 기록한다. Mac 쪽 소비기 `scripts/consume_booking_outbox.py`가 그 행을 원자적으로 선점해 허용 목록에 고정된 2단 발송 래퍼 `scripts/send_booking_integrations.py`로 넘긴다. 래퍼는 두 멱등 레그를 순서대로 실행한다: **① Google Calendar 발송기 `scripts/send_google_calendar_booking.py` → ② Discord 발송기 `scripts/send_discord_booking_alert.py`.** Calendar가 먼저 실행되고, Calendar가 exit 0으로 검증된 뒤에만 Discord를 실행한다. **두 레그가 모두 쓰기 후 재조회 검증에 성공(exit 0)해야만** 소비기가 해당 행을 delivered로 표시한다. 어느 한 레그라도 재시도 가능(exit 2) 또는 불확정(exit 3)이면 각각 백오프 재시도·수동 검토로 처리한다.
+웹 백엔드는 `public.notification_outbox`에 개인정보를 제거한 행만 기록한다. Mac 쪽 소비기 `scripts/consume_booking_outbox.py`가 그 행을 원자적으로 선점해 허용 목록에 고정된 3단 발송 래퍼 `scripts/send_booking_integrations.py`로 넘긴다. 래퍼는 세 멱등 레그를 고정 순서로 실행한다: **① Google Calendar 발송기 `scripts/send_google_calendar_booking.py` → ② Discord 발송기 `scripts/send_discord_booking_alert.py` → ③ 카카오 UI 발송기 `22_2_tools/skills/asteria-kakao-booking-alerts/scripts/send_booking_alert.py`.** Calendar가 먼저, Calendar가 exit 0으로 검증된 뒤에만 Discord, Calendar·Discord가 모두 검증된 뒤에만 카카오를 실행한다. **세 레그가 모두 쓰기/전송 후 재조회 검증에 성공(exit 0)해야만** 소비기가 해당 행을 delivered로 표시한다. 어느 한 레그라도 재시도 가능(exit 2) 또는 불확정(exit 3)이면 각각 백오프 재시도·수동 검토로 처리한다.
 
-네 스크립트는 모두 stdlib만 사용한다. Supabase 서비스 롤 비밀과 Discord 봇 토큰은 실행 시점에 Keychain에서만 읽고, Google OAuth 자격증명(client id/secret·refresh token·token uri)은 고정된 0600 자격증명 파일에서만 읽으며, 어느 것도 로그·설정·소스·argv·예외·HTTP 응답 본문에 절대 남기지 않는다. 발급된 access token도 메모리에서만 사용한다. 로그에는 집계 수치, 안정적 오류 코드, 불투명한 outbox 행 id(UUID)만 남는다. 메시지 본문·예약자·항로·예약번호는 로그에 절대 출력하지 않는다. 래퍼는 자식 레그의 stdout/stderr를 캡처만 하고 재출력하지 않아 자식의 내용이 래퍼를 통해 새지 않는다.
+각 발송기는 stdlib만 사용한다. Supabase 서비스 롤 비밀과 Discord 봇 토큰은 실행 시점에 Keychain에서만 읽고, Google OAuth 자격증명(client id/secret·refresh token·token uri)은 고정된 0600 자격증명 파일에서만 읽으며, 어느 것도 로그·설정·소스·argv·예외·HTTP 응답 본문에 절대 남기지 않는다. 발급된 access token도 메모리에서만 사용한다. 로그에는 집계 수치, 안정적 오류 코드, 불투명한 outbox 행 id(UUID)만 남는다. 메시지 본문·예약자·항로·예약번호는 로그에 절대 출력하지 않는다. 래퍼는 자식 레그의 stdout/stderr를 캡처만 하고 재출력하지 않아 자식의 내용이 래퍼를 통해 새지 않는다.
 
 Calendar 레그는 booking id의 결정적 소문자 hex sha256을 Google 이벤트 id로 사용해 created/updated/cancelled가 예약당 하나의 이벤트를 멱등하게 갱신한다. 이벤트는 Asia/Seoul dateTime(합법적 24:00 종료는 다음날 자정으로 매핑), summary `베로니카 차터 예약 · {예약자}`, description은 예약번호·항로·예상 인원·source 마커만, location은 출발지, `visibility: private`, `extendedProperties.private`에 source·booking id·idempotency key를 담는다. 참석자·전화번호·취소코드·탑승자 상세는 담지 않으며 모든 호출은 `sendUpdates=none`이다. Calendar는 결정적·멱등이므로 Calendar 성공 후 래퍼 전체를 재시도해도 안전하다.
 
-카카오 채널은 중단 상태다. 카카오 SSoT 스킬(`22_2_tools/skills/asteria-kakao-booking-alerts`)은 보존만 하며 이 파이프라인에서 호출하지 않는다.
+카카오 레그는 SSoT 스킬(`22_2_tools/skills/asteria-kakao-booking-alerts`)의 발송기를 절대 경로로 하드핀해 호출한다. 발송기는 kmsg `send`를 쓰지 않고 카카오톡 UI로 전송한다: 고정 템플릿 렌더 → 0600 설정 로드 → 라이브 방 검증(`chats --json`에서 `chat_name`이 정확히 하나이고 그 방의 live `chat_id`가 allowlist와 일치) → 전송 전 재조회(`read --chat-id <id> --deep-recovery --keep-window`로 창을 노출시키고, 동일 정확 메시지가 이미 있으면 전송 없이 성공 처리하는 멱등 검사) → 바운드된 AppleScript UI 전송기(`scripts/asteria_kakao_ui_send.applescript`)로 전송(본문은 0600 임시파일로만 전달, argv/셸 금지) → 클릭 후 `read --chat-id`로 `--background-safe` 먼저·바운드된 `--deep-recovery` 폴백으로 정확 메시지 재조회. 대상 방은 반드시 고정(pin)·최근 노출되어 창을 열 수 있어야 하며, 임의 창/방/부분 일치 fallback은 없다. exit 0=검증 완료 또는 이미 존재(멱등), exit 2=클릭 전 안전 실패(재시도 가능), exit 3=클릭 후 재조회 불확정(자동 재전송 금지). 메시지 본문·예약자·항로·예약번호·chat id·kmsg 원시 출력은 로그에 절대 남기지 않는다.
 
 ### 소비기 런타임 설정
 
@@ -170,9 +170,42 @@ python3 scripts/send_google_calendar_booking.py --render-only \
   --name 예약자 --party-size 4 --idempotency-key preview-only
 ```
 
-### 2단 발송 래퍼
+### 카카오 UI 발송기 런타임 설정
 
-래퍼 `scripts/send_booking_integrations.py`는 공통 예약 인자와 각 레그 `--config`를 받아 Calendar를 먼저, 성공 시에만 Discord를 실행한다. 자식 레그의 출력은 캡처만 하고 재출력하지 않으며, 안정적 상태 코드만 자신의 로그로 낸다. exit 0=두 레그 모두 검증, exit 2=재시도 가능 자식 실패(또는 자식 기동 실패), exit 3=불확정 자식(exit 3·예상 밖 코드·타임아웃). Calendar가 결정적·멱등이라 Calendar 성공 후 래퍼 전체를 재시도해도 안전하다.
+발송기(SSoT `22_2_tools/skills/asteria-kakao-booking-alerts/scripts/send_booking_alert.py`) 대상 설정 파일 `~/.config/asteria-kakao/booking-alert.json` (현재 사용자 소유, 권한 `0600` 이하). 비밀은 넣지 않는다.
+
+```json
+{
+  "chat_id": "chat_REPLACE_WITH_KMSG_CHAT_ID",
+  "chat_name": "ASTERIA YACHT CLUB",
+  "kmsg_bin": "/Users/ja/Applications/Asteria Kmsg.app/Contents/MacOS/kmsg"
+}
+```
+
+```bash
+mkdir -p ~/.config/asteria-kakao
+# booking-alert.json 을 위 형식으로 작성한 뒤:
+chmod 600 ~/.config/asteria-kakao/booking-alert.json
+```
+
+- `chat_id`: `kmsg chats --json`으로 확인한 synthetic ID(`chat_` 접두). `chat_name`: 대상 창 제목과 정확히 일치. `kmsg_bin`: 실행 가능한 절대 경로.
+- 전송은 kmsg `send`를 쓰지 않고 카카오톡 UI로 한다. 매 전송 직전 `chats --json`에서 `chat_name`이 정확히 하나이고 그 방의 live `chat_id`가 allowlist와 일치하는지 확인한 뒤, 전송 전 재조회(`read --chat-id <id> --deep-recovery --keep-window`)로 창을 노출·멱등 검사하고, 바운드된 AppleScript UI 전송기로 본문을 0600 임시파일(argv/셸 금지)로 전달해 전송한 다음, `read --chat-id`(`--background-safe` 먼저·`--deep-recovery` 폴백)로 정확 메시지를 재조회 검증한다.
+- 대상 방은 반드시 고정(pin)·최근 노출되어 창 제목이 정확히 `chat_name`이고 열 수 있어야 한다. 임의 창/방/부분 일치·front window fallback은 없다.
+- exit 0=검증 완료 또는 전송 전 재조회에서 이미 존재(멱등), exit 2=클릭 전 안전 실패(재시도 가능), exit 3=클릭 후 재조회 불확정(자동 재전송 금지). 개인 계정 사용에 따른 계정 제한 위험을 인지한다.
+
+발송기 메시지를 실제 전송 없이 렌더링만 확인(설정·kmsg·UI 미접촉):
+
+```bash
+python3 /Users/ja/repos/22_2_tools/skills/asteria-kakao-booking-alerts/scripts/send_booking_alert.py --render-only \
+  --event created --booking-id VER-260815 --date 2026-08-15 \
+  --start-time 13:00 --end-time 16:00 --route "아라마리나 → 팔미도" \
+  --name 예약자 --party-size 4 --member-included unknown \
+  --calendar-url "https://calendar.google.com/calendar/u/0/r" --idempotency-key preview-only
+```
+
+### 3단 발송 래퍼
+
+래퍼 `scripts/send_booking_integrations.py`는 공통 예약 인자와 각 레그 `--config`를 받아 Calendar를 먼저, 성공 시에만 Discord, Calendar·Discord가 모두 검증된 뒤에만 카카오를 실행한다. 카카오 레그에는 공통 인자에 더해 고정 extras `--member-included unknown`과 고정 베로니카 예약 페이지 URL을 넘기고, 발송기·설정을 각각 22_2_tools SSoT 절대 경로와 `~/.config/asteria-kakao/booking-alert.json`으로 하드핀한다. 자식 레그의 출력은 캡처만 하고 재출력하지 않으며, 안정적 상태 코드만 자신의 로그로 낸다. exit 0=세 레그 모두 검증, exit 2=재시도 가능 자식 실패(또는 자식 기동 실패), exit 3=불확정 자식(exit 3·예상 밖 코드·타임아웃). Calendar·Discord·카카오 모두 멱등이라(카카오는 전송 전 정확 메시지 재조회로 멱등) 래퍼 전체를 재시도해도 안전하다.
 
 ### 활성화 컷오프 (과거 재생 금지)
 

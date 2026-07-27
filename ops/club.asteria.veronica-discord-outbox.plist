@@ -3,11 +3,12 @@
 <!--
   LaunchAgent template for the Asteria Veronica booking outbox consumer.
 
-  The consumer hands each claimed row to the two-leg integration wrapper
+  The consumer hands each claimed row to the three-leg integration wrapper
   (scripts/send_booking_integrations.py), which delivers to Google Calendar
-  first and only then to the pinned Discord thread. A row is marked delivered
-  ONLY when BOTH legs write and verify by read-back. The Kakao channel remains
-  PAUSED and is never invoked by this pipeline.
+  first, then the pinned Discord thread, and finally the pinned KakaoTalk room
+  (via the 22_2_tools SSoT UI sender). Each leg runs only after the prior one
+  verified; a row is marked delivered ONLY when ALL THREE legs write/send and
+  verify by read-back.
 
   This template contains NO secrets. The Supabase service-role secret, the
   Discord bot token, and the Google OAuth credentials are all read at runtime
