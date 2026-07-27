@@ -1,0 +1,70 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE plist PUBLIC "-//Apple//DTD PLIST 1.0//EN" "http://www.apple.com/DTDs/PropertyList-1.0.dtd">
+<!--
+  LaunchAgent template for the Asteria Veronica booking outbox consumer.
+
+  The consumer hands each claimed row to the two-leg integration wrapper
+  (scripts/send_booking_integrations.py), which delivers to Google Calendar
+  first and only then to the pinned Discord thread. A row is marked delivered
+  ONLY when BOTH legs write and verify by read-back. The Kakao channel remains
+  PAUSED and is never invoked by this pipeline.
+
+  This template contains NO secrets. The Supabase service-role secret, the
+  Discord bot token, and the Google OAuth credentials are all read at runtime
+  (Keychain for the first two; a hard-pinned 0600 credentials file for Google);
+  none is ever placed in this plist, in ProgramArguments, or in any environment
+  variable here.
+
+  Install (run manually; NOT performed by the implementation task):
+    cp ops/club.asteria.veronica-discord-outbox.plist \
+       ~/Library/LaunchAgents/club.asteria.veronica-discord-outbox.plist
+    # Edit the two absolute paths below if your repo checkout differs.
+    launchctl bootstrap gui/$(id -u) \
+       ~/Library/LaunchAgents/club.asteria.veronica-discord-outbox.plist
+-->
+<plist version="1.0">
+<dict>
+  <key>Label</key>
+  <string>club.asteria.veronica-discord-outbox</string>
+
+  <key>ProgramArguments</key>
+  <array>
+    <string>/usr/bin/python3</string>
+    <string>/Users/ja/repos/55_MyLabs/asteria-web/scripts/consume_booking_outbox.py</string>
+    <string>--once</string>
+    <string>--config</string>
+    <string>/Users/ja/.config/asteria-discord/outbox-consumer.json</string>
+  </array>
+
+  <!-- Minimal PATH: the consumer and sender are stdlib-only and invoke only
+       absolute-path binaries (python3, hermes-keychain via config). -->
+  <key>EnvironmentVariables</key>
+  <dict>
+    <key>PATH</key>
+    <string>/usr/bin:/bin</string>
+  </dict>
+
+  <!-- Fire every 30 seconds. The consumer is bounded and self-locks with an
+       fcntl lock file, so an overlapping run simply exits without work. -->
+  <key>StartInterval</key>
+  <integer>30</integer>
+
+  <key>RunAtLoad</key>
+  <true/>
+
+  <!-- One bounded pass per fire; do not keep the process alive or auto-restart. -->
+  <key>KeepAlive</key>
+  <false/>
+
+  <key>ProcessType</key>
+  <string>Background</string>
+
+  <!-- Logs contain only aggregate counts, stable error codes, and opaque
+       outbox row ids — never message bodies, names, routes, phones, tokens,
+       or keys. -->
+  <key>StandardOutPath</key>
+  <string>/Users/ja/.local/state/asteria-discord/consumer.out.log</string>
+  <key>StandardErrorPath</key>
+  <string>/Users/ja/.local/state/asteria-discord/consumer.err.log</string>
+</dict>
+</plist>
