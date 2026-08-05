@@ -75,16 +75,30 @@
     const results = (article.results || []).map(item => `<li><span>${item.rank}</span><div><div class="result-name"><strong>${item.skipper}</strong>${(item.badges || []).map(badge => `<em>${badge}</em>`).join('')}</div><small>${item.detail}</small></div></li>`).join('');
     const raceFlow = (article.raceFlow || []).map(item => `<article class="race-flow-card"><img src="${item.image}" alt="${item.alt}" loading="lazy"><div><span>${item.step} / ${item.label}</span><h3>${item.title}</h3><p>${item.text}</p></div></article>`).join('');
     const gallery = (article.gallery || []).map(item => `<figure class="gallery-${item.layout || 'standard'}"><img src="${item.src}" alt="${item.alt}" loading="lazy"${item.position ? ` style="object-position:${item.position}"` : ''}><figcaption>${item.caption}</figcaption></figure>`).join('');
-    const sectionVisual = image => image ? `<figure class="article-section-visual${image.layout ? ` visual-${image.layout}` : ''}"><img src="${image.src}" alt="${image.alt}" loading="lazy"${image.position ? ` style="object-position:${image.position}"` : ''}><figcaption>${image.caption}</figcaption></figure>` : '';
+    const naturalWidthStyle = image => image.width ? ` style="--image-natural-width:${image.rotate ? image.height : image.width}px"` : '';
+    const sectionVisual = image => image ? `<figure class="article-section-visual${image.layout ? ` visual-${image.layout}` : ''}"${naturalWidthStyle(image)}>${image.rotate ? `<span class="article-rotated-media rotate-${image.rotate}">` : ''}<img src="${image.src}" alt="${image.alt}"${image.width && image.height ? ` width="${image.width}" height="${image.height}"` : ''} loading="lazy"${image.width && image.height || image.position ? ` style="${image.width && image.height ? `height:auto;aspect-ratio:${image.width}/${image.height};` : ''}${image.position ? `object-position:${image.position};` : ''}"` : ''}>${image.rotate ? '</span>' : ''}<figcaption>${image.caption}</figcaption></figure>` : '';
+    const sectionGallery = (items, layout) => items?.length ? `<div class="article-section-gallery${layout ? ` gallery-${layout}` : ''}">${items.map(item => `<figure class="section-gallery-${item.layout || 'standard'}"${naturalWidthStyle(item)}><img src="${item.src}" alt="${item.alt}"${item.width && item.height ? ` width="${item.width}" height="${item.height}"` : ''} loading="lazy"${item.position ? ` style="object-position:${item.position}"` : ''}><figcaption>${item.caption}</figcaption></figure>`).join('')}</div>` : '';
+    const sectionExplainer = explainer => explainer ? `<aside class="article-explainer" aria-label="${explainer.title}">
+      <div class="explainer-kicker">${explainer.kicker}</div>
+      <h4>${explainer.title}</h4>
+      <p class="explainer-summary">${explainer.summary}</p>
+      <dl>${explainer.items.map(item => `<div><dt>${item.label}</dt><dd>${item.value}</dd></div>`).join('')}</dl>
+      ${explainer.note ? `<p class="explainer-note">${explainer.note}</p>` : ''}
+    </aside>` : '';
     const sectionMarkup = section => {
-      const [firstParagraph, ...remainingParagraphs] = section.body;
+      const [firstParagraph, secondParagraph, ...remainingParagraphs] = section.body;
       return `<section class="article-section">
         ${section.kicker ? `<div class="section-kicker">${section.kicker}</div>` : ''}
         <h3>${section.heading}</h3>
         ${sectionVisual(section.image)}
         ${firstParagraph ? `<p>${firstParagraph}</p>` : ''}
+        ${sectionExplainer(section.explainer)}
+        ${sectionGallery(section.gallery, section.galleryLayout)}
         ${sectionVisual(section.midImage)}
+        ${secondParagraph ? `<p>${secondParagraph}</p>` : ''}
+        ${sectionVisual(section.endImage)}
         ${remainingParagraphs.map(paragraph => `<p>${paragraph}</p>`).join('')}
+        ${sectionGallery(section.endGallery, section.endGalleryLayout || section.galleryLayout)}
       </section>`;
     };
     const storyDate = article.eventDate || article.publishedAt;

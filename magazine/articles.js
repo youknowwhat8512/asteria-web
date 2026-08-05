@@ -1,5 +1,195 @@
 window.ASTERIA_ARTICLES = [
   {
+    slug: "wangsan-to-yeosu-island-delivery-2026",
+    url: "/magazine/wangsan-to-yeosu-island-delivery-2026/",
+    category: "Island Passage",
+    title: "Code Zero, Problem Zero",
+    titleKo: "코드제로, 프로블롬 제로",
+    publishedAt: "2026-08-04",
+    eventDate: "2026-07-31",
+    image: "/images/mag-island-delivery-2026-code-zero-hero.jpeg",
+    ogImage: "/images/og-wangsan-to-yeosu-island-delivery-2026-code-zero.jpg",
+    imageAlt: "푸른 하늘 아래 흰 코드제로를 펼친 애드 아스트라와 갑판의 크루",
+    heroNote: "WANGSAN → EOCHEONGDO → BOGILDO → YEOSU · 3 NIGHTS / 4 DAYS",
+    shape: "wide",
+    excerpt: "출항 직후 엔진 경고음이 울렸다. 왕산을 떠난 일곱 명은 해무 속에서 세일을 올리고 엔진오일을 구한 뒤, 어청도와 보길도를 거쳐 여수까지 문제를 하나씩 풀어 갔다.",
+    lead: "일곱 명을 태운 애드 아스트라는 왕산을 떠나 어청도와 보길도를 거쳐 여수로 향했다. 3박 4일 동안 크루들은 장거리 항해를 이어 가며 야간 당번과 장비 운용을 익혔고, 약 4년 만에 다시 펼친 코드제로의 운용 경험도 쌓았다.",
+    facts: [
+      { label: "Schedule", value: "2026.07.31 — 08.03 · 3박 4일" },
+      { label: "Route", value: "왕산 → 어청도 → 보길도 → 여수" },
+      { label: "Yacht", value: "애드 아스트라 · Beneteau 38 ft" },
+      { label: "Crew", value: "7명" },
+      { label: "Departure", value: "07.31 05:00 · 왕산마리나" },
+      { label: "Arrival", value: "08.03 16:00 · 여수 이순신마리나" }
+    ],
+    sections: [
+      {
+        kicker: "ACT 01 · 01",
+        heading: "출항 직후, 해무 속에서 시동을 껐다",
+        image: { src: "/images/mag-island-delivery-2026-dawn-departure-mooring-hq.jpeg", alt: "푸른 새벽빛 아래 마리나에 계류된 흰색 요트", caption: "7월 31일 새벽, 왕산마리나 출항을 앞둔 애드 아스트라.", layout: "portrait" },
+        midImage: { src: "/images/mag-island-delivery-2026-fog-deck-check.jpeg", alt: "짙은 해무 속 요트 선수에서 한 사람이 세일과 로프를 확인하는 모습", caption: "출항 직후 해무 속에서 선수의 세일과 로프를 확인했습니다.", layout: "portrait" },
+        endImage: { src: "/images/mag-island-delivery-2026-engine-inspection-portrait.jpeg", alt: "열린 요트 엔진룸에서 한 사람이 엔진을 점검하는 모습", caption: "긴급 세일링으로 전환한 뒤 엔진룸을 열어 상태를 점검했습니다.", layout: "portrait" },
+        body: [
+          "7월 31일 오전 5시 왕산마리나를 출항한 직후 엔진 경고음이 울렸다. 크루는 곧바로 시동을 끄고 세일을 올렸다. 바람으로 배를 움직이는 긴급 세일링을 이어 가며 엔진룸을 확인한 결과, 원인은 엔진오일 누수였다.",
+          "여분의 엔진오일은 없었다. 경고음 뒤 시동을 끈 애드 아스트라는 엔진의 힘을 쓸 수 없었고, 배를 움직일 수 있는 것은 약한 바람뿐이었다. 근처 섬과의 거리도 계속 지켜야 했다. 일곱 명은 곧 세 팀으로 나뉘었다. 엄주범 단장과 김종명 회원은 주변 어선에 지원을 요청했다. 이동준 회장과 조윤호 사무국장은 발전기에서 오일을 빼 주 엔진으로 옮겼다. 정성안 국가대표 감독, 고재영 회원, 이주환 회원은 세일링을 이어 가며 배가 근처 섬에 더 가까워지지 않도록 했다.",
+          "발전기 오일을 옮기자 배는 조금이나마 움직일 수 있었다. 그사이 지원 요청을 받은 주변 낚시배와 연결돼 바다 위에서 엔진오일을 건네받았다. 오일을 보충한 애드 아스트라는 다시 어청도를 향했다."
+        ]
+      },
+      {
+        kicker: "ACT 02 · 02",
+        heading: "어청도로 향하는 길",
+        gallery: [
+          { src: "/images/mag-island-delivery-2026-to-eocheongdo-sunbreak.jpeg", width: 1024, height: 768, alt: "구름 사이로 햇빛이 내려오는 수평선과 바다", caption: "구름 사이로 햇빛이 내려오던 수평선.", layout: "wide" },
+          { src: "/images/mag-island-delivery-2026-to-eocheongdo-deck.jpeg", width: 768, height: 1024, alt: "요트 갑판의 로프와 장비 너머 선수 쪽에 서 있는 사람", caption: "갑판과 로프 너머로 보이는 선수 쪽의 한 사람.", layout: "portrait" },
+          { src: "/images/mag-island-delivery-2026-code-zero-sails-portrait.jpeg", width: 4284, height: 5712, alt: "푸른 하늘 아래 요트의 흰 세일 두 장이 펼쳐진 모습", caption: "푸른 하늘 아래 세일을 펼친 단순 세일링 장면.", layout: "portrait" },
+          { src: "/images/mag-island-delivery-2026-to-eocheongdo-golden-sail.jpeg", width: 360, height: 480, alt: "노을빛을 받은 요트의 세일과 마스트", caption: "해가 기울며 세일이 금빛으로 물들었습니다.", layout: "compact-portrait" },
+          { src: "/images/mag-island-delivery-2026-to-eocheongdo-sunset.jpeg", width: 768, height: 1024, alt: "주황빛 하늘 아래 섬의 능선과 물결치는 바다", caption: "해 질 무렵, 섬의 능선과 바다가 주황빛을 띠었습니다.", layout: "portrait" },
+          { src: "/images/mag-island-delivery-2026-to-eocheongdo-sunset-horizon.jpeg", width: 480, height: 360, alt: "요트 난간 너머 수평선에 번지는 주황빛 노을", caption: "어청도로 향하는 바다 위로 노을이 번졌습니다." },
+          { src: "/images/mag-island-delivery-2026-sunset-deck-silhouette.jpg", width: 768, height: 1024, alt: "주황빛 해를 배경으로 요트 갑판에 서 있는 사람의 실루엣", caption: "주황빛 해와 갑판 위 한 사람의 실루엣.", layout: "portrait" }
+        ],
+        body: [
+          "엔진 문제를 해결한 뒤 왕산에서 어청도로 향하는 동안, 애드 아스트라는 엔진을 가동하고 세일 두 장을 모두 펼쳤다. 동력과 바람을 함께 받아 항로를 이어 가는 사이 구름 사이의 햇빛이 수평선에 내렸고, 해가 기울 무렵에는 세일과 섬의 능선이 차례로 시야에 들어왔다.",
+          "출항 직후의 대응을 마친 배는 예정했던 항로로 돌아왔다. 애드 아스트라는 그날 오후 8시 어청도에 닿았다."
+        ]
+      },
+      {
+        kicker: "ACT 02 · 03",
+        heading: "어청도의 밤, 달빛을 따라 등대로",
+        image: { src: "/images/mag-island-delivery-2026-eocheongdo-mooring.jpeg", alt: "해 질 무렵 어청도 부두에 계류한 애드 아스트라", caption: "7월 31일 오후 8시, 애드 아스트라는 어청도에 도착했습니다." },
+        galleryLayout: "pair",
+        gallery: [
+          { src: "/images/mag-island-delivery-2026-eocheongdo-lighthouse-night.jpeg", width: 768, height: 1024, alt: "해무가 낀 밤에 불이 켜진 어청도 등대", caption: "오후 9시, 해무 속 어청도 등대.", layout: "portrait" },
+          { src: "/images/mag-island-delivery-2026-eocheongdo-lighthouse-walk.jpeg", width: 768, height: 1024, alt: "어두운 밤길을 걸어 등대로 향하는 일행의 뒷모습", caption: "등대로 향하는 어청도의 밤길.", layout: "portrait" }
+        ],
+        body: [
+          "오후 8시 어청도에 도착한 일행은 펜션에서 저녁을 먹었다. 하루 종일 세일링한 뒤라 피로가 쌓였지만, 오후 9시 문화재인 어청도 등대를 보기 위해 다시 밤길에 나섰다.",
+          "해무가 내려앉은 길에서는 달빛에 의지해야 했다. 어둠을 헤치며 걷는 감각은 어릴 적 담력시험을 떠올리게 했다.",
+          "등대에 도착했지만 해무가 시야를 막아 탁 트인 전망은 보기 어려웠다. 다음에 어청도를 찾는다면 등대는 낮에 방문하는 편이 좋다는 결론이 남았다.",
+          "엄주범 단장과 김종명 회원은 배에서 밤을 보냈다. 엄 단장이 돌풍을 먼저 알아차려 계류줄을 조정한 뒤 잠을 설쳤다. 깊이 잠든 동행에게 연락이 닿지 않자 ‘기절 실종’이라는 농담도 나왔지만, 실제 사고는 아니었다."
+        ]
+      },
+      {
+        kicker: "ACT 02 · 04",
+        heading: "별빛으로 시작한 밤, 해무 속 어망을 피하다",
+        image: { src: "/images/mag-island-delivery-2026-eocheongdo-to-bogildo-cockpit.jpeg", width: 1600, height: 1407, alt: "세일을 올린 요트의 콕핏에서 항해 중인 일행", caption: "어청도에서 보길도로 향하는 낮 항해.", layout: "natural" },
+        galleryLayout: "pair",
+        gallery: [
+          { src: "/images/mag-island-delivery-2026-night-helm-portrait.jpg", width: 360, height: 480, alt: "어두운 콕핏에서 조타륜 앞에 서 있는 사람", caption: "불빛이 거의 없는 콕핏과 조타륜 앞의 한 사람.", layout: "compact-portrait" },
+          { src: "/images/mag-island-delivery-2026-night-navigation-display.jpeg", width: 1350, height: 1800, alt: "달빛 아래 바다와 어두운 콕핏에서 켜진 야간 항해 장비 화면", caption: "달빛 아래에서 항해 장비의 정보를 함께 확인했습니다.", layout: "portrait" }
+        ],
+        body: [
+          "8월 1일 오전 9시, 애드 아스트라는 어청도를 떠나 보길도로 향했다. 낮에는 세일을 올린 채 항해했고, 해가 진 뒤 크루는 두 팀 교대의 야간 항해에 들어갔다.",
+          "야간 항해는 두 팀의 교대로 운영됐다. 1팀은 이동준 회장, 조윤호 사무국장, 고재영 회원으로 구성됐다. 2팀은 정성안 국가대표 감독, 김종명 회원, 이주환 회원, 엄주범 단장이 맡았다. 한 팀이 확인한 항로와 장비 정보는 다음 팀으로 이어졌다.",
+          "달이 떠오르고 별빛이 보이기 시작할 때만 해도 낭만적인 야간 항해였다. 그러나 그 시간은 오래가지 않았다. 짙은 해무와 안개비가 시야를 가리며 바다의 표정이 바뀌었다.",
+          "크루는 레이더를 확인하는 동시에 선수에서 야간 견시를 이어 갔다. 그 과정에서 어망을 확인해 걸릴 뻔한 상황을 가까스로 피한 뒤 다시 항로로 들어갔다.",
+          "안개비가 몸에 닿기 시작하자 한여름 밤바다에서도 얼어붙는 듯한 추위가 느껴졌다. 각자 방한 장비를 갖춰 입었지만 예상하지 못한 기온 하락은 야간 항해의 피로를 더했다.",
+          "다행히 추가 사고 없이 아침을 맞았다. 밤새 해무와 안개비를 지난 뒤에야 아침 햇살의 가치가 새삼 분명해졌다."
+        ]
+      },
+      {
+        kicker: "ACT 03 · 05",
+        heading: "매뉴얼에서 찾은 항로, 화면의 ETA가 앞당겨지다",
+        image: { src: "/images/mag-island-delivery-2026-bg-navionics-check.jpeg", alt: "요트 콕핏에서 B&G 항해 장비와 휴대전화 화면을 함께 확인하는 모습", caption: "B&G 화면과 휴대전화의 항로 정보를 함께 확인했습니다.", layout: "portrait" },
+        body: [
+          "전기공학 박사인 김종명 회원은 장비 매뉴얼을 파악한 뒤 기기 안의 기능을 하나씩 점검하고 최적화했다. 기존에는 오토파일럿을 단순 침로 유지에 주로 사용했지만, 설정을 조정한 뒤에는 바람의 방향을 기준으로 항해하거나 Navionics의 경로를 따라갈 수 있도록 B&G 시스템을 연동했다.",
+          "항로 최적화 기능을 적용하자 화면에 표시된 ETA가 약 2시간 앞당겨졌다. 실제 항해도 조정 전 예상보다 빠르게 보길도에 접근했고, 항해 시간이 줄어든 만큼 연료 소모를 아낄 수 있었다.",
+          "이 조정은 보길도 도착을 1마일 앞둔 시점에서 더 중요해졌다. 연료탱크 경고등이 켜지자 크루는 긴급 공급처를 수소문했지만, 이른 아침이라 연락이 닿지 않았다.",
+          "애드 아스트라는 8월 2일 오전 10시 보길도 항구에 무사히 들어왔다. 연료는 거의 빈 상태였다. 입항할 때까지 연료가 완전히 떨어져 주변 어망 구역으로 밀릴 수 있다는 긴장은 가시지 않았다.",
+          "항해를 돌아보면 시스템 최적화가 없었다면 운항 시간이 더 길어졌을 가능성이 있다. 그랬다면 항구를 눈앞에 두고 연료가 바닥나는 위험도 더 커졌을 것이다."
+        ]
+      },
+      {
+        kicker: "ACT 03 · 06",
+        heading: "4년 만의 코드제로, 순서부터 다시 맞췄다",
+        image: { src: "/images/mag-island-delivery-2026-code-zero-main-sail-filtered.png", width: 1800, height: 2400, alt: "푸른 하늘 아래 크게 펼쳐진 흰 코드제로와 갑판의 크루", caption: "정성안 감독의 도움으로 운용 순서를 맞춘 뒤 펼쳐진 코드제로.", layout: "portrait" },
+        galleryLayout: "pair",
+        gallery: [
+          { src: "/images/mag-island-delivery-2026-code-zero-foredeck-view.jpeg", width: 360, height: 480, alt: "푸른 바다와 섬을 향한 요트 선수에서 한 사람이 코드제로와 로프를 정리하는 모습", caption: "선수에서 코드제로와 로프를 정리하는 모습.", layout: "portrait" },
+          { src: "/images/mag-island-delivery-2026-code-zero-cockpit-guidance-wide.jpeg", width: 5357, height: 4281, alt: "요트 콕핏에서 세 사람이 로프와 장비를 확인하는 모습", caption: "정성안 감독이 운용 순서를 알려주는 동안 크루가 장비를 함께 확인했습니다." }
+        ],
+        explainer: {
+          kicker: "SAIL GUIDE · CODE ZERO 101",
+          title: "약한 바람을 잡는 선수 앞의 큰 세일",
+          summary: "코드제로는 약한 바람에서 속도를 보태기 위해 포어스테이 앞쪽에 펼치는 경량 세일이다. 대체로 제노아보다 면적이 크고 비대칭 스피네이커보다 형태가 평평해, 배의 정면에서 비스듬히 들어오는 바람부터 옆바람까지 효율적으로 받는다.",
+          items: [
+            { label: "BEST USE", value: "약한 바람 · 사선 방향의 바람부터 옆바람까지" },
+            { label: "POSITION", value: "포어스테이 앞쪽 · 전용 퍼러에 연결" },
+            { label: "TURN", value: "방향 전환 전에 감고 반대쪽에서 다시 펼침" },
+            { label: "LIMIT", value: "강풍용이 아니며 사용 각도는 세일 설계에 따라 다름" }
+          ],
+          note: "이 항해에서 크루가 맞춘 핵심도 ‘감기 → 방향 전환 → 다시 펼치기’의 순서와 역할 분담이었다."
+        },
+        body: [
+          "약 4년 동안 사용하지 않았던 코드제로는 장치를 보완한 뒤 다시 갑판에 나왔다. 코드제로는 선수 쪽에서 크게 펼쳐 쓰는 세일이다. 정성안 감독의 도움을 받아 크루는 실제 항해에서 운용 순서를 맞췄다.",
+          "방향을 바꿀 때 스키퍼가 배를 천천히 돌리면 트리머가 시트를 풀어 세일의 힘을 뺐다. 펄링 담당이 세일을 감고, 반대쪽에서 다시 펼치면 트리머가 바람에 맞춰 당겼다. 여러 사람이 제때 움직여야 한 차례의 전환이 끝났다.",
+          "개선된 코드제로 운용 시스템에 적응하는 동안 크루들은 각자의 포지션에서 역할과 순서를 익혔다. 한 차례씩 전환을 완성할 때마다 협업은 정교해졌고, 각자의 세일링 경험도 함께 쌓였다."
+        ]
+      },
+      {
+        kicker: "ACT 04 · 07",
+        heading: "보길도 섬 여행, 요트 수영에서 섬마카세까지",
+        gallery: [
+          { src: "/images/mag-island-delivery-2026-bogildo-swim.jpeg", width: 360, height: 480, alt: "요트 선미 수영 플랫폼 앞 바다에서 수영하는 두 사람", caption: "요트 선미 앞 바다에서 잠시 수영한 장면.", layout: "portrait" }
+        ],
+        midImage: { src: "/images/mag-island-delivery-2026-island-omakase-sashimi-table.jpeg", width: 1600, height: 1200, alt: "여러 접시의 회와 해산물, 소스가 놓인 식탁", caption: "회와 해산물, 여러 소스가 이어진 보길도의 저녁.", layout: "natural" },
+        body: [
+          "보길도에 닿은 뒤 항해는 잠시 섬 여행으로 전환됐다. 항구와 산을 바라본 일행은 요트 선미 플랫폼 앞 바다로 들어갔다. 긴 야간 항해와 연료의 긴장을 지나 마주한 수영은 보길도의 하루를 여는 첫 장면이 됐다.",
+          "물에서 나온 뒤에는 세연정으로 향해 연못과 바위, 정자와 나무가 이어지는 한국 전통 정원의 원형을 살폈다. 섬 여행의 마지막은 여러 접시가 차례로 놓인 저녁, 이른바 ‘섬마카세’였다. 오삿갓 조개와 문어, 전복, 각종 해산물, 광어, 거북손, 돌돔 매운탕까지 사장님이 오늘 잡은 재료로 차려 낸 음식이 끊임없이 이어지자 눈이 휘둥그레졌다.",
+          "요트 수영, 세연정, 섬마카세. 보길도에서의 시간은 바다에서 육지로, 다시 식탁으로 이어진 하나의 섬 여행이 됐다."
+        ]
+      },
+      {
+        kicker: "ACT 04 · 08",
+        heading: "세연정, 한국 정원의 원형을 보다",
+        image: { src: "/images/mag-island-delivery-2026-seyeonjeong-crew-listening.jpeg", width: 1024, height: 768, alt: "세연정 목조 정자 안에 둘러앉아 설명을 듣는 일행", caption: "세연정 안에 둘러앉아 역사와 공간에 관한 설명을 들었습니다." },
+        midImage: { src: "/images/mag-island-delivery-2026-seyeonjeong-rafters-portrait.jpeg", width: 360, height: 480, alt: "세연정 목조 정자의 기둥과 지붕 안쪽 구조", caption: "고개를 들어 바라본 세연정의 목조 구조.", layout: "compact-portrait" },
+        endImage: { src: "/images/mag-island-delivery-2026-seyeonjeong-garden-window.jpeg", width: 1014, height: 776, alt: "세연정 창과 열린 덧문 너머로 보이는 연못과 바위, 숲", caption: "세연정 안에서 바라본 연못과 바위, 숲의 풍경." },
+        body: [
+          "세연정은 국가 명승 ‘보길도 윤선도 원림’을 대표하는 공간이다. 정자와 연못, 바위와 숲이 하나의 풍경을 이룬다. 이곳은 모험을 시작하기 전부터 엄주범 단장이 꼭 들러야 한다고 꼽은 필수 코스였다. 크루 대부분은 세연정을 잘 몰랐지만, 직접 와 보고서야 왜 꼭 들러야 하는지 알게 됐다.",
+          "역사를 공부하며 건물을 짓는 분과, 역사를 공부해 영상으로 만들어 온 분의 설명이 함께하니 마치 그 시대에 살아 있는 듯했다. 세일링뿐 아니라 항해 중 지역의 역사와 문화를 함께 만나는 시간을 가질 수 있어 더욱 좋았다.",
+          "<a class=\"article-source-link\" href=\"https://www.heritage.go.kr/heri/cul/culSelectDetail.do?ccbaCpno=1353600340000&amp;pageNo=1_1_1_1\" target=\"_blank\" rel=\"noopener noreferrer\">국가유산포털에서 보길도 윤선도 원림 보기 →</a>"
+        ]
+      },
+      {
+        kicker: "ACT 04 · 09",
+        heading: "초행 크루가 항로와 장비를 넘겨받는 법",
+        galleryLayout: "pair",
+        gallery: [
+          { src: "/images/mag-island-delivery-2026-day-helm-portrait.jpg", width: 768, height: 1024, alt: "모자와 선글라스, 구명조끼를 착용하고 조타륜 뒤에 서 있는 사람", caption: "낮 시간 조타륜 뒤에 서 있는 한 사람.", layout: "portrait" },
+          { src: "/images/mag-island-delivery-2026-helm-red-lifejacket-portrait.jpeg", width: 4284, height: 5712, alt: "챙이 넓은 모자와 선글라스, 빨간 구명조끼를 착용하고 조타륜을 잡은 사람", caption: "조타륜을 잡고 직접 항해를 이어가는 모습.", layout: "portrait" }
+        ],
+        endGallery: [
+          { src: "/images/mag-island-delivery-2026-helm-guidance-pair-wide.jpeg", width: 5712, height: 4284, alt: "조타륜 앞에 선 사람과 그 옆에서 설명하는 사람", caption: "정성안 감독이 조타륜 옆에서 항해 상태와 운용 방법을 알려주는 장면." },
+          { src: "/images/mag-island-delivery-2026-helm-instruction-pair-square.jpeg", width: 4283, height: 4156, alt: "요트 콕핏에서 두 사람이 마주 보며 대화하는 모습", caption: "정성안 감독이 옆에서 운용 방법을 알려주는 장면." },
+          { src: "/images/mag-island-delivery-2026-cockpit-two-crew-rest-wide.jpeg", width: 4953, height: 3580, alt: "요트 콕핏에 앉아 대화를 나누는 두 사람", caption: "당번 사이 콕핏에 앉아 대화를 나누는 모습." }
+        ],
+        body: [
+          "항로 경험자인 엄주범 단장과 이동준 회장은 Navionics로 항로를 설계하고, 야간 당번과 배에서 밤을 보내는 요박의 방식을 나눴다. 초행인 김종명 회원, 이주환 회원, 조윤호 사무국장은 화면을 읽고 장비 정보를 공유하며 실제 항로를 따라갔다.",
+          "엄주범 단장과 이동준 회장에게 항로를 읽는 법과 요트 운항법을 전수받았고, 정성안 감독에게는 코드제로 세일뿐 아니라 세일링 퍼포먼스에 대해서도 배울 수 있는 시간이었다.",
+          "출발 전 설명으로 접했던 장거리 항해는 마지막 구간에 이르러 크루가 직접 수행한 경험이 됐다."
+        ]
+      },
+      {
+        kicker: "ACT 04 · 10",
+        heading: "여수 도착, 사고와 문제 없이 목적지에 입항",
+        image: { src: "/images/mag-island-delivery-2026-yeosu-arrival.jpeg", alt: "여수 이순신마리나에 도착해 계류한 애드 아스트라", caption: "8월 3일 오후 4시, 여수 이순신마리나에 도착했습니다.", position: "center 55%" },
+        endGallery: [
+          { src: "/images/mag-island-delivery-2026-code-zero-rope-guidance-wide.jpeg", width: 5712, height: 4284, alt: "여수 도착 뒤 노란 상의를 입은 사람이 요트 갑판에서 로프를 잡고 있는 모습", caption: "여수에 도착한 뒤 갑판에서 로프를 정리하는 모습." },
+          { src: "/images/mag-island-delivery-2026-deck-cleaning.jpg", width: 870, height: 902, alt: "요트 갑판에서 긴 솔로 바닥을 닦는 사람", caption: "긴 솔로 요트 갑판을 닦는 모습." },
+          { src: "/images/mag-island-delivery-2026-city-sail-portrait.jpg", width: 360, height: 480, alt: "요트 갑판과 마스트 너머 바다 위 검은 세일과 건물들", caption: "갑판과 마스트 너머로 보이는 바다 위 세일과 건물들.", layout: "compact-portrait" },
+          { src: "/images/mag-island-delivery-2026-crew-toast-portrait.jpeg", width: 4284, height: 5712, alt: "손에 든 맥주잔과 뒤편의 요트 콕핏", caption: "항해 중 잔을 들고 잠시 숨을 돌린 순간.", layout: "portrait" }
+        ],
+        body: [
+          "8월 3일 오전 4시 보길도를 출발한 애드 아스트라는 12시간 뒤인 오후 4시 여수 이순신마리나에 계류했다. 왕산에서 어청도와 보길도를 거친 3박 4일 항해의 끝이었다.",
+          "항해를 하다 보면 크고 작은 이슈가 생길 수밖에 있다. 이번 항해에도 다양한 에피소드가 이어졌지만, 그때마다 크루들은 서로를 신뢰하며 하나씩 해결해 나갔다. 각자 맡은 임무도 충실히 수행했고, 모두 무사히 여수에 도착했다.",
+          "같은 상황도 문제로만 바라볼지, 함께 풀어 갈 에피소드로 받아들일지에 따라 항해의 즐거움은 달라진다. 이번 항해에서 크루들은 매 순간을 하나의 에피소드로 받아들였고, 끝까지 즐겁게 항해를 마쳤다. Code Zero, Problem Zero였다.",
+          "마지막에는 무사 항해를 축하했다. 이동준 회장이 “앞에 그물 있어요!”라고 농담하자 모두 웃었고, 기쁜 마음으로 축하 원샷을 하며 3박 4일의 항해를 마무리했다."
+        ]
+      }
+    ],
+    gallery: []
+  },
+  {
     slug: "asteria-club-cup-2026",
     url: "/magazine/asteria-club-cup-2026/",
     category: "Club Race",

@@ -2,8 +2,11 @@
 """Build the allow-listed static tree served by the Asteria production origin."""
 from pathlib import Path
 import shutil
+import subprocess
+import sys
 
 ROOT = Path(__file__).resolve().parents[1]
+RENDERER = ROOT / "scripts" / "render_magazine_static.mjs"
 DEST = Path.home() / ".local/share/asteria-web-public"
 NEXT = DEST.with_name(DEST.name + ".next")
 OLD = DEST.with_name(DEST.name + ".old")
@@ -18,6 +21,14 @@ for name in FILES:
     shutil.copy2(ROOT / name, NEXT / name)
 for name in DIRS:
     shutil.copytree(ROOT / name, NEXT / name)
+
+# Inject crawler-facing static HTML into the copied magazine pages before the
+# atomic swap. If Node is missing or the renderer fails, abort here: NEXT is
+# left in place unswapped and the currently published DEST stays untouched.
+node = shutil.which("node")
+if node is None:
+    sys.exit("build_public_site: 'node' not found on PATH; magazine static render aborted")
+subprocess.run([node, str(RENDERER), str(NEXT)], check=True)
 
 if DEST.exists():
     DEST.rename(OLD)

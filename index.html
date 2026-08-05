@@ -21,6 +21,32 @@
   <meta name="twitter:title" content="아스테리아 세일링 요트 스포츠 클럽" />
   <meta name="twitter:description" content="딩기연습, 킬보트 훈련, 프로 코칭 레이싱 도전" />
   <meta name="twitter:image" content="https://asteria.club/images/og-asteria.jpg" />
+  <script type="application/ld+json">
+  {
+    "@context": "https://schema.org",
+    "@graph": [
+      {
+        "@type": "SportsClub",
+        "@id": "https://asteria.club/#organization",
+        "name": "Asteria Sailing Yacht Club",
+        "alternateName": ["Asteria Yacht Club", "아스테리아 요트 클럽"],
+        "url": "https://asteria.club/",
+        "description": "딩기와 킬보트 훈련, 프로 코칭, 레이싱 도전을 함께하는 세일링 스포츠 클럽 아스테리아입니다.",
+        "sport": "Sailing",
+        "inLanguage": "ko-KR",
+        "image": "https://asteria.club/images/og-asteria.jpg"
+      },
+      {
+        "@type": "WebSite",
+        "@id": "https://asteria.club/#website",
+        "url": "https://asteria.club/",
+        "name": "Asteria Sailing Yacht Club",
+        "inLanguage": "ko-KR",
+        "publisher": { "@id": "https://asteria.club/#organization" }
+      }
+    ]
+  }
+  </script>
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
   <link href="https://fonts.googleapis.com/css2?family=Archivo+Black&family=Pretendard:wght@400;500;600;700;800;900&display=swap" rel="stylesheet">
@@ -352,7 +378,7 @@
   <section class="section reveal" id="magazine"><div class="wrap"><div class="section-head"><div><div class="overline">Magazine</div><h2 class="title">Proof of<br>Training.</h2></div><div class="magazine-side"><p class="desc">아스테리아 도전과 선수들의 성장 이야기.</p><a class="magazine-all" href="/magazine/">지난 에피소드 보기 <span aria-hidden="true">→</span></a></div></div><div class="mag-grid mag-strip" id="latestMagazine" aria-label="최신 Magazine 에피소드 5개"></div></div></section>
   <div class="modal" id="applyModal" aria-hidden="true"><div class="modal-card" role="dialog" aria-modal="true" aria-labelledby="applyModalTitle"><div class="form-modal-head"><h3 id="applyModalTitle">아스테리아 가입 신청</h3><button class="form-modal-close" type="button" id="modalClose" aria-label="가입 신청서 닫기">×</button></div><iframe class="form-embed" id="applyForm" title="아스테리아 가입 신청서" data-src="https://docs.google.com/forms/d/e/1FAIpQLSfQgBt8oAAZyvqMs5Ng6H7hI2Br4NpJzzyIpQeuWZ-VSm_h9Q/viewform?embedded=true" loading="lazy" referrerpolicy="strict-origin-when-cross-origin"></iframe><div class="form-modal-foot"><a href="https://forms.gle/FyeS2XVyxLnpxY3r8" target="_blank" rel="noopener noreferrer">새 창에서 작성 ↗</a></div></div></div>
 </div>
-<script src="/magazine/articles.js?v=20260726-ilca7-skipper-copy"></script>
+<script src="/magazine/articles.js?v=20260805-deploy-r16"></script>
 <script>
   const applyAction = document.getElementById('applyAction');
   const applyModal = document.getElementById('applyModal');
