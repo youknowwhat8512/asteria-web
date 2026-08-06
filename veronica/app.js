@@ -383,7 +383,6 @@
         detailRow("운항", fmtRange(b.startsAt, b.endsAt)),
         detailRow("항로", `${b.departure} → ${b.destination}`),
         detailRow("예약자", b.bookerName || memberName(b.bookerMemberId)),
-        detailRow("책임 운항자", memberName(b.responsibleMemberId)),
         detailRow("총 인원", `${b.totalPeople}명`),
       ];
       const paxNodes = (b.passengers || []).map((p) =>
@@ -433,12 +432,23 @@
     $("endHour").value = "12";
   }
 
-  function fillMemberSelect(sel, selectedId) {
+  function fillMemberSelect(sel, selectedId, excludedId = "") {
     sel.replaceChildren(el("option", { text: "회원 선택", attrs: { value: "" } }));
     for (const m of members) {
+      // The requester is already the mandatory first passenger. Remove them
+      // from companion-only member dropdowns so a duplicate cannot be selected.
+      if (m.id === excludedId) continue;
       const o = el("option", { text: m.displayName, attrs: { value: m.id } });
       if (m.id === selectedId) o.selected = true;
       sel.appendChild(o);
+    }
+  }
+
+  function refreshMemberPassengerSelects() {
+    const excludedId = $("bookerMember").value;
+    for (const sel of $("paxList").querySelectorAll('.pax-row[data-type="member"] select')) {
+      const selectedId = sel.value;
+      fillMemberSelect(sel, selectedId === excludedId ? "" : selectedId, excludedId);
     }
   }
 
@@ -449,7 +459,7 @@
     row.dataset.type = type;
     if (type === "member") {
       const sel = el("select");
-      fillMemberSelect(sel, preset.memberId);
+      fillMemberSelect(sel, preset.memberId, $("bookerMember").value);
       row.append(kind, sel, el("div"), removeBtn(row));
     } else {
       const name = el("input", { attrs: { placeholder: "성명" } });
@@ -499,7 +509,6 @@
     setError("formError", "");
     fillHourOptions();
     fillMemberSelect($("bookerMember"), prefill ? prefill.bookerMemberId : "");
-    fillMemberSelect($("responsibleMember"), prefill ? prefill.responsibleMemberId : "");
     $("paxList").replaceChildren();
     editingId = prefill ? prefill.id : null;
     createIdempotencyKey = prefill ? null : crypto.randomUUID();
@@ -545,8 +554,6 @@
     if (endH <= startH) return setError("formError", "종료 시각은 시작 시각보다 뒤여야 합니다.");
     const bookerMemberId = $("bookerMember").value;
     if (!bookerMemberId) return setError("formError", "예약자(회원)를 선택하세요.");
-    const responsibleMemberId = $("responsibleMember").value;
-    if (!responsibleMemberId) return setError("formError", "책임 운항자를 선택하세요.");
     if (!$("destination").value.trim()) return setError("formError", "목적지를 입력하세요.");
     if (!$("waiverAgree").checked) return setError("formError", "안전·파손 책임 서약에 동의해야 합니다.");
     if (!$("privacyAgree").checked) return setError("formError", "개인정보 수집 동의 확인이 필요합니다.");
@@ -567,7 +574,6 @@
       destination: $("destination").value.trim(),
       totalPeople: passengers.length,
       bookerMemberId,
-      responsibleMemberId,
       passengers,
       waiverVersion: WAIVER_VERSION,
       waiverAccepted: true,
@@ -642,11 +648,11 @@
     $("showNewBtn").addEventListener("click", () => openForm(null));
     $("listViewBtn").addEventListener("click", () => setBookingView("list"));
     $("calendarViewBtn").addEventListener("click", () => setBookingView("calendar"));
-    // One-way default: picking the requester copies that member into the
-    // responsible-operator select at that moment. Changing the responsible
-    // operator afterwards never touches the requester (no listener on it).
     $("bookerMember").addEventListener("change", () => {
-      $("responsibleMember").value = $("bookerMember").value;
+      // Rebuild companion member options immediately. If the newly selected
+      // requester was already chosen as a companion, that stale duplicate is
+      // cleared while every other companion selection is preserved.
+      refreshMemberPassengerSelects();
     });
     $("detailBackBtn").addEventListener("click", showList);
     $("detailCancelBtn").addEventListener("click", cancelCurrent);
