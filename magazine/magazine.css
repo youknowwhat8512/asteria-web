@@ -64,3 +64,17 @@ html[data-article-variant="reporter"] .article-meta:after{content:"REPORTER'S CU
 .article-source-link{display:inline-flex;align-items:center;min-height:42px;padding:11px 15px;border:1px solid var(--ink);border-radius:999px;color:var(--ink);font-size:11px;font-weight:900;line-height:1.3;letter-spacing:.04em;transition:background .2s ease,color .2s ease,transform .2s ease}
 .article-source-link:hover{transform:translateY(-2px);background:var(--ink);color:var(--white)}
 @media(max-width:760px){.article-source-link{width:100%;justify-content:center;text-align:center}}
+
+.article-share [data-apply]{white-space:nowrap}
+.membership-modal{position:fixed;inset:0;z-index:100;display:none;align-items:center;justify-content:center;padding:24px;background:rgba(2,9,15,.82);backdrop-filter:blur(12px)}
+.membership-modal.open{display:flex}.membership-modal-open{overflow:hidden}
+.membership-modal-card{width:min(920px,100%);height:min(88vh,900px);background:var(--white);color:var(--ink);border-radius:12px;overflow:hidden;display:flex;flex-direction:column;box-shadow:0 40px 120px rgba(0,0,0,.52);border-top:6px solid var(--red)}
+.membership-modal-head{display:flex;align-items:center;justify-content:space-between;gap:20px;padding:18px 22px;border-bottom:1px solid var(--line)}
+.membership-modal-head h3{margin:0;font-size:24px;letter-spacing:-.05em}
+.membership-modal-close{flex:0 0 auto;width:42px;height:42px;border:1px solid var(--line);border-radius:50%;background:var(--white);color:var(--ink);font:inherit;font-size:25px;line-height:1;cursor:pointer}
+.membership-modal-close:hover,.membership-modal-close:focus-visible{background:var(--ink);color:var(--white);outline:none}
+.membership-form-embed{width:100%;min-height:0;flex:1;border:0;background:#f0ebf8}
+.membership-modal-foot{display:flex;justify-content:flex-end;padding:11px 20px;border-top:1px solid var(--line);background:var(--white)}
+.membership-modal-foot a{color:var(--muted);font-size:11px;font-weight:800;letter-spacing:.08em}
+.membership-modal-foot a:hover{color:var(--red)}
+@media(max-width:760px){.membership-modal{padding:14px}.membership-modal-card{width:100%;height:min(92svh,900px)}.membership-modal-head{padding:14px 16px}.membership-modal-head h3{font-size:21px}.membership-modal-foot{padding:10px 16px}}
