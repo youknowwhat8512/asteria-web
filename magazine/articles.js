@@ -128,7 +128,7 @@ window.ASTERIA_ARTICLES = [
           }
         ],
         midImage: {
-          src: "/images/mag-shootingstar-tuning-2026-lazybag-installation-day.jpeg",
+          src: "/images/mag-shootingstar-tuning-2026-lazybag-installation-day-left-face-blurred.jpeg",
           width: 3837,
           height: 2160,
           alt: "낮에 슈팅스타의 붐 위로 레이지백을 설치하는 모습",
