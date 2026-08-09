@@ -236,7 +236,16 @@ function masonryMarkup(articles) {
 
 function articleMarkup(article) {
   const sections = (article.sections || []).map(section => {
-    const body = (section.body || []).map(paragraph => `<p>${esc(paragraph)}</p>`).join('');
+    const [firstParagraph, ...remainingParagraphs] = section.body || [];
+    const tip = section.tip ? `<aside class="article-tip" aria-label="${esc(section.tip.title)}">`
+      + `<div class="article-tip-mark" aria-hidden="true">TIP</div><div class="article-tip-copy">`
+      + `<div class="article-tip-kicker">${esc(section.tip.kicker)}</div><h4>${esc(section.tip.title)}</h4>`
+      + `<p>${esc(section.tip.summary)}</p><dl>${(section.tip.items || []).map((item, index) => ``
+        + `<div><dt>${String(index + 1).padStart(2, '0')} · ${esc(item.label)}</dt><dd>${esc(item.value)}</dd></div>`).join('')}</dl>`
+      + `</div></aside>` : '';
+    const body = `${firstParagraph ? `<p>${esc(firstParagraph)}</p>` : ''}`
+      + `${section.intro ? `<p>${esc(section.intro)}</p>` : ''}${tip}`
+      + remainingParagraphs.map(paragraph => `<p>${esc(paragraph)}</p>`).join('');
     return `<section class="article-section">${section.kicker ? `<div class="section-kicker">${esc(section.kicker)}</div>` : ''}`
       + `<h3>${esc(section.heading)}</h3>${body}</section>`;
   }).join('\n');

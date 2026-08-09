@@ -26,6 +26,9 @@ class ShootingStarTipCardTests(unittest.TestCase):
             self.assertIn(required, self.data)
         self.assertIn("const sectionTip", self.renderer)
         self.assertIn("sectionTip(section.tip)", self.renderer)
+        static_renderer = (ROOT / "scripts/render_magazine_static.mjs").read_text(encoding="utf-8")
+        self.assertIn("section.tip", static_renderer)
+        self.assertIn("article-tip", static_renderer)
         self.assertIn(".article-tip{", self.css)
 
     def test_all_entry_points_use_tip_card_cache_keys(self):
