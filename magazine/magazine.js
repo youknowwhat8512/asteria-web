@@ -86,6 +86,15 @@
       <dl>${explainer.items.map(item => `<div><dt>${item.label}</dt><dd>${item.value}</dd></div>`).join('')}</dl>
       ${explainer.note ? `<p class="explainer-note">${explainer.note}</p>` : ''}
     </aside>` : '';
+    const sectionTip = tip => tip ? `<aside class="article-tip" aria-label="${tip.title}">
+      <div class="article-tip-mark" aria-hidden="true">TIP</div>
+      <div class="article-tip-copy">
+        <div class="article-tip-kicker">${tip.kicker}</div>
+        <h4>${tip.title}</h4>
+        <p>${tip.summary}</p>
+        <dl>${tip.items.map((item, index) => `<div><dt>${String(index + 1).padStart(2, '0')} · ${item.label}</dt><dd>${item.value}</dd></div>`).join('')}</dl>
+      </div>
+    </aside>` : '';
     const sectionMarkup = section => {
       const [firstParagraph, secondParagraph, ...remainingParagraphs] = section.body;
       return `<section class="article-section">
@@ -93,8 +102,10 @@
         <h3>${section.heading}</h3>
         ${sectionVisual(section.image)}
         ${firstParagraph ? `<p>${firstParagraph}</p>` : ''}
+        ${section.intro ? `<p>${section.intro}</p>` : ''}
         ${sectionExplainer(section.explainer)}
         ${sectionGallery(section.gallery, section.galleryLayout)}
+        ${sectionTip(section.tip)}
         ${sectionVisual(section.midImage)}
         ${secondParagraph ? `<p>${secondParagraph}</p>` : ''}
         ${sectionVisual(section.endImage)}
