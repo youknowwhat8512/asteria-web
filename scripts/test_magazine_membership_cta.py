@@ -19,9 +19,12 @@ class MagazineMembershipGuideTests(unittest.TestCase):
         self.assertNotIn("querySelector('[data-copy]')", self.magazine_js)
 
     def test_home_explains_membership_follows_open_sailing(self):
+        self.assertIn("오픈 세일링 안내", self.home)
+        self.assertIn("오픈 세일링 참여 방법", self.home)
         self.assertIn("오픈 세일링 참가 신청서 작성", self.home)
         self.assertIn("오픈 세일링 후 서로 잘 맞는다고 생각하면 클럽 가입을 진행합니다.", self.home)
         self.assertNotIn("가입 신청서를 작성해 아스테리아에 지원합니다.", self.home)
+        self.assertNotIn("클럽 가입 안내", self.home)
 
     def test_episode_does_not_embed_the_application_modal(self):
         self.assertNotIn("membershipModal", self.magazine_js)
