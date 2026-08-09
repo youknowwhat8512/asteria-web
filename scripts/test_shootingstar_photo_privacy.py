@@ -7,14 +7,16 @@ import unittest
 
 ROOT = Path(__file__).resolve().parents[1]
 OLD_HERO = "images/mag-shootingstar-tuning-2026-hardstand-hero.jpeg"
+MISALIGNED_HERO = "images/mag-shootingstar-tuning-2026-hardstand-hero-anonymized.jpeg"
 OLD_OG = "images/og-shootingstar-tuning-2026.jpg"
-NEW_HERO = "images/mag-shootingstar-tuning-2026-hardstand-hero-anonymized.jpeg"
+NEW_HERO = "images/mag-shootingstar-tuning-2026-hardstand-hero-face-blurred-v2.jpeg"
 NEW_OG = "images/og-shootingstar-tuning-2026-anonymized.jpg"
 
 
 class ShootingStarPhotoPrivacyTests(unittest.TestCase):
     def test_old_public_assets_are_removed(self):
         self.assertFalse((ROOT / OLD_HERO).exists())
+        self.assertFalse((ROOT / MISALIGNED_HERO).exists())
         self.assertFalse((ROOT / OLD_OG).exists())
 
     def test_anonymized_assets_exist_with_expected_dimensions(self):
@@ -29,14 +31,14 @@ class ShootingStarPhotoPrivacyTests(unittest.TestCase):
             self.assertIn(f"pixelWidth: {width}", output)
             self.assertIn(f"pixelHeight: {height}", output)
 
-    def test_anonymized_assets_differ_from_last_public_versions(self):
-        old_hashes = {
-            NEW_HERO: "aba51a108349a9775136a8ab82b87523e3828a76994017c6e1c554bad579a11e",
-            NEW_OG: "96c70194ee6a63eb3a7d61477216f17e8ccf1b12e1a47b99cb10365afa5948f0",
+    def test_anonymized_assets_match_reviewed_versions(self):
+        reviewed_hashes = {
+            NEW_HERO: "73754ce3446e3c8d77f56f52e31a5f9917a6738e00283aae9d4972cf9b56e306",
+            NEW_OG: "27240299ddefb513cf9a5e506ae5114088c1eac3036cf28de641a692eeeef50d",
         }
-        for new_rel, old_hash in old_hashes.items():
-            new_hash = hashlib.sha256((ROOT / new_rel).read_bytes()).hexdigest()
-            self.assertNotEqual(old_hash, new_hash)
+        for rel, expected_hash in reviewed_hashes.items():
+            actual_hash = hashlib.sha256((ROOT / rel).read_bytes()).hexdigest()
+            self.assertEqual(expected_hash, actual_hash)
 
     def test_all_public_references_use_anonymized_names(self):
         article_data = (ROOT / "magazine/articles.js").read_text(encoding="utf-8")
@@ -46,6 +48,7 @@ class ShootingStarPhotoPrivacyTests(unittest.TestCase):
         self.assertIn(f'/{NEW_HERO}', detail)
         self.assertIn(f'/{NEW_OG}', detail)
         self.assertNotIn(OLD_HERO.split("/", 1)[1], article_data + detail)
+        self.assertNotIn(MISALIGNED_HERO.split("/", 1)[1], article_data + detail)
         self.assertNotIn(OLD_OG.split("/", 1)[1], article_data + detail)
 
 
