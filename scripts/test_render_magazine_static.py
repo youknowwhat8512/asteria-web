@@ -43,6 +43,19 @@ def main() -> int:
         assert before == after_check, "--check must not modify files"
 
         # Real run.
+        # Include a hostile script-closing sequence to prove JSON-LD remains
+        # inside its script element and the rendered HTML is not corrupted.
+        hostile = "crawler guard </script><script>alert(1)</script>"
+        articles_path = build_root / "magazine" / "articles.js"
+        hostile_source = articles_path.read_text(encoding="utf-8")
+        first_excerpt = re.search(r'excerpt:\s*"([^"]+)"', hostile_source)
+        assert first_excerpt, "expected an excerpt fixture in articles.js"
+        hostile_source = (
+            hostile_source[: first_excerpt.start(1)]
+            + hostile
+            + hostile_source[first_excerpt.end(1) :]
+        )
+        articles_path.write_text(hostile_source, encoding="utf-8")
         subprocess.run([node, str(RENDERER), str(build_root)], check=True)
 
         index_html = (build_root / "magazine" / "index.html").read_text(encoding="utf-8")
@@ -53,6 +66,11 @@ def main() -> int:
         assert masonry, "magazineMasonry container missing after render"
         assert "<h2>" in masonry.group(1), "expected static card headings in masonry"
         assert 'id="magazineMasonry"' in index_html, "hydration hook id must be preserved"
+        assert hostile not in index_html, "raw hostile JSON-LD/content sequence leaked into HTML"
+
+        hostile_page = (build_root / "magazine" / slugs[0] / "index.html").read_text(encoding="utf-8")
+        assert hostile not in hostile_page, "raw hostile sequence leaked into article HTML"
+        assert "\\u003c/script>" in hostile_page, "article JSON-LD must escape script-closing sequences"
 
         for slug in slugs:
             page = (build_root / "magazine" / slug / "index.html").read_text(encoding="utf-8")

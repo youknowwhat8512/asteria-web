@@ -1,0 +1,19 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE plist PUBLIC "-//Apple//DTD PLIST 1.0//EN" "http://www.apple.com/DTDs/PropertyList-1.0.dtd">
+<plist version="1.0">
+<dict>
+  <key>Label</key><string>club.asteria.website</string>
+  <key>ProgramArguments</key>
+  <array>
+    <string>/usr/bin/python3</string>
+    <string>/Users/ja/repos/55_MyLabs/asteria-web/scripts/serve_public_site.py</string>
+    <string>--bind</string><string>127.0.0.1</string>
+    <string>--port</string><string>8787</string>
+    <string>--directory</string><string>/Users/ja/.local/share/asteria-web-public</string>
+  </array>
+  <key>RunAtLoad</key><true/>
+  <key>KeepAlive</key><true/>
+  <key>StandardOutPath</key><string>/Users/ja/.cloudflared/asteria-website.log</string>
+  <key>StandardErrorPath</key><string>/Users/ja/.cloudflared/asteria-website.err.log</string>
+</dict>
+</plist>

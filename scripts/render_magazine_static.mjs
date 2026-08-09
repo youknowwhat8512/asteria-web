@@ -30,10 +30,165 @@ const check = args.includes('--check');
 const buildRoot = args.find(arg => !arg.startsWith('--'));
 if (!buildRoot) fail('missing <buildRoot> argument');
 const root = resolve(buildRoot);
+const ORIGIN = 'https://asteria.club';
 
 // --- HTML escaping -----------------------------------------------------------
 const ESCAPE = { '&': '&amp;', '<': '&lt;', '>': '&gt;', '"': '&quot;', "'": '&#39;' };
 const esc = value => String(value == null ? '' : value).replace(/[&<>"']/g, ch => ESCAPE[ch]);
+const regexEsc = value => String(value).replace(/[.*+?^${}()|[\]\\]/g, '\\$&');
+const absolute = value => new URL(value, ORIGIN).href;
+
+function replaceTitle(html, title) {
+  if (!/<title>[\s\S]*?<\/title>/i.test(html)) fail('page is missing <title>');
+  return html.replace(/<title>[\s\S]*?<\/title>/i, `<title>${esc(title)}</title>`);
+}
+
+function upsertMeta(html, attribute, key, content) {
+  const pattern = new RegExp(`<meta\\s+[^>]*\\b${attribute}=["']${regexEsc(key)}["'][^>]*>`, 'i');
+  const tag = `<meta ${attribute}="${esc(key)}" content="${esc(content)}">`;
+  return pattern.test(html) ? html.replace(pattern, tag) : html.replace('</head>', `  ${tag}\n</head>`);
+}
+
+function upsertCanonical(html, canonical) {
+  const pattern = /<link\s+[^>]*\brel=["']canonical["'][^>]*>/i;
+  const tag = `<link rel="canonical" href="${esc(canonical)}">`;
+  return pattern.test(html) ? html.replace(pattern, tag) : html.replace('</head>', `  ${tag}\n</head>`);
+}
+
+function replaceStructuredData(html, value, file) {
+  const pattern = /<script\s+type=["']application\/ld\+json["'][^>]*>[\s\S]*?<\/script>/i;
+  if (!pattern.test(html)) fail(`JSON-LD script not found in ${file}`);
+  // JSON-LD lives inside an HTML <script> element. Escape '<' so article data
+  // can never synthesize a closing </script> tag or corrupt the document.
+  const serialized = JSON.stringify(value, null, 2).replace(/</g, '\\u003c');
+  const tag = `<script type="application/ld+json">\n${serialized}\n  </script>`;
+  return html.replace(pattern, tag);
+}
+
+function articleDate(value) {
+  return `${value}T00:00:00+09:00`;
+}
+
+function collectionStructuredData(articles) {
+  const items = articles.map((article, index) => ({
+    '@type': 'ListItem',
+    position: index + 1,
+    url: absolute(article.url),
+    name: article.titleKo,
+  }));
+  return {
+    '@context': 'https://schema.org',
+    '@graph': [
+      {
+        '@type': 'CollectionPage',
+        '@id': `${ORIGIN}/magazine/#collection`,
+        url: `${ORIGIN}/magazine/`,
+        name: '아스테리아 매거진',
+        description: '아스테리아의 세일링 훈련, 레이싱 도전, 크루 성장 이야기를 모은 매거진입니다.',
+        inLanguage: 'ko-KR',
+        isPartOf: { '@id': `${ORIGIN}/#website` },
+        publisher: { '@id': `${ORIGIN}/#organization` },
+        breadcrumb: { '@id': `${ORIGIN}/magazine/#breadcrumb` },
+        mainEntity: { '@id': `${ORIGIN}/magazine/#episodes` },
+      },
+      {
+        '@type': 'ItemList',
+        '@id': `${ORIGIN}/magazine/#episodes`,
+        name: '아스테리아 매거진 에피소드',
+        numberOfItems: items.length,
+        itemListOrder: 'https://schema.org/ItemListOrderDescending',
+        itemListElement: items,
+      },
+      {
+        '@type': 'BreadcrumbList',
+        '@id': `${ORIGIN}/magazine/#breadcrumb`,
+        itemListElement: [
+          { '@type': 'ListItem', position: 1, name: '아스테리아 요트 클럽', item: `${ORIGIN}/` },
+          { '@type': 'ListItem', position: 2, name: '매거진', item: `${ORIGIN}/magazine/` },
+        ],
+      },
+    ],
+  };
+}
+
+function articleStructuredData(article) {
+  const canonical = absolute(article.url);
+  const published = articleDate(article.publishedAt);
+  const modified = articleDate(article.modifiedAt || article.publishedAt);
+  return {
+    '@context': 'https://schema.org',
+    '@graph': [
+      {
+        '@type': 'BlogPosting',
+        '@id': `${canonical}#article`,
+        headline: article.titleKo,
+        description: article.excerpt,
+        image: [absolute(article.ogImage || article.image)],
+        datePublished: published,
+        dateModified: modified,
+        inLanguage: 'ko-KR',
+        articleSection: article.category,
+        mainEntityOfPage: { '@type': 'WebPage', '@id': canonical },
+        isPartOf: { '@id': `${ORIGIN}/magazine/#collection` },
+        author: { '@id': `${ORIGIN}/#organization` },
+        publisher: { '@id': `${ORIGIN}/#organization` },
+        breadcrumb: { '@id': `${canonical}#breadcrumb` },
+      },
+      {
+        '@type': 'BreadcrumbList',
+        '@id': `${canonical}#breadcrumb`,
+        itemListElement: [
+          { '@type': 'ListItem', position: 1, name: '아스테리아 요트 클럽', item: `${ORIGIN}/` },
+          { '@type': 'ListItem', position: 2, name: '매거진', item: `${ORIGIN}/magazine/` },
+          { '@type': 'ListItem', position: 3, name: article.titleKo, item: canonical },
+        ],
+      },
+    ],
+  };
+}
+
+function applyIndexSeo(html, articles) {
+  const title = '아스테리아 매거진 | 세일링 훈련과 레이싱 이야기';
+  const description = '아스테리아의 세일링 훈련, 레이싱 도전, 크루 성장 이야기를 모은 매거진입니다.';
+  const image = `${ORIGIN}/images/og-asteria.jpg`;
+  let next = replaceTitle(html, title);
+  next = upsertCanonical(next, `${ORIGIN}/magazine/`);
+  for (const [attribute, key, content] of [
+    ['name', 'description', description], ['name', 'robots', 'index,follow,max-image-preview:large'],
+    ['property', 'og:type', 'website'], ['property', 'og:locale', 'ko_KR'],
+    ['property', 'og:site_name', 'Asteria Magazine'], ['property', 'og:title', title],
+    ['property', 'og:description', description], ['property', 'og:url', `${ORIGIN}/magazine/`],
+    ['property', 'og:image', image], ['property', 'og:image:alt', '아스테리아 요트 클럽 세일링 매거진'],
+    ['name', 'twitter:card', 'summary_large_image'], ['name', 'twitter:title', title],
+    ['name', 'twitter:description', description], ['name', 'twitter:image', image],
+    ['name', 'twitter:image:alt', '아스테리아 요트 클럽 세일링 매거진'],
+  ]) next = upsertMeta(next, attribute, key, content);
+  next = replaceStructuredData(next, collectionStructuredData(articles), 'magazine/index.html');
+  return next.replace(/(<[^>]+id="magazineCount"[^>]*>)[\s\S]*?(<\/[^>]+>)/, `$1${articles.length} Episodes$2`);
+}
+
+function applyArticleSeo(html, article) {
+  const canonical = absolute(article.url);
+  const image = absolute(article.ogImage || article.image);
+  const title = `${article.titleKo} | Asteria Magazine`;
+  const published = articleDate(article.publishedAt);
+  const modified = articleDate(article.modifiedAt || article.publishedAt);
+  let next = replaceTitle(html, title);
+  next = upsertCanonical(next, canonical);
+  for (const [attribute, key, content] of [
+    ['name', 'description', article.excerpt], ['name', 'robots', 'index,follow,max-image-preview:large'],
+    ['property', 'og:type', 'article'], ['property', 'og:locale', 'ko_KR'],
+    ['property', 'og:site_name', 'Asteria Magazine'], ['property', 'og:title', article.titleKo],
+    ['property', 'og:description', article.excerpt], ['property', 'og:url', canonical],
+    ['property', 'og:image', image], ['property', 'og:image:secure_url', image],
+    ['property', 'og:image:alt', article.imageAlt || article.titleKo],
+    ['property', 'article:published_time', published], ['property', 'article:modified_time', modified],
+    ['property', 'article:section', article.category], ['name', 'twitter:card', 'summary_large_image'],
+    ['name', 'twitter:title', article.titleKo], ['name', 'twitter:description', article.excerpt],
+    ['name', 'twitter:image', image], ['name', 'twitter:image:alt', article.imageAlt || article.titleKo],
+  ]) next = upsertMeta(next, attribute, key, content);
+  return replaceStructuredData(next, articleStructuredData(article), `magazine/${article.slug}/index.html`);
+}
 
 // --- Load articles safely via a sandboxed vm context -------------------------
 function loadArticles() {
@@ -106,7 +261,12 @@ try {
 } catch (error) {
   fail(`could not read ${indexPath}: ${error.message}`);
 }
-const nextIndexHtml = injectInto(indexHtml, 'magazineMasonry', masonryMarkup(ordered), 'magazine/index.html');
+const nextIndexHtml = injectInto(
+  applyIndexSeo(indexHtml, ordered),
+  'magazineMasonry',
+  masonryMarkup(ordered),
+  'magazine/index.html',
+);
 
 // Per-article pages.
 const pages = [];
@@ -119,7 +279,8 @@ for (const article of articles) {
   } catch (error) {
     fail(`could not read article page for slug "${article.slug}": ${error.message}`);
   }
-  const nextPageHtml = injectInto(pageHtml, 'articleRoot', articleMarkup(article), `magazine/${article.slug}/index.html`);
+  const seoHtml = applyArticleSeo(pageHtml, article);
+  const nextPageHtml = injectInto(seoHtml, 'articleRoot', articleMarkup(article), `magazine/${article.slug}/index.html`);
   pages.push({ pagePath, nextPageHtml, slug: article.slug });
 }
 

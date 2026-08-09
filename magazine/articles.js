@@ -1,5 +1,201 @@
 window.ASTERIA_ARTICLES = [
   {
+    slug: "shootingstar-club-tuning-2026",
+    url: "/magazine/shootingstar-club-tuning-2026/",
+    category: "Yacht Maintenance",
+    title: "Tuned for Practice",
+    titleKo: "클럽 멤버들의 연습을 위해, 슈팅스타 튜닝",
+    publishedAt: "2026-08-09",
+    eventDate: "2026-08-08",
+    image: "/images/mag-shootingstar-tuning-2026-hardstand-hero.jpeg",
+    ogImage: "/images/og-shootingstar-tuning-2026.jpg",
+    imageAlt: "푸른 하늘 아래 하드스탠드에 올려진 슈팅스타 전경",
+    heroNote: "ARA MARINA · HARDSTAND · 08 AUG 2026",
+    shape: "wide",
+    excerpt: "클럽 멤버들의 연습을 위해 아라마리나 육상계류장에 올린 슈팅스타. 세 사람은 한낮부터 오후 8시까지 엔진 거치대를 보강하고 레이지백과 무선 초음파 풍향·풍속계를 더했습니다.",
+    lead: "슈팅스타는 아라마리나 육상계류장에서 다음 연습을 준비하며 한낮부터 세 가지 튜닝 작업을 진행했습니다.",
+    facts: [
+      { label: "Date", value: "2026.08.08" },
+      { label: "Place", value: "아라마리나 육상계류장" },
+      { label: "Yacht", value: "Shooting Star" },
+      { label: "Work", value: "엔진 거치대 보강 · 레이지백 · 초음파 풍향·풍속계" },
+      { label: "Team", value: "엄주범 · 조윤호 · 김종명" },
+      { label: "Finish", value: "20:00" }
+    ],
+    sections: [
+      {
+        kicker: "01 / For Club Practice",
+        heading: "클럽 멤버들의 연습을 위한 준비",
+        image: {
+          src: "/images/mag-shootingstar-tuning-2026-hull-mast.jpeg",
+          width: 2160,
+          height: 2917,
+          alt: "작업장에 세워진 슈팅스타의 선체와 마스트",
+          caption: "작업장에 세워진 슈팅스타. 이날의 튜닝은 클럽 멤버들의 연습을 준비하는 일이었습니다.",
+          layout: "portrait"
+        },
+        body: [
+          "엄주범 단장은 슈팅스타를 아라마리나 육상계류장에 올리고, 클럽 멤버들이 연습에 활용할 수 있도록 세 가지 튜닝을 준비했습니다. 이날 현장에는 조윤호 사무국장과 김종명 회원이 함께했습니다.",
+          "부산요트협회 김정철 부회장의 지원을 받아 작업을 진행했습니다. 예정된 작업은 엔진 거치대 보강, 레이지백 설치, Calypso 초음파 풍향·풍속계 설치였습니다."
+        ]
+      },
+      {
+        kicker: "02 / Reinforcement",
+        heading: "엔진 업그레이드 전, 엔진 거치대를 보강했습니다",
+        galleryLayout: "pair",
+        gallery: [
+          {
+            src: "/images/mag-shootingstar-tuning-2026-engine-reinforcement-installation.jpeg",
+            width: 2160,
+            height: 2080,
+            alt: "엔진과 엔진 거치대 보강 구조가 보이는 작업 장면",
+            caption: "엔진과 엔진 거치대 보강 구조의 전체 모습.",
+            layout: "standard"
+          },
+          {
+            src: "/images/mag-shootingstar-tuning-2026-engine-reinforcement-detail.jpeg",
+            width: 2160,
+            height: 2880,
+            alt: "엔진 아래에 더한 엔진 거치대 보강 구조의 가까운 모습",
+            caption: "엔진 아래에 더한 엔진 거치대 보강 구조의 가까운 모습.",
+            layout: "portrait"
+          }
+        ],
+        body: [
+          "슈팅스타의 기존 5.5마력 엔진을 9.9마력으로 업그레이드하기에 앞서 엔진 거치대를 보강했습니다. 왕산 앞바다에서는 어망을 피해 연습 수역까지 멀리 이동해야 합니다. 조수간만의 차가 크거나 바람이 강한 날에는 기존 엔진으로 이동하는 시간이 길어져, 크루가 연습 전부터 지치거나 연습 후 복귀에 큰 부담을 느낄 수 있었습니다.",
+          "엄주범 단장은 크루의 컨디션과 실제 연습 시간을 함께 고려해 엔진 업그레이드를 결정했습니다. 엔진 장착부와 그 아래에 더한 보강 구조를 두 장의 사진에 담았습니다."
+        ]
+      },
+      {
+        kicker: "03 / Lazy Bag",
+        heading: "원단을 맞추고, 봉제하고, 배에 올렸습니다",
+        image: {
+          src: "/images/mag-shootingstar-tuning-2026-lazybag-team.jpeg",
+          width: 2160,
+          height: 2880,
+          alt: "세 사람이 작업장에서 짙은색 레이지백 원단을 함께 다루는 모습",
+          caption: "세 사람이 레이지백 원단을 함께 펼쳐 확인하는 작업 장면.",
+          layout: "portrait"
+        },
+        explainer: {
+          theme: "lazybag",
+          kicker: "DECK GUIDE · LAZY BAG",
+          title: "레이지백 사용 방법",
+          summary: "레이지백은 메인세일을 내릴 때 붐 양쪽에서 세일을 받아 정리를 돕는 장비입니다. 운용의 핵심은 세일을 올리기 전 간섭을 없애고, 내린 뒤에는 세일과 로프를 고르게 정리하는 것입니다.",
+          image: {
+            src: "/images/mag-shootingstar-tuning-2026-lazybag-knot-detail.jpeg",
+            width: 2160,
+            height: 2880,
+            alt: "레이지백을 고정한 로프와 매듭의 가까운 모습",
+            caption: "레이지백 고정 로프와 매듭."
+          },
+          items: [
+            { label: "01 · 올리기 전", value: "커버를 열고 레이지잭과 고정 로프가 메인세일 전개를 방해하지 않는지 확인합니다." },
+            { label: "02 · 세일 내리기", value: "메인세일을 레이지잭 안으로 천천히 내리고, 붐 위에 한쪽으로 몰리지 않도록 고르게 정리합니다." },
+            { label: "03 · 길이 조절 매듭", value: "레이지잭 길이를 매번 풀어 다시 묶지 않고 조절하려면 미드십맨스 히치(Midshipman’s Hitch)를 사용할 수 있습니다. 하중이 없을 때 매듭을 본줄을 따라 밀어 길이를 조절하고, 하중이 걸리면 제자리에서 잡아주는 조절식 루프입니다." },
+            { label: "04 · 묶는 순서", value: "로프 끝을 고정점에 돌린 뒤 본줄을 같은 방향으로 두 번 감습니다. 두 번째 감김을 첫 감김 옆에 붙여 조이고, 바깥쪽에 같은 방향의 하프 히치(Half Hitch)를 하나 더 만들어 마무리합니다." },
+            { label: "05 · 길이 조절", value: "먼저 레이지잭의 하중을 뺍니다. 매듭 몸통을 잡고 본줄을 따라 위아래로 밀어 루프 길이를 맞춘 뒤, 매듭을 다시 조여 고정합니다. 하중이 걸린 상태에서는 억지로 움직이지 않습니다." },
+            { label: "06 · 출항 전 확인", value: "매듭이 미끄러지거나 풀리지 않는지, 로프가 마찰되는 곳은 없는지, 지퍼와 커버가 제대로 닫혔는지 다시 확인합니다." }
+          ],
+          note: "미드십맨스 히치는 로프 소재에 따라 미끄러질 수 있습니다. 실제 출항 전에는 슈팅스타의 설치 상태에서 충분히 시험하고, 하중을 뺀 상태에서만 길이를 조절합니다. 묶는 순서는 <a href='https://www.animatedknots.com/midshipmans-hitch-knot' target='_blank' rel='noopener noreferrer'>Animated Knots의 Midshipman’s Hitch 안내</a>를 참고했습니다."
+        },
+        galleryLayout: "pair",
+        gallery: [
+          {
+            src: "/images/mag-shootingstar-tuning-2026-lazybag-sewing.jpeg",
+            width: 2880,
+            height: 2160,
+            alt: "작업대의 재봉틀로 짙은색 원단을 봉제하는 모습",
+            caption: "재봉틀로 레이지백 원단을 봉제하는 장면.",
+            layout: "wide"
+          },
+          {
+            src: "/images/mag-shootingstar-tuning-2026-lazybag-equipment.jpeg",
+            width: 2160,
+            height: 2880,
+            alt: "재봉 장비와 짙은색 원단이 놓인 작업대",
+            caption: "레이지백 제작에 사용한 재봉 장비와 원단.",
+            layout: "portrait"
+          }
+        ],
+        midImage: {
+          src: "/images/mag-shootingstar-tuning-2026-lazybag-installation-day.jpeg",
+          width: 3837,
+          height: 2160,
+          alt: "낮에 슈팅스타의 붐 위로 레이지백을 설치하는 모습",
+          caption: "제작한 레이지백을 슈팅스타의 붐 위에 올려 설치하는 작업 장면.",
+          layout: "wide"
+        },
+        endGalleryLayout: "pair",
+        endGallery: [
+          {
+            src: "/images/mag-shootingstar-tuning-2026-lazybag-final-fitting.jpeg",
+            width: 2160,
+            height: 2880,
+            alt: "슈팅스타의 붐 위 레이지백을 맞추는 작업 장면",
+            caption: "붐 위에서 레이지백의 위치와 고정 상태를 맞추는 작업 장면.",
+            layout: "portrait"
+          },
+          {
+            src: "/images/mag-shootingstar-tuning-2026-lazybag-complete-night.jpeg",
+            width: 2160,
+            height: 2880,
+            alt: "해가 진 뒤 슈팅스타의 붐 위에 설치된 레이지백",
+            caption: "해가 진 뒤 확인한 레이지백 설치 완료 모습.",
+            layout: "portrait"
+          }
+        ],
+        body: [
+          "다음은 레이지백이었습니다. 아마추어 크루가 연습 전후 범장과 해장에 쓰는 수고를 덜고, 중요한 훈련에 쓸 컨디션을 남겨두기 위한 선택이었습니다. 세 사람은 원단을 함께 다루고 재봉틀로 봉제하며 슈팅스타에 맞출 준비를 했습니다.",
+          "제작한 레이지백은 갑판으로 옮겨 설치했습니다. 낮에 붐 위에 올린 뒤 위치와 고정 상태를 맞췄고, 해가 진 뒤에야 설치가 끝난 모습을 확인할 수 있었습니다.",
+          "현재 단계에서는 최고 성능을 노리는 레이싱 세팅보다 팀워크를 맞추고 세일링 중 실수를 줄이는 일이 먼저입니다. 최상의 컨디션으로 한 번의 연습에서 팀이 해결할 한 가지 문제에 집중하고, 충분한 수준에 도달한 뒤에는 레이지백을 제거한 레이싱 세팅으로 다음 단계의 퍼포먼스에 도전할 수 있습니다."
+        ]
+      },
+      {
+        kicker: "04 / Ultrasonic Wind Sensor",
+        heading: "Calypso 무선 초음파 풍향·풍속계를 달았습니다",
+        image: {
+          src: "/images/mag-shootingstar-tuning-2026-wind-sensor-installation.jpeg",
+          width: 2160,
+          height: 2461,
+          alt: "마스트의 작업자와 갑판에서 Calypso 초음파 풍향·풍속계를 설치하는 모습",
+          caption: "마스트와 갑판에서 Calypso 초음파 풍향·풍속계를 설치하는 작업 장면.",
+          layout: "portrait"
+        },
+        endImage: {
+          src: "/images/mag-shootingstar-tuning-2026-mast-deck-finish.jpeg",
+          width: 2160,
+          height: 2880,
+          alt: "마스트 위 작업자와 갑판에서 초음파 풍향·풍속계 설치를 돕는 두 사람",
+          caption: "마스트 위와 갑판에서 초음파 풍향·풍속계 설치를 마무리하는 세 사람.",
+          layout: "portrait"
+        },
+        body: [
+          "프로 선수들과 함께 탔을 때, 오랜 훈련을 받은 선수들은 바람의 변화를 감각적으로 찾고 곧바로 반응했습니다. 아마추어 크루가 그 경험의 차이를 메우려면 감각만이 아니라 정확한 정보가 필요했습니다. 기존 슈팅스타에는 바람을 확인할 전자 장비가 없었습니다.",
+          "다만 Fareast 28R인 슈팅스타에 여러 전자 장비와 별도 디스플레이를 잔뜩 더하는 방식은 스포츠 레이싱 요트의 성격에 맞지 않았습니다. 그래서 태양광으로 전원을 보조하고 초음파로 풍향·풍속을 수집하는 Calypso Instruments Portable Ultrasonic Wind Sensor를 선택했습니다. 별도 디스플레이 없이 휴대전화나 Garmin 워치에서 데이터를 확인할 수 있고, 앞으로 연동 환경이 갖춰지면 AR 글래스로 정면을 보면서 정보를 확인하는 방식도 고려할 수 있습니다.",
+          "이제 크루는 정확한 바람 정보를 바탕으로 팀에서 잘되지 않는 부분을 더 정교하게 찾고, 한 가지씩 연습해 보완할 수 있게 됐습니다. 마스트 위 작업자와 갑판의 두 사람은 각자의 자리에서 장비를 확인하며 설치를 마무리했습니다."
+        ]
+      },
+      {
+        kicker: "05 / Until 20:00",
+        heading: "한낮에 시작한 일은 오후 8시에 끝났습니다",
+        image: {
+          src: "/images/mag-shootingstar-tuning-2026-sunset-finish.jpeg",
+          width: 2160,
+          height: 2880,
+          alt: "해가 진 뒤 주황빛과 푸른빛이 남은 아라마리나 육상계류장",
+          caption: "오후 8시 무렵, 아라마리나 육상계류장에 남은 저녁빛.",
+          layout: "portrait"
+        },
+        body: [
+          "한낮에 시작한 작업은 오후 8시에 끝났습니다. 엔진 거치대 보강부터 레이지백 제작과 설치, Calypso 초음파 풍향·풍속계 설치까지 같은 날 이어진 튜닝이었습니다.",
+          "저녁빛이 남은 아라마리나 육상계류장에서 세 사람은 슈팅스타의 하루 작업을 마쳤습니다. 클럽 멤버들의 연습을 위해 준비한 세 가지 작업도 모두 끝났습니다."
+        ]
+      }
+    ],
+    gallery: []
+  },
+  {
     slug: "wangsan-to-yeosu-island-delivery-2026",
     url: "/magazine/wangsan-to-yeosu-island-delivery-2026/",
     category: "Island Passage",

@@ -78,10 +78,11 @@
     const naturalWidthStyle = image => image.width ? ` style="--image-natural-width:${image.rotate ? image.height : image.width}px"` : '';
     const sectionVisual = image => image ? `<figure class="article-section-visual${image.layout ? ` visual-${image.layout}` : ''}"${naturalWidthStyle(image)}>${image.rotate ? `<span class="article-rotated-media rotate-${image.rotate}">` : ''}<img src="${image.src}" alt="${image.alt}"${image.width && image.height ? ` width="${image.width}" height="${image.height}"` : ''} loading="lazy"${image.width && image.height || image.position ? ` style="${image.width && image.height ? `height:auto;aspect-ratio:${image.width}/${image.height};` : ''}${image.position ? `object-position:${image.position};` : ''}"` : ''}>${image.rotate ? '</span>' : ''}<figcaption>${image.caption}</figcaption></figure>` : '';
     const sectionGallery = (items, layout) => items?.length ? `<div class="article-section-gallery${layout ? ` gallery-${layout}` : ''}">${items.map(item => `<figure class="section-gallery-${item.layout || 'standard'}"${naturalWidthStyle(item)}><img src="${item.src}" alt="${item.alt}"${item.width && item.height ? ` width="${item.width}" height="${item.height}"` : ''} loading="lazy"${item.position ? ` style="object-position:${item.position}"` : ''}><figcaption>${item.caption}</figcaption></figure>`).join('')}</div>` : '';
-    const sectionExplainer = explainer => explainer ? `<aside class="article-explainer" aria-label="${explainer.title}">
+    const sectionExplainer = explainer => explainer ? `<aside class="article-explainer${explainer.theme ? ` explainer-${explainer.theme}` : ''}" aria-label="${explainer.title}">
       <div class="explainer-kicker">${explainer.kicker}</div>
       <h4>${explainer.title}</h4>
       <p class="explainer-summary">${explainer.summary}</p>
+      ${explainer.image ? `<figure class="explainer-media"><img src="${explainer.image.src}" alt="${explainer.image.alt}"${explainer.image.width && explainer.image.height ? ` width="${explainer.image.width}" height="${explainer.image.height}"` : ''} loading="lazy"><figcaption>${explainer.image.caption}</figcaption></figure>` : ''}
       <dl>${explainer.items.map(item => `<div><dt>${item.label}</dt><dd>${item.value}</dd></div>`).join('')}</dl>
       ${explainer.note ? `<p class="explainer-note">${explainer.note}</p>` : ''}
     </aside>` : '';

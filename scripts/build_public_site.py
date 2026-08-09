@@ -7,6 +7,8 @@ import sys
 
 ROOT = Path(__file__).resolve().parents[1]
 RENDERER = ROOT / "scripts" / "render_magazine_static.mjs"
+SITEMAP_GENERATOR = ROOT / "scripts" / "generate_sitemap.mjs"
+SEO_TEST = ROOT / "scripts" / "test_static_seo.py"
 DEST = Path.home() / ".local/share/asteria-web-public"
 NEXT = DEST.with_name(DEST.name + ".next")
 OLD = DEST.with_name(DEST.name + ".old")
@@ -28,7 +30,13 @@ for name in DIRS:
 node = shutil.which("node")
 if node is None:
     sys.exit("build_public_site: 'node' not found on PATH; magazine static render aborted")
+# Generate from the copied articles.js so sitemap membership and evidence-based
+# lastmod values cannot drift from the public episode data.
+subprocess.run([node, str(SITEMAP_GENERATOR), str(NEXT)], check=True)
 subprocess.run([node, str(RENDERER), str(NEXT)], check=True)
+# Validate the exact copied/rendered tree before the atomic swap. A metadata,
+# canonical, JSON-LD, sitemap, or no-JS regression must never replace live.
+subprocess.run([sys.executable, str(SEO_TEST), str(NEXT)], check=True)
 
 if DEST.exists():
     DEST.rename(OLD)
