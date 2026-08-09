@@ -30,10 +30,13 @@ class ShootingStarPhotoPrivacyTests(unittest.TestCase):
             self.assertIn(f"pixelHeight: {height}", output)
 
     def test_anonymized_assets_differ_from_last_public_versions(self):
-        for old_rel, new_rel in ((OLD_HERO, NEW_HERO), (OLD_OG, NEW_OG)):
-            old = subprocess.check_output(["git", "show", f"HEAD:{old_rel}"], cwd=ROOT)
-            new = (ROOT / new_rel).read_bytes()
-            self.assertNotEqual(hashlib.sha256(old).digest(), hashlib.sha256(new).digest())
+        old_hashes = {
+            NEW_HERO: "aba51a108349a9775136a8ab82b87523e3828a76994017c6e1c554bad579a11e",
+            NEW_OG: "96c70194ee6a63eb3a7d61477216f17e8ccf1b12e1a47b99cb10365afa5948f0",
+        }
+        for new_rel, old_hash in old_hashes.items():
+            new_hash = hashlib.sha256((ROOT / new_rel).read_bytes()).hexdigest()
+            self.assertNotEqual(old_hash, new_hash)
 
     def test_all_public_references_use_anonymized_names(self):
         article_data = (ROOT / "magazine/articles.js").read_text(encoding="utf-8")
