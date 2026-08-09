@@ -118,7 +118,7 @@
       <header class="article-head"><a class="article-back" href="/magazine/">← Magazine 전체보기</a><div class="article-meta"><span>${article.category}</span><time datetime="${storyDate}">${dateLabel(storyDate)}</time></div><h1>${article.title}</h1><h2>${article.titleKo}</h2></header>
       <div class="article-hero"><img src="${article.image}" alt="${article.imageAlt || article.titleKo}">${article.heroNote ? `<span>${article.heroNote}</span>` : ''}</div>
       ${facts ? `<div class="article-facts">${facts}</div>` : ''}
-      <section class="article-share" aria-label="에피소드 공유 및 클럽 가입"><div><span>Share This Episode</span><strong>${article.titleKo}</strong></div><div class="article-share-actions"><button class="share-primary" type="button" data-share>바로 공유하기 <b aria-hidden="true">↗</b></button><button type="button" data-apply>클럽 가입 신청</button></div><p class="share-status" role="status" aria-live="polite"></p></section>
+      <section class="article-share" aria-label="에피소드 공유 및 가입 안내"><div><span>Share This Episode</span><strong>${article.titleKo}</strong></div><div class="article-share-actions"><button class="share-primary" type="button" data-share>바로 공유하기 <b aria-hidden="true">↗</b></button><a class="share-guide" href="/#club-guide">가입 안내 확인</a></div><p class="share-status" role="status" aria-live="polite"></p></section>
       ${raceFlow ? `<section class="article-race-flow"><div class="eyebrow">Race in Three Acts</div><div class="race-flow-grid">${raceFlow}</div></section>` : ''}
       ${article.pullQuote ? `<blockquote class="article-pullquote">${article.pullQuote}</blockquote>` : ''}
       <div class="article-content"><p class="article-lead">${article.lead}</p><div class="article-body">
@@ -159,39 +159,6 @@
         if (error.name !== 'AbortError') await copyShareUrl();
       }
     });
-
-    document.body.insertAdjacentHTML('beforeend', `
-      <div class="membership-modal" id="membershipModal" aria-hidden="true">
-        <div class="membership-modal-card" role="dialog" aria-modal="true" aria-labelledby="membershipModalTitle">
-          <div class="membership-modal-head">
-            <h3 id="membershipModalTitle">아스테리아 가입 신청</h3>
-            <button class="membership-modal-close" type="button" data-membership-close aria-label="가입 신청서 닫기">×</button>
-          </div>
-          <iframe class="membership-form-embed" title="아스테리아 가입 신청서" data-src="https://docs.google.com/forms/d/e/1FAIpQLSfQgBt8oAAZyvqMs5Ng6H7hI2Br4NpJzzyIpQeuWZ-VSm_h9Q/viewform?embedded=true" loading="lazy" referrerpolicy="strict-origin-when-cross-origin"></iframe>
-          <div class="membership-modal-foot"><a href="https://forms.gle/FyeS2XVyxLnpxY3r8" target="_blank" rel="noopener noreferrer">새 창에서 작성 ↗</a></div>
-        </div>
-      </div>`);
-    const applyButton = articleRoot.querySelector('[data-apply]');
-    const membershipModal = document.getElementById('membershipModal');
-    const membershipForm = membershipModal.querySelector('.membership-form-embed');
-    const membershipClose = membershipModal.querySelector('[data-membership-close]');
-    const openMembershipModal = () => {
-      if (!membershipForm.src) membershipForm.src = membershipForm.dataset.src;
-      membershipModal.classList.add('open');
-      membershipModal.setAttribute('aria-hidden', 'false');
-      document.body.classList.add('membership-modal-open');
-      membershipClose.focus();
-    };
-    const closeMembershipModal = () => {
-      membershipModal.classList.remove('open');
-      membershipModal.setAttribute('aria-hidden', 'true');
-      document.body.classList.remove('membership-modal-open');
-      applyButton.focus();
-    };
-    applyButton.addEventListener('click', openMembershipModal);
-    membershipClose.addEventListener('click', closeMembershipModal);
-    membershipModal.addEventListener('click', event => { if(event.target === membershipModal) closeMembershipModal(); });
-    addEventListener('keydown', event => { if(event.key === 'Escape' && membershipModal.classList.contains('open')) closeMembershipModal(); });
 
     const motionItems = articleRoot.querySelectorAll('.race-flow-card, .article-section, .article-gallery figure');
     if (!matchMedia('(prefers-reduced-motion: reduce)').matches && 'IntersectionObserver' in window) {
