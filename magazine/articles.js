@@ -79,7 +79,7 @@ window.ASTERIA_ARTICLES = [
         kicker: "03 / Lazy Bag",
         heading: "원단을 맞추고, 봉제하고, 배에 올렸습니다",
         image: {
-          src: "/images/mag-shootingstar-tuning-2026-lazybag-team.jpeg",
+          src: "/images/mag-shootingstar-tuning-2026-lazybag-team-right-head-blurred.jpeg",
           width: 2160,
           height: 2880,
           alt: "세 사람이 작업장에서 짙은색 레이지백 원단을 함께 다루는 모습",
