@@ -31,12 +31,16 @@ class ShootingStarTipCardTests(unittest.TestCase):
         self.assertIn("article-tip", static_renderer)
         self.assertIn(".article-tip{", self.css)
 
+    def test_engine_power_is_corrected(self):
+        self.assertIn("기존 4.9마력 엔진을 9.9마력으로 업그레이드", self.data)
+        self.assertNotIn("5.5마력", self.data)
+
     def test_all_entry_points_use_tip_card_cache_keys(self):
         pages = sorted((ROOT / "magazine").rglob("*.html"))
         self.assertEqual(len(pages), 7)
         for page in pages:
             html = page.read_text(encoding="utf-8")
-            self.assertIn("articles.js?v=20260809-shootingstar-r15", html, page)
+            self.assertIn("articles.js?v=20260809-shootingstar-r16", html, page)
             self.assertIn("magazine.js?v=20260809-skipper-tip-r1", html, page)
             self.assertIn("magazine.css?v=20260809-skipper-tip-r1", html, page)
 
