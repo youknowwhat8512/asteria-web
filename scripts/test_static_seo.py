@@ -8,11 +8,16 @@ import shutil
 import subprocess
 import sys
 import xml.etree.ElementTree as ET
+from collections import Counter
 from html.parser import HTMLParser
 from pathlib import Path
 from urllib.parse import urlparse
 
 ORIGIN = "https://asteria.club"
+# Coach credentials are factual but snippet-hostile: each coach card suppresses
+# exactly its career/meta/note block, and nothing else on the page is tagged.
+NOSNIPPET_BLOCKS = ("coach-career", "coach-meta", "coach-note")
+COACH_CARDS = 2
 ROOT = Path(__file__).resolve().parents[1]
 BUILD = Path(sys.argv[1]).resolve() if len(sys.argv) > 1 else Path.home() / ".local/share/asteria-web-public"
 
@@ -29,9 +34,18 @@ class PageParser(HTMLParser):
         self.links: list[str] = []
         self.h1 = 0
         self.paragraphs = 0
+        # class name -> element count, and the class list of every element that
+        # carries data-nosnippet. Both are structural (attribute-parsed), so the
+        # snippet-suppression contract is asserted without regex over raw HTML.
+        self.class_counts: Counter[str] = Counter()
+        self.nosnippet: list[list[str]] = []
 
     def handle_starttag(self, tag: str, attrs: list[tuple[str, str | None]]) -> None:
         attr_map = dict(attrs)
+        classes = (attr_map.get("class") or "").split()
+        self.class_counts.update(classes)
+        if "data-nosnippet" in attr_map:
+            self.nosnippet.append(classes)
         if tag == "title":
             self.in_title = True
         elif tag == "meta":
@@ -176,6 +190,27 @@ def main() -> int:
     assert {"WebSite", "SportsClub"}.issubset(types(home)), "home: WebSite and SportsClub JSON-LD required"
     assert home.h1 >= 1 and home.paragraphs >= 3, "home: meaningful static headings and text required"
     assert "/magazine/" in home.links, "home: static magazine link required"
+
+    home_description = one(home.meta["description"], "home description")
+    for key in ("og:description", "twitter:description"):
+        assert one(home.meta[key], f"home {key}") == home_description, \
+            f"home: {key} must repeat the meta description verbatim"
+    club = next(node for node in nodes(home) if node.get("@type") == "SportsClub")
+    assert club.get("description") == home_description, \
+        "home: SportsClub JSON-LD description must repeat the meta description verbatim"
+
+    expected_nosnippet = COACH_CARDS * len(NOSNIPPET_BLOCKS)
+    assert len(home.nosnippet) == expected_nosnippet, \
+        f"home: expected exactly {expected_nosnippet} data-nosnippet elements, found {len(home.nosnippet)}"
+    for block in NOSNIPPET_BLOCKS:
+        assert home.class_counts[block] == COACH_CARDS, \
+            f"home: expected {COACH_CARDS} .{block} elements, found {home.class_counts[block]}"
+        tagged = sum(1 for classes in home.nosnippet if block in classes)
+        assert tagged == COACH_CARDS, \
+            f"home: every .{block} must carry data-nosnippet ({tagged}/{COACH_CARDS} tagged)"
+    stray = sorted(" ".join(classes) or "<unclassed element>" for classes in home.nosnippet
+                   if not set(classes) & set(NOSNIPPET_BLOCKS))
+    assert not stray, f"home: data-nosnippet must stay on coach credential blocks only; also found on {stray}"
 
     magazine = parse_page("magazine/index.html")
     validate_page(magazine, f"{ORIGIN}/magazine/", "magazine", "website")
