@@ -306,6 +306,20 @@
     .booking-fab-copy strong{font-size:14px;font-weight:900;letter-spacing:-.03em;white-space:nowrap}
     @media(max-width:600px){.booking-fab{right:14px;bottom:calc(14px + env(safe-area-inset-bottom,0px));min-height:54px;padding:8px 15px 8px 9px;gap:10px}.booking-fab-icon{width:36px;height:36px;flex-basis:36px;font-size:18px}.booking-fab-copy strong{font-size:13px}}
 
+    /* Shootingstar racing crew homepage promotion */
+    .racing-promo{position:fixed;inset:0;z-index:220;display:none;place-items:center;padding:24px;background:rgba(2,9,15,.82);backdrop-filter:blur(14px)}
+    .racing-promo.open{display:grid}
+    .racing-promo-card{position:relative;width:min(430px,calc(100vw - 32px));max-height:min(92svh,850px);overflow:hidden;border:1px solid rgba(248,247,242,.28);border-radius:18px;background:#061622;box-shadow:0 36px 110px rgba(0,0,0,.68)}
+    .racing-promo-close{position:absolute;z-index:3;right:12px;top:12px;width:40px;height:40px;display:grid;place-items:center;border:1px solid rgba(248,247,242,.4);border-radius:50%;background:rgba(2,9,15,.72);color:#fff;font:700 25px/1 Pretendard,sans-serif;cursor:pointer;backdrop-filter:blur(10px)}
+    .racing-promo-close:hover,.racing-promo-close:focus-visible{background:var(--red);border-color:var(--red);outline:none}
+    .racing-promo-media{display:block;aspect-ratio:4/5;max-height:calc(min(92svh,850px) - 92px);overflow:hidden;background:#02090f}
+    .racing-promo-media img{width:100%;height:100%;display:block;object-fit:cover}
+    .racing-promo-foot{min-height:92px;display:flex;align-items:center;justify-content:space-between;gap:14px;padding:14px 16px;background:#061622;border-top:1px solid rgba(248,247,242,.14)}
+    .racing-promo-foot p{margin:0;color:rgba(248,247,242,.7);font-size:12px;line-height:1.45;font-weight:700}
+    .racing-promo-detail{flex:0 0 auto;display:inline-flex;align-items:center;justify-content:center;min-height:46px;padding:0 18px;border-radius:999px;background:var(--red);color:#fff;font-size:13px;font-weight:900;letter-spacing:-.02em;box-shadow:0 12px 30px rgba(230,66,46,.28)}
+    .racing-promo-detail:hover,.racing-promo-detail:focus-visible{background:#ff523f;outline:2px solid rgba(248,247,242,.8);outline-offset:2px}
+    @media(max-width:600px){.racing-promo{padding:12px}.racing-promo-card{width:min(390px,calc(100vw - 24px));max-height:94svh;border-radius:14px}.racing-promo-media{max-height:calc(94svh - 82px)}.racing-promo-foot{min-height:82px;padding:11px 12px}.racing-promo-foot p{font-size:10px}.racing-promo-detail{min-height:42px;padding:0 15px;font-size:12px}}
+
 </style>
 <style id="fee-membership-styles">
     .action-buttons{display:flex;flex-wrap:wrap;gap:10px;align-items:stretch}
@@ -444,6 +458,18 @@
     </div>
     </div></section>
   <section class="section reveal" id="magazine"><div class="wrap"><div class="section-head"><div><div class="overline">Magazine</div><h2 class="title">Proof of<br>Training.</h2></div><div class="magazine-side"><p class="desc">아스테리아 도전과 선수들의 성장 이야기.</p><a class="magazine-all" href="/magazine/">지난 에피소드 보기 <span aria-hidden="true">→</span></a></div></div><div class="mag-grid mag-strip" id="latestMagazine" aria-label="최신 Magazine 에피소드 5개"></div></div></section>
+  <div class="racing-promo" id="racingPromo" aria-hidden="true">
+    <div class="racing-promo-card" role="dialog" aria-modal="true" aria-labelledby="racingPromoTitle">
+      <button class="racing-promo-close" type="button" id="racingPromoClose" aria-label="레이싱 크루 모집 팝업 닫기">×</button>
+      <a class="racing-promo-media" href="/racing-crew/" aria-label="이순신컵 레이싱 크루 모집 상세 페이지 열기">
+        <img src="/images/racing-crew-popup-900x1125.png" alt="슈팅스타 이순신컵 레이싱 크루 모집 안내" width="900" height="1125" />
+      </a>
+      <div class="racing-promo-foot">
+        <p id="racingPromoTitle">9월 5·6·19·20일<br>왕산마리나 · 회원·비회원 참가 가능</p>
+        <a class="racing-promo-detail" href="/racing-crew/">자세히 보기 →</a>
+      </div>
+    </div>
+  </div>
   <div class="modal" id="applyModal" aria-hidden="true"><div class="modal-card" role="dialog" aria-modal="true" aria-labelledby="applyModalTitle"><div class="form-modal-head"><h3 id="applyModalTitle">오픈 세일링 참가 신청</h3><button class="form-modal-close" type="button" id="modalClose" aria-label="오픈 세일링 참가 신청서 닫기">×</button></div><iframe class="form-embed" id="applyForm" title="오픈 세일링 참가 신청서" data-src="https://docs.google.com/forms/d/e/1FAIpQLSfQgBt8oAAZyvqMs5Ng6H7hI2Br4NpJzzyIpQeuWZ-VSm_h9Q/viewform?embedded=true" loading="lazy" referrerpolicy="strict-origin-when-cross-origin"></iframe><div class="form-modal-foot"><a href="https://forms.gle/FyeS2XVyxLnpxY3r8" target="_blank" rel="noopener noreferrer">새 창에서 작성 ↗</a></div></div></div>
   <div class="modal fee-modal" id="feeModal" aria-hidden="true">
     <div class="modal-card" role="dialog" aria-modal="true" aria-labelledby="feeModalTitle">
@@ -515,6 +541,28 @@
 </div>
 <script src="/magazine/articles.js?v=20260809-shootingstar-r10"></script>
 <script>
+  const racingPromo = document.getElementById('racingPromo');
+  const racingPromoClose = document.getElementById('racingPromoClose');
+  const racingPromoSessionKey = 'asteria-racing-crew-promo-2026-09-v2';
+  function openRacingPromo(){
+    racingPromo?.classList.add('open');
+    racingPromo?.setAttribute('aria-hidden','false');
+    document.body.classList.add('modal-open');
+    racingPromoClose?.focus();
+  }
+  function closeRacingPromo(){
+    racingPromo?.classList.remove('open');
+    racingPromo?.setAttribute('aria-hidden','true');
+    document.body.classList.remove('modal-open');
+    try{ sessionStorage.setItem(racingPromoSessionKey,'closed'); }catch(error){}
+  }
+  try{
+    if(!sessionStorage.getItem(racingPromoSessionKey)) setTimeout(openRacingPromo,500);
+  }catch(error){ setTimeout(openRacingPromo,500); }
+  racingPromoClose?.addEventListener('click', closeRacingPromo);
+  racingPromo?.addEventListener('click',(event)=>{ if(event.target===racingPromo) closeRacingPromo(); });
+  addEventListener('keydown',(event)=>{ if(event.key==='Escape'&&racingPromo?.classList.contains('open')) closeRacingPromo(); });
+
   const applyAction = document.getElementById('applyAction');
   const applyModal = document.getElementById('applyModal');
   const modalClose = document.getElementById('modalClose');

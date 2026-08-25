@@ -13,7 +13,7 @@ DEST = Path.home() / ".local/share/asteria-web-public"
 NEXT = DEST.with_name(DEST.name + ".next")
 OLD = DEST.with_name(DEST.name + ".old")
 FILES = ("index.html", "favicon.ico", "robots.txt", "sitemap.xml")
-DIRS = ("images", "magazine", "veronica")
+DIRS = ("images", "magazine", "veronica", "racing-crew")
 
 for path in (NEXT, OLD):
     if path.exists():
@@ -46,4 +46,4 @@ if OLD.exists():
 
 print(f"public_root={DEST}")
 print("allowlisted_files=4")
-print("allowlisted_directories=3")
+print("allowlisted_directories=4")
