@@ -32,11 +32,11 @@ class MagazineMembershipGuideTests(unittest.TestCase):
 
     def test_all_magazine_entry_points_load_the_shared_membership_renderer(self):
         pages = sorted((ROOT / "magazine").rglob("*.html"))
-        self.assertEqual(len(pages), 7)
+        self.assertEqual(len(pages), 8)
         for page in pages:
             html = page.read_text(encoding="utf-8")
-            self.assertIn("magazine.js?v=20260809-membership-guide-r1", html, page)
-            self.assertIn("magazine.css?v=20260809-membership-guide-r1", html, page)
+            self.assertIn("magazine.js?v=20260830-body-media-r19", html, page)
+            self.assertIn("magazine.css?v=20260830-photo-swap-r11", html, page)
 
 
 if __name__ == "__main__":

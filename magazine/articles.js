@@ -1,5 +1,155 @@
 window.ASTERIA_ARTICLES = [
   {
+    slug: "shootingstar-wind-data-sail-2026",
+    url: "/magazine/shootingstar-wind-data-sail-2026/",
+    category: "Club Sailing",
+    title: "A Day with Captain Tablet",
+    titleKo: "테선장님과 함께한 하루",
+    publishedAt: "2026-08-30",
+    eventDate: "2026-08-29",
+    image: "/images/mag-shootingstar-wind-data-2026-data-awa-103.jpeg",
+    ogImage: "/images/og-shootingstar-wind-data-2026-tablet.jpg",
+    imageAlt: "슈팅스타 콕핏에 거치한 태블릿에 AWA 103, TWA 143, 보트 속도 6.2, AWS 5.8, TWS 9.3이 표시된 모습",
+    heroLayout: "natural-portrait",
+    heroNaturalWidth: 360,
+    heroNote: "WANGSAN MARINA · 17:30–19:30 · 29 AUG 2026",
+    shape: "tall",
+    excerpt: "지난 튜닝에서 단 무선 초음파 풍향·풍속계의 첫 실전이었습니다. 세 사람은 스키퍼와 트리머를 돌아가며 맡고 같은 태블릿 화면을 기준으로 삼았고, 연습용 세일과 무거운 조건에서도 풍상 7.4노트를 기록했습니다.",
+    lead: "2026년 8월 29일 오후 5시 30분, 왕산마리나에서 슈팅스타가 출항했습니다. 풍속계를 기본으로 테스트 세일링을 해보는 날이었습니다.",
+    facts: [
+      { label: "Date", value: "2026.08.29" },
+      { label: "Venue", value: "왕산마리나" },
+      { label: "Sail Time", value: "17:30–19:30" },
+      { label: "Yacht", value: "Shooting Star" },
+      { label: "Crew", value: "엄주범 단장 · 유진욱 크루 · 조윤호 사무국장" },
+      { label: "Sail", value: "연습용 다크론 세일" },
+      { label: "Instrument", value: "Calypso 무선 초음파 풍향·풍속계" },
+      { label: "Boat Speed", value: "풍상 7.4 kt" }
+    ],
+    sections: [
+      {
+        kicker: "01 / First Run",
+        heading: "설치한 풍향·풍속계를 처음 실전에서 켰습니다",
+        image: {
+          src: "/images/mag-shootingstar-wind-data-2026-cockpit-tablet.jpeg",
+          width: 360,
+          height: 480,
+          alt: "슈팅스타 콕핏에 앉은 두 사람과 데크에 거치된 태블릿",
+          caption: "콕핏에 앉은 두 사람 앞으로 데크에 거치한 태블릿이 함께 놓여 있습니다.",
+          layout: "compact-portrait"
+        },
+        endImage: {
+          src: "/images/mag-shootingstar-wind-data-2026-tablet-under-sail.jpeg",
+          width: 360,
+          height: 480,
+          alt: "펼쳐진 세일 아래 거치대에 물린 태블릿 화면",
+          caption: "반사방지 필름을 붙여 모든 크루가 보기 쉬운 위치에 고정한 태블릿.",
+          layout: "compact-portrait"
+        },
+        body: [
+          "오후 5시 30분, 왕산마리나에서 슈팅스타가 출항했습니다. 엄주범 단장, 유진욱 크루, 조윤호 사무국장 세 사람이 탔습니다. 처음으로 왕산 앞바다에서 쓰는 항해였습니다.",
+          "처음에는 어색했습니다. 반사방지 필름을 붙인 태블릿은 모든 크루가 보기 쉬운 위치에 고정되어 있었고, 세 사람은 곧 화면에 뜨는 바람 정보에 집중하기 시작했습니다.",
+          "세 사람은 이날 스키퍼와 지브 트리머, 메인 트리머를 돌아가며 맡았습니다. 경험이 달라도 같은 데이터를 공통 기준으로 삼자, 자리를 바꿀 때마다 무엇을 확인하고 조정할지가 분명해졌습니다."
+        ]
+      },
+      {
+        kicker: "02 / 7.4 Knots",
+        heading: "무거운 조건에서 풍상 7.4노트가 나왔습니다",
+        gallery: [
+          {
+            src: "/images/mag-shootingstar-wind-data-2026-data-awa-41.jpeg",
+            width: 360,
+            height: 480,
+            alt: "태블릿 화면에 AWA 41, TWA 71, 보트 속도 6.4, AWS 12.2, TWS 8.6이 표시된 모습",
+            caption: "AWA 41°, TWA 71°, 보트 속도 6.4노트, AWS 12.2노트, TWS 8.6노트.",
+            layout: "compact-portrait"
+          }
+        ],
+        bodyMedia: [
+          {
+            afterParagraph: 5,
+            src: "/images/mag-shootingstar-wind-data-2026-helm-underway.jpeg",
+            width: 360,
+            height: 480,
+            alt: "왕산 앞바다를 항해 중인 슈팅스타 콕핏에 앉은 한 사람",
+            caption: "왕산 앞바다를 항해 중인 슈팅스타의 콕핏.",
+            layout: "compact-portrait"
+          }
+        ],
+        body: [
+          "이날 슈팅스타는 레이싱 세팅이 아니었습니다. 세일은 연습용 다크론 세일이었고, 엔진은 들어 올렸지만 배에서 내리지 않아 무게가 그대로 실려 있었습니다. 폰툰은 물에 내린 채였고, 레이지백도 세일의 흐름에 간섭하는 조건이었습니다.",
+          "그 조건에서 오후 6시 13분 태블릿에는 풍상 보트 속도 7.4노트가 표시됐습니다. 기대했던 속도보다 매우 높은 속도를 기록하여 다들 희열을 느꼈습니다.",
+          "스키퍼 경험이 많은 사람에게 데이터는 더 높은 속도를 시도해 볼 목표가 됐고, 경험이 적은 사람에게는 감각을 보완할 기준이 됐습니다. 세일과 진로를 조정한 뒤 BOAT SPEED를 다시 확인할 수 있다는 점이 감각에만 의존할 때와 가장 달랐습니다.",
+          "데이터의 효과는 스키퍼에게만 머물지 않았습니다. 스키퍼의 판단이 빗나가더라도 크루는 태블릿에서 바람과 속도를 확인하며 세일 운영을 이어가, 그 빈틈을 함께 메울 수 있었습니다. 평소라면 지시가 엇갈려 분주해질 장면에서도 모두가 같은 화면을 보니 움직임은 차분했습니다.",
+          "처음 시도한 태블릿 기반 세일링이었지만 적응은 빨랐습니다. 문제가 생기면 스키퍼의 표정보다 태블릿의 수치를 먼저 확인했고, 누구의 감이 맞는지를 두고 옥신각신하기보다 같은 데이터를 놓고 다음 조정을 이야기했습니다.",
+          "엄주범 단장이 장비를 마련한 이유도 여기에 있었습니다. 아마추어 중심의 클럽이 실력을 높이려면 포지션별 집중 훈련이 필요하다고 보았습니다. 한 포지션은 데이터를 보며 여러 시도를 하고, 다른 포지션은 일정한 움직임을 유지해야 무엇이 달라졌는지 비교할 수 있기 때문입니다.",
+          "프로 세일러들과 함께 타며 살핀 연습 방식을 클럽 환경에 맞게 옮긴 것이 이번 데이터 기반 훈련의 기준선이었습니다. 이날 슈팅스타에서는 좌충우돌하거나 스키퍼 한 사람에게만 의존하지 않고, 크루가 같은 데이터를 보며 서로의 빈틈을 채우는 방식이 작동했습니다.",
+          "모두가 스키퍼의 표정보다 태블릿을 먼저 확인하는 모습을 두고, 조윤호 사무국장이 스키퍼를 ‘테선장님’이라고 부르기 시작했습니다. 별명은 웃음에서 시작됐지만, 그날부터 팀이 함께 실력을 키워 갈 기준이 하나 더 생겼습니다."
+        ]
+      },
+      {
+        kicker: "03 / How to use Tablet Data",
+        heading: "태블릿 데이터 활용 팁",
+        explainer: {
+          theme: "winddata",
+          layout: "device-tutorial",
+          kicker: "WIND DATA · SCREEN TUTORIAL",
+          title: "태블릿 화면, 이렇게 읽습니다",
+          summary: "배가 움직이면 선상에서 느끼는 바람의 방향과 세기가 달라집니다. 노란 A와 빨간 T를 함께 보며 세일과 진로 조정에 참고하고, 가운데 BOAT SPEED로 조정 전후 결과를 비교합니다.",
+          image: {
+            src: "/images/mag-shootingstar-wind-data-2026-tablet-dial-closeup.jpeg",
+            width: 412,
+            height: 565,
+            alt: "태블릿 화면을 그대로 확대한 사진. 위쪽에 AWA 64와 TWA 98, 가운데 다이얼 안에 보트 속도 7.4, 아래쪽에 AWS 13.0과 TWS 11.9가 떠 있고, 다이얼 위의 A 화살은 노란색 원, T 화살은 빨간색 원으로 표시했습니다.",
+            caption: "오후 6시 13분 태블릿 화면을 그대로 확대한 사진입니다. 화면 위의 번호는 아래 설명의 번호와 같고, 노란색 원 안이 A 화살, 빨간색 원 안이 T 화살입니다.",
+            annotations: [
+              { label: "A", tone: "yellow", x: 61.2, y: 44.8, diameter: 46, description: "노란색 원 안이 화면의 A 화살입니다" },
+              { label: "T", tone: "red", x: 72.8, y: 52.9, diameter: 46, description: "빨간색 원 안이 화면의 T 화살입니다" }
+            ]
+          },
+          items: [
+            { marker: "01", label: "AWA", fullName: "Apparent Wind Angle", reading: "64°", anchor: "top-left", hotspot: { x: 14.1, y: 20.4 }, value: "배 위에서 느끼는 바람의 방향입니다. 뱃머리를 0°로 봤을 때 64° 쪽에서 바람이 들어옵니다." },
+            { marker: "02", label: "TWA", fullName: "True Wind Angle", reading: "98°", anchor: "top-right", hotspot: { x: 83.5, y: 21.8 }, value: "배가 움직이는 영향을 빼고 계산한 바람의 방향입니다." },
+            // No fullName: BOAT SPEED is already the whole words, not an acronym.
+            { marker: "03", label: "BOAT SPEED", reading: "7.4노트", anchor: "center", hotspot: { x: 30.3, y: 47.3 }, value: "그 순간 배가 달리던 속도입니다. 자동차의 속도계처럼 보면 됩니다." },
+            { marker: "04", label: "AWS", fullName: "Apparent Wind Speed", reading: "13.0노트", anchor: "bottom-left", hotspot: { x: 36.2, y: 74.2 }, value: "달리는 배 위에서 몸으로 느끼는 바람의 세기입니다." },
+            { marker: "05", label: "TWS", fullName: "True Wind Speed", reading: "11.9노트", anchor: "bottom-right", hotspot: { x: 76.5, y: 80.9 }, value: "배가 움직이는 영향을 빼고 계산한 바람의 세기입니다." }
+          ],
+          legend: [
+            { label: "A · 노란색 화살", value: "지금 배 위에서 느끼는 값", tone: "yellow" },
+            { label: "T · 빨간색 화살", value: "배가 움직이는 영향을 빼고 계산한 값", tone: "red" }
+          ],
+          usage: {
+            layout: "reading-map",
+            kicker: "HOW TO USE · 활용 팁",
+            title: "약자에서 용도로 바로 연결합니다",
+            summary: "앞글자 A는 노란 화살, T는 빨간 화살입니다. WA는 바람 방향, WS는 바람 세기입니다.",
+            steps: [
+              { marker: "01", code: "AWA", tone: "yellow", metric: "노란 A · WA 방향", action: "세일 줄 조정", body: "지금 배에서 느끼는 바람 방향을 보고 세일 줄을 당기거나 풀 때 참고합니다." },
+              { marker: "02", code: "TWA", tone: "red", metric: "빨간 T · WA 방향", action: "진로 판단", body: "장비가 계산한 바람 방향을 보고 배가 바람을 앞·옆·뒤 어디에서 받는지 확인합니다." },
+              { marker: "03", code: "BOAT SPEED", tone: "cyan", metric: "배 속도", action: "조정 결과 확인", body: "세일 줄이나 진로를 바꾸기 전후의 속도를 비교합니다." },
+              { marker: "04", code: "AWS", tone: "yellow", metric: "노란 A · WS 세기", action: "센 바람 대비", body: "지금 배에서 느끼는 바람 세기가 갑자기 오르는지 확인합니다." },
+              { marker: "05", code: "TWS", tone: "red", metric: "빨간 T · WS 세기", action: "바람 변화 확인", body: "장비가 계산한 바람 세기가 시간에 따라 오르내리는지 확인합니다." }
+            ]
+          },
+          scenario: {
+            kicker: "SCENARIO · 이렇게 써봅니다",
+            title: "이 화면 숫자로 한 번 따라가 봅니다",
+            summary: "빨간 T로 기준 바람을 확인하고, 노란 A와 비교한 뒤, 조금 조정하고 보트 속도로 결과를 봅니다.",
+            steps: [
+              { marker: "1", tone: "red", title: "기본 바람 확인", chips: ["TWA 98°", "TWS 11.9노트"], body: "빨간 T를 보고 장비가 배의 움직임 영향을 보정해 계산한 바람의 방향과 세기를 먼저 확인합니다." },
+              { marker: "2", tone: "yellow", title: "배 위 느낌과 비교", chips: ["AWA 64°", "AWS 13.0노트"], body: "노란 A를 보면 이 순간에는 바람이 더 앞쪽에서, 조금 더 강하게 느껴집니다." },
+              { marker: "3", title: "조금 조정해 보기", chips: ["세일 줄", "진로"], body: "A와 T의 차이를 참고해 세일 줄이나 진로를 한 번에 크게 바꾸지 않고 조금씩 조정해 봅니다." },
+              { marker: "4", tone: "cyan", title: "속도로 결과 확인", chips: ["BOAT SPEED 7.4노트", "조정 뒤 새 숫자"], body: "7.4노트를 비교 기준으로 기억하고 조정 뒤 숫자가 어떻게 바뀌는지 봅니다. 더 나아지면 유지하고, 나빠지면 이전 설정으로 돌아가거나 다시 미세 조정합니다." }
+            ]
+          }
+        },
+        body: []
+      }
+    ],
+    gallery: []
+  },
+  {
     slug: "shootingstar-club-tuning-2026",
     url: "/magazine/shootingstar-club-tuning-2026/",
     category: "Yacht Maintenance",

@@ -219,10 +219,15 @@ function injectInto(html, id, inner, file) {
 }
 
 // --- Static markup builders --------------------------------------------------
+const HERO_LAYOUTS = ['natural-portrait'];
+const heroLayoutClass = layout => HERO_LAYOUTS.includes(layout) ? ` hero-${layout}` : '';
+const heroNaturalWidth = value => Math.min(4096, Math.max(0, Math.round(Number(value) || 0)));
+const heroStyle = value => heroNaturalWidth(value) ? ` style="--hero-natural-width:${heroNaturalWidth(value)}px"` : '';
+
 function cardMarkup(article) {
   const heading = esc(article.title);
   const subheading = esc(article.titleKo);
-  return `<a class="pin-card" href="${esc(article.url)}" aria-label="${subheading} 에피소드 열기">`
+  return `<a class="pin-card" data-category="${esc(article.category)}" data-shape="${esc(article.shape || 'standard')}" href="${esc(article.url)}" aria-label="${subheading} 에피소드 열기">`
     + `<div class="pin-media"><img src="${esc(article.image)}" alt="${esc(article.imageAlt || article.titleKo)}" loading="lazy">`
     + `<span class="pin-category">${esc(article.category)}</span></div>`
     + `<div class="pin-body"><time datetime="${esc(article.publishedAt)}">${esc(article.publishedAt)}</time>`
@@ -234,6 +239,161 @@ function masonryMarkup(articles) {
   return articles.map(cardMarkup).join('\n');
 }
 
+// Crawler-facing twin of magazine.js `sectionExplainer`: same slots, same class
+// hooks, every value escaped. Purely data-driven — a new explainer theme needs
+// no change here, only a `theme` string in articles.js.
+// Hotspots come from data, so the percentage that lands in a style attribute is
+// clamped to a plain 0-100 number rather than escaped as text.
+const hotspotPct = value => Math.min(100, Math.max(0, Number(value) || 0));
+// Tones land in an attribute selector, so only the known accents are ever
+// emitted — never a raw value from articles.js. Shared by the legend rows and
+// by the rings drawn over the device image.
+const ACCENT_TONES = ['yellow', 'red'];
+const toneAttr = tone => ACCENT_TONES.includes(tone) ? ` data-tone="${tone}"` : '';
+// Twin of magazine.js `imageAnnotations`: optional hollow rings pinned on the
+// device image. The ring is placed like a hotspot and sized from a source-pixel
+// diameter, so it keeps the same footprint on the photo at any display width.
+// An unknown tone drops the ring outright rather than reflecting it.
+const ringSize = (diameter, width) =>
+  Math.min(40, Math.max(2, (Number(diameter) || 0) / (Number(width) || 1) * 100)).toFixed(2);
+const annotationsMarkup = image => (image.annotations || [])
+  .filter(entry => ACCENT_TONES.includes(entry.tone))
+  .map(entry => `<span class="explainer-annotation" data-tone="${entry.tone}"`
+    + ` style="left:${hotspotPct(entry.x)}%;top:${hotspotPct(entry.y)}%;`
+    + `--ring-size:${ringSize(entry.diameter, image.width)}%"`
+    + ` role="img" aria-label="${esc(entry.description || entry.label)}">`
+    + `<b aria-hidden="true">${esc(entry.label)}</b></span>`).join('');
+
+// Optional per-explainer "how to use" panel, twin of magazine.js
+// `explainerUsage`: any explainer that declares `usage` gets it.
+// usage.layout:"reading-map" swaps the step for a mapping row carrying the
+// reading's own code, category and action. Its tones are their own allowlist:
+// they tint a card and never reach the rings drawn on the photo.
+const READING_MAP = 'reading-map';
+const USAGE_TONES = ['yellow', 'red', 'cyan'];
+const usageTone = tone => USAGE_TONES.includes(tone) ? ` data-tone="${tone}"` : '';
+const usageStep = (step, layout) => layout === READING_MAP
+  ? `<li class="explainer-usage-step"${usageTone(step.tone)}>`
+    + `<b class="usage-marker">${esc(step.marker)}</b>`
+    + `<b class="usage-code">${esc(step.code)}</b>`
+    + `<span class="usage-metric">${esc(step.metric)}</span>`
+    + `<b class="usage-action">${esc(step.action)}</b>`
+    + `<span class="usage-body">${esc(step.body)}</span></li>`
+  : `<li class="explainer-usage-step"><b>${esc(step.title)}</b>`
+    + `<span>${esc(step.body)}</span></li>`;
+
+function usageMarkup(usage) {
+  if (!usage || !(usage.steps || []).length) return '';
+  const layout = usage.layout === READING_MAP ? ` data-layout="${READING_MAP}"` : '';
+  return `<section class="explainer-usage" aria-label="${esc(usage.title)}">`
+    + `<div class="explainer-usage-kicker">${esc(usage.kicker)}</div>`
+    + `<h5>${esc(usage.title)}</h5>`
+    + `<p class="explainer-usage-summary">${esc(usage.summary)}</p>`
+    + `<ol class="explainer-usage-steps"${layout}>`
+    + usage.steps.map(step => usageStep(step, usage.layout)).join('')
+    + `</ol></section>`;
+}
+
+// Optional sibling of `usage`, twin of magazine.js `explainerScenario`: the
+// same readings walked once as a numbered decision, each step carrying its own
+// chips (the values or actions it works on). Tones reuse the usage allowlist —
+// a step is still titled and numbered, so an off-allowlist tone only costs the
+// tint, never the meaning. Every slot is escaped.
+const scenarioChips = chips => (chips || []).length
+  ? `<span class="scenario-chips">${chips.map(chip => `<span class="scenario-chip">${esc(chip)}</span>`).join('')}</span>`
+  : '';
+const scenarioStep = step => `<li class="explainer-scenario-step"${usageTone(step.tone)}>`
+  + `<b class="scenario-marker">${esc(step.marker)}</b>`
+  + `<b class="scenario-title">${esc(step.title)}</b>`
+  + scenarioChips(step.chips)
+  + `<span class="scenario-body">${esc(step.body)}</span></li>`;
+
+function scenarioMarkup(scenario) {
+  if (!scenario || !(scenario.steps || []).length) return '';
+  return `<section class="explainer-scenario" aria-label="${esc(scenario.title)}">`
+    + `<div class="explainer-scenario-kicker">${esc(scenario.kicker)}</div>`
+    + `<h5>${esc(scenario.title)}</h5>`
+    + `<p class="explainer-scenario-summary">${esc(scenario.summary)}</p>`
+    + `<ol class="explainer-scenario-steps">`
+    + scenario.steps.map(scenarioStep).join('')
+    + `</ol></section>`;
+}
+
+function tutorialMarkup(explainer) {
+  const items = explainer.items || [];
+  const image = explainer.image;
+  const size = image && image.width && image.height
+    ? ` width="${esc(image.width)}" height="${esc(image.height)}"` : '';
+  const legend = explainer.legend || [];
+  return `<div class="explainer-tutorial">`
+    + (image ? `<figure class="explainer-device"><span class="explainer-device-frame">`
+        + `<img src="${esc(image.src)}" alt="${esc(image.alt)}"${size} loading="lazy">`
+        + items.map(item => `<span class="explainer-hotspot" data-marker="${esc(item.marker)}"`
+            + ` style="left:${hotspotPct(item.hotspot && item.hotspot.x)}%;top:${hotspotPct(item.hotspot && item.hotspot.y)}%"`
+            + ` aria-hidden="true">${esc(item.marker)}</span>`).join('')
+        + annotationsMarkup(image)
+        + `</span><figcaption>${esc(image.caption)}</figcaption></figure>` : '')
+    + `<dl class="explainer-callouts">${items.map(item =>
+        `<div class="explainer-callout" data-anchor="${esc(item.anchor || 'center')}" data-marker="${esc(item.marker)}">`
+        + `<dt><b class="explainer-marker">${esc(item.marker)}</b>`
+        + `<span class="explainer-label">${esc(item.label)}</span>`
+        // Optional: the acronym spelled out under the label. A label that is
+        // already written out omits it and the line disappears.
+        + (item.fullName ? `<span class="explainer-fullname">${esc(item.fullName)}</span>` : '')
+        + `<span class="explainer-reading">${esc(item.reading)}</span></dt>`
+        + `<dd>${esc(item.value)}</dd></div>`).join('')}</dl>`
+    + `</div>`
+    + (legend.length ? `<ul class="explainer-legend">${legend.map(entry =>
+        `<li class="explainer-legend-item"${toneAttr(entry.tone)}><b>${esc(entry.label)}</b>`
+        + `<span>${esc(entry.value)}</span></li>`).join('')}</ul>` : '');
+}
+
+function explainerMarkup(explainer) {
+  if (!explainer) return '';
+  const image = explainer.image;
+  const size = image && image.width && image.height
+    ? ` width="${esc(image.width)}" height="${esc(image.height)}"` : '';
+  const body = explainer.layout === 'device-tutorial' ? tutorialMarkup(explainer)
+    : (image ? `<figure class="explainer-media"><img src="${esc(image.src)}" alt="${esc(image.alt)}"${size}`
+        + ` loading="lazy"><figcaption>${esc(image.caption)}</figcaption></figure>` : '')
+      + `<dl>${(explainer.items || []).map(item =>
+          `<div><dt>${esc(item.label)}</dt><dd>${esc(item.value)}</dd></div>`).join('')}</dl>`;
+  return `<aside class="article-explainer${explainer.theme ? ` explainer-${esc(explainer.theme)}` : ''}`
+    + `${explainer.layout ? ` explainer-layout-${esc(explainer.layout)}` : ''}"`
+    + ` aria-label="${esc(explainer.title)}">`
+    + `<div class="explainer-kicker">${esc(explainer.kicker)}</div>`
+    + `<h4>${esc(explainer.title)}</h4>`
+    + `<p class="explainer-summary">${esc(explainer.summary)}</p>`
+    + body
+    + usageMarkup(explainer.usage)
+    + scenarioMarkup(explainer.scenario)
+    + (explainer.note ? `<p class="explainer-note">${esc(explainer.note)}</p>` : '')
+    + `</aside>`;
+}
+
+// Twin of magazine.js `atArticleEnd`: a section may declare
+// `explainerPlacement: 'article-end'` to move its explainer under the whole body.
+const atArticleEnd = section => section.explainerPlacement === 'article-end';
+
+const staticNaturalWidthStyle = image => image.width
+  ? ` style="--image-natural-width:${esc(image.rotate ? image.height : image.width)}px"` : '';
+const staticSectionVisual = image => {
+  if (!image) return '';
+  const size = image.width && image.height
+    ? ` width="${esc(image.width)}" height="${esc(image.height)}"` : '';
+  const imageStyle = image.width && image.height || image.position
+    ? ` style="${image.width && image.height ? `height:auto;aspect-ratio:${esc(image.width)}/${esc(image.height)};` : ''}`
+      + `${image.position ? `object-position:${esc(image.position)};` : ''}"` : '';
+  return `<figure class="article-section-visual${image.layout ? ` visual-${esc(image.layout)}` : ''}"${staticNaturalWidthStyle(image)}>`
+    + `<img src="${esc(image.src)}" alt="${esc(image.alt)}"${size} loading="lazy"${imageStyle}>`
+    + `<figcaption>${esc(image.caption)}</figcaption></figure>`;
+};
+const staticBodyMediaAfter = (section, paragraphNumber) => (section.bodyMedia || [])
+  .filter(image => Number(image.afterParagraph) === paragraphNumber)
+  .map(staticSectionVisual).join('');
+const staticSectionParagraph = (section, paragraph, paragraphNumber) => paragraph
+  ? `<p>${esc(paragraph)}</p>${staticBodyMediaAfter(section, paragraphNumber)}` : '';
+
 function articleMarkup(article) {
   const sections = (article.sections || []).map(section => {
     const [firstParagraph, ...remainingParagraphs] = section.body || [];
@@ -243,19 +403,22 @@ function articleMarkup(article) {
       + `<p>${esc(section.tip.summary)}</p><dl>${(section.tip.items || []).map((item, index) => ``
         + `<div><dt>${String(index + 1).padStart(2, '0')} · ${esc(item.label)}</dt><dd>${esc(item.value)}</dd></div>`).join('')}</dl>`
       + `</div></aside>` : '';
-    const body = `${firstParagraph ? `<p>${esc(firstParagraph)}</p>` : ''}`
-      + `${section.intro ? `<p>${esc(section.intro)}</p>` : ''}${tip}`
-      + remainingParagraphs.map(paragraph => `<p>${esc(paragraph)}</p>`).join('');
+    const body = `${staticSectionParagraph(section, firstParagraph, 1)}`
+      + `${section.intro ? `<p>${esc(section.intro)}</p>` : ''}`
+      + `${atArticleEnd(section) ? '' : explainerMarkup(section.explainer)}${tip}`
+      + remainingParagraphs.map((paragraph, index) => staticSectionParagraph(section, paragraph, index + 2)).join('');
     return `<section class="article-section">${section.kicker ? `<div class="section-kicker">${esc(section.kicker)}</div>` : ''}`
       + `<h3>${esc(section.heading)}</h3>${body}</section>`;
   }).join('\n');
+  const endExplainers = (article.sections || []).filter(atArticleEnd)
+    .map(section => explainerMarkup(section.explainer)).join('');
   return `<article>`
     + `<header class="article-head"><div class="article-meta"><span>${esc(article.category)}</span>`
     + `<time datetime="${esc(article.eventDate || article.publishedAt)}">${esc(article.eventDate || article.publishedAt)}</time></div>`
     + `<h1>${esc(article.title)}</h1><h2>${esc(article.titleKo)}</h2></header>`
-    + `<div class="article-hero"><img src="${esc(article.image)}" alt="${esc(article.imageAlt || article.titleKo)}"></div>`
+    + `<div class="article-hero${heroLayoutClass(article.heroLayout)}"${heroStyle(article.heroNaturalWidth)}><img src="${esc(article.image)}" alt="${esc(article.imageAlt || article.titleKo)}"></div>`
     + `<div class="article-content"><p class="article-lead">${esc(article.lead)}</p>`
-    + `<div class="article-body">${sections}</div></div></article>`;
+    + `<div class="article-body">${sections}${endExplainers}</div></div></article>`;
 }
 
 // --- Run ---------------------------------------------------------------------
