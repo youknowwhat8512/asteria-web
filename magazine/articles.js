@@ -122,7 +122,7 @@ window.ASTERIA_ARTICLES = [
           usage: {
             layout: "reading-map",
             kicker: "HOW TO USE · 활용 팁",
-            title: "약자에서 용도로 바로 연결합니다",
+            title: "다섯 가지 약자, 이럴 때 봅니다",
             summary: "앞글자 A는 노란 화살, T는 빨간 화살입니다. WA는 바람 방향, WS는 바람 세기입니다.",
             steps: [
               { marker: "01", code: "AWA", tone: "yellow", metric: "노란 A · WA 방향", action: "세일 줄 조정", body: "지금 배에서 느끼는 바람 방향을 보고 세일 줄을 당기거나 풀 때 참고합니다." },

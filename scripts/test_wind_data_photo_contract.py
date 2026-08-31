@@ -63,7 +63,7 @@ BODY_SCENES = (
 # revision advances the article data while retaining the verified renderer and
 # natural-size portrait stylesheet bundles.
 CACHE_KEYS = {
-    "articles.js": "20260830-body-media-r19",
+    "articles.js": "20260831-usage-title-r20",
     "magazine.js": "20260830-body-media-r19",
     "magazine.css": "20260830-photo-swap-r11",
 }
@@ -107,7 +107,7 @@ ANNOTATIONS = (("yellow", "A", "61.2", "44.8", "11.17"),
 USAGE = {
     "layout": "reading-map",
     "kicker": "HOW TO USE · 활용 팁",
-    "title": "약자에서 용도로 바로 연결합니다",
+    "title": "다섯 가지 약자, 이럴 때 봅니다",
     "summary": "앞글자 A는 노란 화살, T는 빨간 화살입니다. WA는 바람 방향, WS는 바람 세기입니다.",
 }
 # marker, code, tone, metric chip, action, sentence — in the same 01-05 order as
