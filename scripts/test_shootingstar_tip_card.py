@@ -49,7 +49,7 @@ class ShootingStarTipCardTests(unittest.TestCase):
         self.assertEqual(set(pages), expected)
         for page in pages:
             html = page.read_text(encoding="utf-8")
-            self.assertIn("articles.js?v=20260907-sail-repair-r23", html, page)
+            self.assertIn("articles.js?v=20260907-four-positions-r24", html, page)
             self.assertIn("magazine.js?v=20260830-body-media-r19", html, page)
             self.assertIn("magazine.css?v=20260830-photo-swap-r11", html, page)
 

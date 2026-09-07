@@ -63,7 +63,7 @@ BODY_SCENES = (
 # revision advances the article data while retaining the verified renderer and
 # natural-size portrait stylesheet bundles.
 CACHE_KEYS = {
-    "articles.js": "20260907-sail-repair-r23",
+    "articles.js": "20260907-four-positions-r24",
     "magazine.js": "20260830-body-media-r19",
     "magazine.css": "20260830-photo-swap-r11",
 }
