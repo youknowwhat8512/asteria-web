@@ -1,10 +1,12 @@
 #!/usr/bin/env python3
 """Contract tests for the Magazine membership-guide CTA."""
 from pathlib import Path
+import re
 import unittest
 
 ROOT = Path(__file__).resolve().parents[1]
 MAGAZINE_JS = ROOT / "magazine" / "magazine.js"
+ARTICLES_JS = ROOT / "magazine" / "articles.js"
 HOME = ROOT / "index.html"
 
 
@@ -31,8 +33,15 @@ class MagazineMembershipGuideTests(unittest.TestCase):
         self.assertNotIn("membership-form-embed", self.magazine_js)
 
     def test_all_magazine_entry_points_load_the_shared_membership_renderer(self):
+        # Derive the expected page set from the episode data: every slug ships a
+        # page, plus the index and the slug-less article shell. Pinning a raw
+        # count made publishing an episode look like a CTA regression.
+        slugs = re.findall(r'slug:\s*"([^"]+)"', ARTICLES_JS.read_text(encoding="utf-8"))
+        self.assertTrue(slugs, "expected episode slugs in articles.js")
+        expected = {ROOT / "magazine" / "index.html", ROOT / "magazine" / "article.html"}
+        expected.update(ROOT / "magazine" / slug / "index.html" for slug in slugs)
         pages = sorted((ROOT / "magazine").rglob("*.html"))
-        self.assertEqual(len(pages), 8)
+        self.assertEqual(set(pages), expected)
         for page in pages:
             html = page.read_text(encoding="utf-8")
             self.assertIn("magazine.js?v=20260830-body-media-r19", html, page)

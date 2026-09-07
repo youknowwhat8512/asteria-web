@@ -1,5 +1,267 @@
 window.ASTERIA_ARTICLES = [
   {
+    slug: "yisunshin-cup-2026-first-practice",
+    url: "/magazine/yisunshin-cup-2026-first-practice/",
+    category: "Race Practice",
+    title: "Good To Go",
+    titleKo: "2026 이순신컵 - 1",
+    publishedAt: "2026-09-07",
+    eventDate: "2026-09-06",
+    // Photos are the 9월 6일 practice set, byte-copied from the source files
+    // with only JPEG metadata segments dropped. Portrait frames keep their
+    // natural size (compact-portrait) rather than being cropped to a slot.
+    image: "/images/mag-yisunshin-2026-hero-crew-underway.jpeg",
+    imageAlt: "폴스타 콕핏에서 크루 다섯 명이 붉은 로프와 세일을 다루며 항해하는 모습",
+    // 1024px original: pinned so the wide hero frame cannot upscale past the
+    // source pixels.
+    heroLayout: "natural-portrait",
+    heroNaturalWidth: 1024,
+    heroNote: "GOOD TO GO · EP.01 FIRST PRACTICE · WANGSAN MARINA · 06 SEP 2026",
+    shape: "wide",
+    excerpt: "2026 이순신컵을 앞둔 첫 연습이었습니다. 바람이 제법 불어 작은 스피네이커를 골랐고, 계류장에서 올리고 내리기를 반복한 뒤 오후에 바다로 나갔습니다. 네 자리가 서로를 맞춰 가던 세 시간, 그리고 로프 한 가닥이 하루를 일찍 마무리 지었습니다.",
+    lead: "2026년 9월 6일 오전 10시, 왕산마리나에 폴스타 크루 여섯 명이 모였습니다. 2026 이순신컵을 앞둔 첫 연습이었습니다.",
+    pullQuote: "예전 같으면 이런 바람에 스피네이커를 올릴 엄두도 못 냈습니다. 이제는 올려 놓고, 어떻게 더 잘 쓸지를 이야기합니다.",
+    facts: [
+      { label: "Series", value: "2026 이순신컵 Good To Go · EP.01" },
+      { label: "Date", value: "2026.09.06" },
+      { label: "Venue", value: "왕산마리나" },
+      { label: "Practice", value: "10:00–16:00" },
+      { label: "Yacht", value: "PoleStar · Beneteau First 36.7" },
+      { label: "Crew", value: "이동준 · 엄주범 · 조윤호 · 채승범 · 김종명 · 이주환" },
+      { label: "Sail", value: "작은 스피네이커" },
+      { label: "Drill", value: "계류장 호이스트·다운 · 해상 스피네이커 운용" }
+    ],
+    sections: [
+      {
+        kicker: "01 / Good To Go",
+        heading: "이순신컵을 향한 첫 연습이 시작됐습니다",
+        image: {
+          src: "/images/mag-yisunshin-2026-polestar-moored.jpeg",
+          width: 480,
+          height: 360,
+          alt: "왕산마리나 부잔교에 계류한 흰 선체의 폴스타",
+          caption: "연습 전 왕산마리나에 계류해 있던 폴스타.",
+          layout: "natural"
+        },
+        endImage: {
+          src: "/images/mag-yisunshin-2026-asteria-jersey.jpeg",
+          width: 768,
+          height: 1024,
+          alt: "아스테리아 로고가 새겨진 남색 저지를 입고 마스크와 모자를 착용한 크루의 뒷모습",
+          caption: "아스테리아 저지를 입고 출항을 준비하는 크루.",
+          layout: "compact-portrait"
+        },
+        body: [
+          "9월 6일 오전 10시, 왕산마리나. 이동준, 엄주범, 조윤호, 채승범, 김종명, 이주환 여섯 명이 폴스타에 모였습니다. 오후 4시까지 이어질 2026 이순신컵 첫 연습이었습니다.",
+          "여섯 명이 한 배에서 손발을 맞춰 보는 것은 이날이 처음이었습니다. 대회를 앞둔 첫 연습은 실력을 겨루는 자리가 아니라, 서로가 어디까지 맞는지 확인하는 자리입니다.",
+          "이날은 바람이 제법 불었습니다. 크루는 큰 스피네이커 대신 작은 스피네이커로 연습하기로 했습니다."
+        ]
+      },
+      {
+        kicker: "02 / Dock Drill",
+        heading: "바다에 나가기 전, 계류장에서 먼저 올리고 내렸습니다",
+        explainer: {
+          kicker: "SAIL GUIDE · SPINNAKER",
+          title: "바람이 강한 날, 작은 스피네이커를 고르는 이유",
+          summary: "스피네이커는 바람을 등지고 달릴 때 배 앞쪽에 크게 부풀려 펼치는 세일입니다. 같은 배에도 크기가 다른 스피네이커를 여럿 갖춰 두고, 그날 바람에 맞춰 골라 씁니다.",
+          items: [
+            { label: "WHAT IT IS", value: "바람을 등지고 달릴 때 선수 앞쪽에 부풀려 펼치는 세일입니다. 면적이 커서 바람을 등진 구간에서 속도를 크게 끌어올립니다." },
+            { label: "WHY SMALLER", value: "바람이 셀수록 큰 세일은 힘이 세지고 다루기 어려워집니다. 면적이 작은 스피네이커는 그만큼 힘을 덜어 조작하기 쉽고 안정적입니다." },
+            { label: "HOIST & DOWN", value: "세일을 올리는 동작을 호이스트, 내리는 동작을 다운이라고 부릅니다. 여러 사람이 순서를 맞춰야 한 번이 끝납니다." },
+            { label: "DOCK DRILL", value: "계류장에서 배를 바람 방향에 맞춰 돌려 두면, 항해 부담 없이 올리고 내리는 순서만 따로 떼어 반복할 수 있습니다." }
+          ]
+        },
+        body: [
+          "첫 연습은 바다가 아니라 계류장에서 시작했습니다. 크루는 계류장에 묶인 폴스타를 바람 방향에 맞춰 돌려 세운 뒤, 스피네이커를 올리고 내리기를 여러 번 반복했습니다.",
+          "계류장에서는 배가 달리지 않으니 조종할 일이 없습니다. 그러면 세일이 오르내리는 순서, 로프를 잡는 손, 신호를 주고받는 타이밍만 남습니다. 처음 손발을 맞추는 팀이 순서를 몸에 익히기에는 이만한 조건이 없습니다."
+        ],
+        midImage: {
+          src: "/images/mag-yisunshin-2026-dock-pole-three.jpeg",
+          width: 1606,
+          height: 1958,
+          alt: "계류장에 정박한 폴스타 갑판에서 크루 세 명이 스피네이커 폴을 함께 잡고 있는 모습",
+          caption: "계류장에서 스피네이커 폴을 잡고 순서를 맞추는 크루.",
+          layout: "portrait"
+        },
+        galleryLayout: "pair",
+        endGallery: [
+          {
+            src: "/images/mag-yisunshin-2026-dock-pole-team.jpeg",
+            width: 1024,
+            height: 768,
+            alt: "계류장 갑판 위에서 크루 네 명이 각자 자리를 잡고 스피네이커 폴을 다루는 모습",
+            caption: "각자 자리에서 폴과 로프를 맡은 계류장 연습 장면.",
+            layout: "wide"
+          },
+          {
+            src: "/images/mag-yisunshin-2026-dock-pole-lift.jpeg",
+            width: 768,
+            height: 1024,
+            alt: "헬멧과 구명조끼를 착용한 크루가 한 손으로 스피네이커 폴을 들어 올린 모습",
+            caption: "폴을 들어 올려 위치를 확인하는 동작.",
+            layout: "portrait"
+          }
+        ]
+      },
+      {
+        kicker: "03 / Torn Seam",
+        heading: "연습 도중 스피네이커가 찢어졌습니다",
+        image: {
+          src: "/images/mag-yisunshin-2026-sail-repair.jpeg",
+          width: 1024,
+          height: 768,
+          alt: "왕산마리나 부두 바닥에 흰 세일을 펼쳐 놓고 크루 세 명이 둘러앉아 수리하는 모습",
+          caption: "부두에 세일을 펼쳐 놓고 함께 수리하는 크루.",
+          layout: "wide"
+        },
+        body: [
+          "반복하던 중 스피네이커가 찢어졌습니다. 연습을 멈추고, 크루는 바로 수리에 들어갔습니다.",
+          "부두 바닥에 세일을 넓게 펼쳐 놓고 세 사람이 둘러앉아 손을 보탰습니다.",
+          "수리를 마치고 점심을 먹었습니다. 오전에 계류장에서 익힌 순서를 그대로 안고, 오후에는 바다로 나가기로 했습니다."
+        ]
+      },
+      {
+        kicker: "04 / Four Positions",
+        heading: "오후, 바다 위에서 네 자리가 서로를 맞춰 갔습니다",
+        explainer: {
+          kicker: "CREW GUIDE · POSITIONS",
+          title: "스피네이커를 올릴 때 함께 움직이는 네 자리",
+          summary: "스피네이커 한 장을 올리고 다루는 동안 여러 자리가 동시에 움직입니다. 맡은 로프와 장비가 서로 다르기 때문에, 한 자리의 조절이 다른 자리의 감각까지 바꿉니다.",
+          items: [
+            { label: "피트맨 · PIT MAN", value: "마스트 아래 콕핏 쪽에서 세일을 올리고 내리는 로프를 다룹니다. 호이스트와 다운의 속도와 타이밍을 잡는 자리입니다." },
+            { label: "집트리머 · JIB TRIMMER", value: "선수 쪽 세일인 집(Jib)의 로프를 당기고 풀어, 세일이 바람을 받는 각도와 힘을 맞춥니다." },
+            { label: "마스트맨 · MAST MAN", value: "마스트 옆에서 세일이 빠르고 고르게 올라가도록 직접 거들고, 갑판 위의 로프와 장비를 정리합니다." },
+            { label: "바우맨 · BOW MAN", value: "배의 맨 앞인 선수에서 스피네이커를 펼치고 거두는 동작을 맡습니다. 배에서 앞을 가장 먼저 보는 자리입니다." }
+          ],
+          note: "이날 연습의 핵심도 여기에 있었습니다. 네 자리가 각자 조금씩 바꾼 조절이 서로에게 어떻게 전해지는지 확인하는 것이었습니다."
+        },
+        body: [
+          "오후에 폴스타는 바다로 나갔습니다. 스피네이커를 올린 뒤, 크루는 피트맨, 집트리머, 마스트맨, 바우맨 사이에서 조금씩 다르게 맞춰 보며 여러 조합을 시험했습니다.",
+          "한 사람이 조금 당기면 다른 자리에서 곧 반응이 옵니다. 어떤 조합이 가장 잘 맞는지 찾느라 크루는 조정하고 확인하기를 여러 차례 되풀이했습니다.",
+          "처음 맞춰 보는 팀치고는 손발이 꽤 잘 맞았습니다."
+        ],
+        bodyMedia: [
+          {
+            afterParagraph: 1,
+            src: "/images/mag-yisunshin-2026-pole-trim.jpeg",
+            width: 768,
+            height: 1024,
+            alt: "항해 중인 폴스타 갑판에서 크루가 붉은 커버를 감은 폴과 로프를 두 손으로 잡고 있는 모습",
+            caption: "바다 위에서 폴과 로프를 잡고 세일을 맞추는 손.",
+            layout: "compact-portrait"
+          },
+          {
+            afterParagraph: 2,
+            src: "/images/mag-yisunshin-2026-winch-work.jpeg",
+            width: 768,
+            height: 1024,
+            alt: "폴스타 콕핏에서 한 크루가 윈치를 다루고 두 크루가 앞쪽을 살피는 모습",
+            caption: "윈치를 다루는 손과 앞을 살피는 시선이 함께 움직입니다.",
+            layout: "compact-portrait"
+          }
+        ],
+        galleryLayout: "pair",
+        endGallery: [
+          {
+            src: "/images/mag-yisunshin-2026-jib-kor6989.jpeg",
+            width: 360,
+            height: 480,
+            alt: "KOR 6989 세일 번호가 적힌 흰 집 세일이 펼쳐진 모습",
+            caption: "펼쳐진 집 세일. 선수 쪽에서 바람을 받습니다.",
+            layout: "portrait"
+          },
+          {
+            src: "/images/mag-yisunshin-2026-spinnaker-full.jpeg",
+            width: 360,
+            height: 480,
+            alt: "푸른 하늘을 배경으로 흰 스피네이커가 가득 부풀어 오른 모습",
+            caption: "바람을 받아 부풀어 오른 스피네이커.",
+            layout: "portrait"
+          }
+        ]
+      },
+      {
+        kicker: "05 / Feedback Circle",
+        heading: "한 차례 끝날 때마다 스키퍼가 피드백 시간을 열었습니다",
+        tip: {
+          kicker: "TEAM TIP · FEEDBACK",
+          title: "김지아 선수에게 배운 피드백 방식",
+          summary: "한 차례 연습이 끝날 때마다 스키퍼가 주도해 짧게 모입니다. 기억이 선명할 때 바로 이야기하는 것이 핵심입니다.",
+          items: [
+            { label: "연습 직후 모이기", value: "육상이든 바다 위든, 한 차례 연습이 끝나면 그 자리에서 바로 피드백 시간을 엽니다." },
+            { label: "소감과 느낌 나누기", value: "각자 자기 자리에서 무엇을 느꼈는지 이야기합니다. 잘된 것과 어색했던 것을 함께 꺼냅니다." },
+            { label: "질의응답", value: "이해되지 않은 동작이나 신호는 그 자리에서 묻고 답합니다." },
+            { label: "다음 연습 조정", value: "다음 번에 무엇을 다르게 할지 정하고, 그 부분을 맞춰 다시 시작합니다." }
+          ]
+        },
+        body: [
+          "이날 연습에는 정해진 순서가 하나 더 있었습니다. 육상에서든 바다 위에서든, 한 차례 연습이 끝나면 스키퍼가 주도해 피드백 시간을 가졌습니다.",
+          "지난 대회 때 김지아 선수에게 배운 방식입니다. 연습을 마치면 서로의 소감과 느낌을 이야기하고, 궁금한 것을 묻고 답한 뒤, 다음 연습에서 맞출 부분을 정합니다.",
+          "팀워크와 실력을 빠르게 끌어올리는 데 이만한 방법이 없어서, 지금은 아스테리아 레이싱 연습의 문화로 자리 잡았습니다."
+        ],
+        endImage: {
+          src: "/images/mag-yisunshin-2026-signal-call.jpeg",
+          width: 768,
+          height: 1024,
+          alt: "기울어진 폴스타 갑판에서 한 크루가 팔을 들어 신호를 보내고 다른 크루들이 이를 바라보는 모습",
+          caption: "손을 들어 신호를 보내는 크루. 같은 신호를 함께 확인합니다.",
+          layout: "compact-portrait"
+        }
+      },
+      {
+        kicker: "06 / The Rope",
+        heading: "세 시간째, 로프 한 가닥이 바다에 떨어졌습니다",
+        image: {
+          src: "/images/mag-yisunshin-2026-hull-wake.jpeg",
+          width: 360,
+          height: 480,
+          alt: "달리는 요트 선체 옆으로 흰 물거품이 이는 수면",
+          caption: "선체 옆을 지나는 수면. 이 아래에서 로프가 프로펠러에 감겼습니다.",
+          layout: "compact-portrait"
+        },
+        body: [
+          "그렇게 세 시간 동안 연습이 이어졌습니다. 그러다 예상치 못한 일이 생겼습니다.",
+          "피드백에 집중하는 사이, 로프 한 가닥이 바다에 떨어졌습니다. 아무도 보지 못했습니다. 로프는 프로펠러에 감겼고, 이날 연습은 여기서 접을 수밖에 없었습니다."
+        ]
+      },
+      {
+        kicker: "07 / Sail Home",
+        heading: "세일로 돌아와, 이웃 선장의 도움을 받았습니다",
+        midImage: {
+          src: "/images/mag-yisunshin-2026-helm-return.jpeg",
+          width: 768,
+          height: 1024,
+          alt: "흐린 하늘 아래 폴스타 콕핏에서 한 크루가 휠을 잡고 서 있고 뒤쪽에 크루들이 앉아 있는 모습",
+          caption: "엔진 없이 세일만으로 마리나 근처까지 돌아오는 길.",
+          layout: "compact-portrait"
+        },
+        body: [
+          "크루는 동요하지 않았습니다. 여러 해를 바다에서 보낸 크루에게 이 정도 상황은 성가신 일이지, 흔들릴 일은 아니었습니다.",
+          "크루는 세일을 펴고 마리나 근처까지 마음껏 세일링하며 돌아왔습니다. 그리고 이웃 선장에게 연락해 도움을 받았습니다.",
+          "바다 위에서는 무슨 일이 생길지 알 수 없습니다. 그래서 이웃과 잘 지내는 일이 중요합니다. 시맨십의 첫 번째 매너이기도 합니다."
+        ]
+      },
+      {
+        kicker: "08 / What The Day Left",
+        heading: "입항 뒤 긴급 정비, 그리고 첫 연습이 남긴 것",
+        image: {
+          src: "/images/mag-yisunshin-2026-rope-removal.jpeg",
+          width: 1182,
+          height: 665,
+          alt: "계류장 물속에 들어간 두 사람이 요트 선체 아래에서 작업하고 갑판 위의 한 사람이 로프를 내려 주는 모습",
+          caption: "입항 뒤 물에 들어가 프로펠러에 감긴 로프를 걷어냈습니다.",
+          layout: "natural"
+        },
+        body: [
+          "입항한 뒤에는 프로펠러에 감긴 로프를 걷어내는 긴급 정비를 마치고 하루를 마감했습니다.",
+          "이날 집트리머를 맡은 크루에게는 좋은 교훈이 됐고, 크루 모두가 로프 관리가 왜 중요한지 몸으로 배웠습니다.",
+          "연습 시간이 짧아진 아쉬움은 남았습니다. 그래도 첫 연습으로는 더할 나위 없는 하루였습니다.",
+          "예전 같으면 이런 날씨에 스피네이커를 올린다는 생각은 꿈에도 못 했을 것입니다. 이제는 스피네이커를 올려 놓고, 어떻게 하면 가장 잘 쓸 수 있을지 차분히 의견을 주고받습니다. 실력이 조금은 붙었구나, 스스로 느낀 순간이었습니다."
+        ]
+      }
+    ]
+  },
+  {
     slug: "shootingstar-wind-data-sail-2026",
     url: "/magazine/shootingstar-wind-data-sail-2026/",
     category: "Club Sailing",

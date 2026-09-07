@@ -1,6 +1,7 @@
 #!/usr/bin/env python3
 """Contract test for the Shooting Star reinforcement tip card."""
 from pathlib import Path
+import re
 import unittest
 
 ROOT = Path(__file__).resolve().parents[1]
@@ -36,11 +37,19 @@ class ShootingStarTipCardTests(unittest.TestCase):
         self.assertNotIn("5.5마력", self.data)
 
     def test_all_entry_points_use_current_magazine_cache_keys(self):
+        # Every episode slug ships a page, alongside the index and the slug-less
+        # article shell. Deriving the set from the data keeps publishing an
+        # episode from reading as a cache-key regression, while still failing
+        # when a page is added without its keys.
+        slugs = re.findall(r'slug:\s*"([^"]+)"', self.data)
+        self.assertTrue(slugs, "expected episode slugs in articles.js")
+        expected = {ROOT / "magazine" / "index.html", ROOT / "magazine" / "article.html"}
+        expected.update(ROOT / "magazine" / slug / "index.html" for slug in slugs)
         pages = sorted((ROOT / "magazine").rglob("*.html"))
-        self.assertEqual(len(pages), 8)
+        self.assertEqual(set(pages), expected)
         for page in pages:
             html = page.read_text(encoding="utf-8")
-            self.assertIn("articles.js?v=20260831-usage-title-r20", html, page)
+            self.assertIn("articles.js?v=20260907-sail-repair-r23", html, page)
             self.assertIn("magazine.js?v=20260830-body-media-r19", html, page)
             self.assertIn("magazine.css?v=20260830-photo-swap-r11", html, page)
 

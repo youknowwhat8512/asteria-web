@@ -112,17 +112,30 @@ def main() -> int:
         hostile = "crawler guard </script><script>alert(1)</script>"
         articles_path = build_root / "magazine" / "articles.js"
         hostile_source = articles_path.read_text(encoding="utf-8")
-        first_excerpt = re.search(r'excerpt:\s*"([^"]+)"', hostile_source)
-        assert first_excerpt, "expected an excerpt fixture in articles.js"
+        # Anchor the fixture on the richest explainer in the data — the device
+        # tutorial — rather than on whichever episode happens to sit first.
+        # Publishing an episode reorders this file, but the slot inventory
+        # poisoned below (rings, legend, usage panel, scenario) belongs to that
+        # one card, so the anchor has to follow the card, not the file order.
+        DEVICE_TUTORIAL = 'layout: "device-tutorial"'
+        assert DEVICE_TUTORIAL in hostile_source, "expected a device-tutorial explainer fixture"
+        target_slug = re.findall(
+            r'slug:\s*"([^"]+)"', hostile_source[: hostile_source.index(DEVICE_TUTORIAL)])[-1]
+        # The poisoned excerpt must land on that same episode: the crawler page
+        # asserted below is that episode's page.
+        first_excerpt = re.compile(r'excerpt:\s*"([^"]+)"').search(
+            hostile_source, hostile_source.index(f'slug: "{target_slug}"'))
+        assert first_excerpt, f"expected an excerpt fixture in {target_slug}"
         hostile_source = (
             hostile_source[: first_excerpt.start(1)]
             + hostile
             + hostile_source[first_excerpt.end(1) :]
         )
-        # Poison every slot of the first explainer too. Real copy rarely carries
+        # Poison every slot of that explainer too. Real copy rarely carries
         # markup in these fields, so without this the escaping of a card slot
-        # would only be proven by accident.
-        explainer_at = hostile_source.index("explainer: {")
+        # would only be proven by accident. Offsets moved with the excerpt edit,
+        # so the anchor is resolved again against the edited source.
+        explainer_at = hostile_source.rindex("explainer: {", 0, hostile_source.index(DEVICE_TUTORIAL))
         head, tail = hostile_source[:explainer_at], hostile_source[explainer_at:]
         # Slot poisoning is region-scoped: the optional usage panel reuses the
         # kicker/title/summary field names, so a plain count=1 sweep over the
@@ -190,7 +203,7 @@ def main() -> int:
         assert 'id="magazineMasonry"' in index_html, "hydration hook id must be preserved"
         assert hostile not in index_html, "raw hostile JSON-LD/content sequence leaked into HTML"
 
-        hostile_page = (build_root / "magazine" / slugs[0] / "index.html").read_text(encoding="utf-8")
+        hostile_page = (build_root / "magazine" / target_slug / "index.html").read_text(encoding="utf-8")
         assert hostile not in hostile_page, "raw hostile sequence leaked into article HTML"
         assert "\\u003c/script>" in hostile_page, "article JSON-LD must escape script-closing sequences"
 

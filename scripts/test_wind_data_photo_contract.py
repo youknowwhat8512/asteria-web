@@ -63,7 +63,7 @@ BODY_SCENES = (
 # revision advances the article data while retaining the verified renderer and
 # natural-size portrait stylesheet bundles.
 CACHE_KEYS = {
-    "articles.js": "20260831-usage-title-r20",
+    "articles.js": "20260907-sail-repair-r23",
     "magazine.js": "20260830-body-media-r19",
     "magazine.css": "20260830-photo-swap-r11",
 }
@@ -935,14 +935,28 @@ class WindDataPhotoContractTests(unittest.TestCase):
         pages = sorted(p for p in ROOT.rglob("*.html")
                        if not {".wrangler", "prototypes", ".git"} & set(p.relative_to(ROOT).parts))
         keys = {asset: set() for asset in CACHE_KEYS}
-        readers = {asset: 0 for asset in CACHE_KEYS}
+        readers = {asset: set() for asset in CACHE_KEYS}
         for page in pages:
             html = page.read_text(encoding="utf-8")
             for asset in keys:
                 for found in re.findall(rf'{re.escape(asset)}\?v=([^"\']+)', html):
                     keys[asset].add(found)
-                    readers[asset] += 1
-        self.assertEqual(readers, {"articles.js": 9, "magazine.js": 8, "magazine.css": 8})
+                    readers[asset].add(page)
+        # Expected readers come from the episode data, not a pinned count: every
+        # slug ships a page that loads all three assets, as do the magazine index
+        # and the slug-less article shell, and the home page reads articles.js
+        # for its episode teasers. Publishing an episode therefore extends the
+        # expectation instead of breaking it, while a page that forgets an asset
+        # (or an unexpected page that loads one) still fails.
+        slugs = re.findall(r'slug:\s*"([^"]+)"', self.data)
+        self.assertTrue(slugs, "expected episode slugs in articles.js")
+        magazine_pages = {ROOT / "magazine" / "index.html", ROOT / "magazine" / "article.html"}
+        magazine_pages.update(ROOT / "magazine" / slug / "index.html" for slug in slugs)
+        self.assertEqual(readers, {
+            "articles.js": magazine_pages | {ROOT / "index.html"},
+            "magazine.js": magazine_pages,
+            "magazine.css": magazine_pages,
+        })
         self.assertEqual(keys, {asset: {key} for asset, key in CACHE_KEYS.items()})
 
     def test_generated_no_js_body_carries_the_card_exactly_once(self):
