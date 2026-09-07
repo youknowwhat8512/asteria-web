@@ -19,7 +19,7 @@ class ShootingStarTipCardTests(unittest.TestCase):
 
     def test_reinforcement_tip_uses_shared_card_schema(self):
         for required in (
-            'title: "엄주범 단장 팁"',
+            'title: "단장 JB 팁"',
             "현장에서 ‘실리카’라고 부른 해양용 실리콘 실란트",
             "서로 다른 진동 특성",
             "필수 공정",
@@ -47,11 +47,14 @@ class ShootingStarTipCardTests(unittest.TestCase):
         expected.update(ROOT / "magazine" / slug / "index.html" for slug in slugs)
         pages = sorted((ROOT / "magazine").rglob("*.html"))
         self.assertEqual(set(pages), expected)
-        for page in pages:
+        entry_points = [ROOT / "index.html", *pages]
+        self.assertEqual(len(entry_points), 10)
+        for page in entry_points:
             html = page.read_text(encoding="utf-8")
-            self.assertIn("articles.js?v=20260907-four-positions-r24", html, page)
-            self.assertIn("magazine.js?v=20260830-body-media-r19", html, page)
-            self.assertIn("magazine.css?v=20260830-photo-swap-r11", html, page)
+            self.assertIn("articles.js?v=20260907-leadership-aliases-r26", html, page)
+            if page.parent == ROOT / "magazine" or ROOT / "magazine" in page.parents:
+                self.assertIn("magazine.js?v=20260830-body-media-r19", html, page)
+                self.assertIn("magazine.css?v=20260830-photo-swap-r11", html, page)
 
 
 if __name__ == "__main__":

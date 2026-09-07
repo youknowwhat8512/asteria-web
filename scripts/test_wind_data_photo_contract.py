@@ -63,7 +63,7 @@ BODY_SCENES = (
 # revision advances the article data while retaining the verified renderer and
 # natural-size portrait stylesheet bundles.
 CACHE_KEYS = {
-    "articles.js": "20260907-four-positions-r24",
+    "articles.js": "20260907-leadership-aliases-r26",
     "magazine.js": "20260830-body-media-r19",
     "magazine.css": "20260830-photo-swap-r11",
 }
@@ -468,7 +468,7 @@ class WindDataPhotoContractTests(unittest.TestCase):
         target = ("처음 시도한 태블릿 기반 세일링이었지만 적응은 빨랐습니다. 문제가 생기면 "
                   "스키퍼의 표정보다 태블릿의 수치를 먼저 확인했고, 누구의 감이 맞는지를 두고 "
                   "옥신각신하기보다 같은 데이터를 놓고 다음 조정을 이야기했습니다.")
-        following = "엄주범 단장이 장비를 마련한 이유도 여기에 있었습니다."
+        following = "단장 JB가 장비를 마련한 이유도 여기에 있었습니다."
         photo = f"{PREFIX}helm-underway.jpeg"
         for markup, where in ((self.dom, "hydrated DOM"), (self.static_detail, "static fallback")):
             self.assertEqual(markup.count(photo), 1, where)
