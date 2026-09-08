@@ -51,7 +51,7 @@ class ShootingStarTipCardTests(unittest.TestCase):
         self.assertEqual(len(entry_points), 10)
         for page in entry_points:
             html = page.read_text(encoding="utf-8")
-            self.assertIn("articles.js?v=20260907-leadership-aliases-r26", html, page)
+            self.assertIn("articles.js?v=20260908-full-initial-aliases-r27", html, page)
             if page.parent == ROOT / "magazine" or ROOT / "magazine" in page.parents:
                 self.assertIn("magazine.js?v=20260830-body-media-r19", html, page)
                 self.assertIn("magazine.css?v=20260830-photo-swap-r11", html, page)

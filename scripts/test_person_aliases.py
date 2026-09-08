@@ -1,14 +1,5 @@
 #!/usr/bin/env python3
-"""Contract test: person-alias substitution in magazine/articles.js.
-
-Verifies:
-- All 17 non-pro real names are absent (0 occurrences)
-- Each activity alias appears at least once in the article data
-- 정성안 (coach, real name retained) still appears
-- 김지아 (athlete, real name retained) still appears
-- 스키퍼 XX form is used (no bare 'Skipper XX' left in data)
-"""
-import re
+"""Contract test: fixed-initial person aliases in magazine/articles.js."""
 import unittest
 from pathlib import Path
 
@@ -21,11 +12,18 @@ REAL_NAMES_ABSENT = [
     "박정일", "김동천", "김영철", "김정철", "김은진",
 ]
 
-# Public activity names that must appear at least once
-ALIASES_PRESENT = [
-    "회장 DJ", "단장 JB", "국장 YH", "스키퍼 JW", "스키퍼 JY", "스키퍼 JS",
-    "Crew JM", "Crew JH", "Crew SB", "Crew JS", "Crew A", "Crew WH",
-    "Crew JI", "Crew DC", "Crew YC", "Crew JC", "Crew EJ",
+# Public fixed initials that must appear at least once
+MEMBER_INITIALS_PRESENT = [
+    "YJW", "GJY", "PJS", "KJM", "LJH", "CSB", "CJS", "LA", "LWH",
+    "PJI", "KDC", "KYC", "KJC", "KEJ",
+]
+
+LEADERSHIP_NAMES_PRESENT = ["회장 DJ", "단장 JB", "국장 YH"]
+
+LEGACY_ACTIVITY_NAMES_ABSENT = [
+    "스키퍼 JW", "스키퍼 JY", "스키퍼 JS", "Crew JM", "Crew JH", "Crew SB",
+    "Crew JS", "Crew A", "Crew WH", "Crew JI", "Crew DC", "Crew YC",
+    "Crew JC", "Crew EJ",
 ]
 
 LEADERSHIP_SKIPPER_NAMES_ABSENT = ["스키퍼 DJ", "스키퍼 JB", "스키퍼 YH"]
@@ -48,10 +46,20 @@ class PersonAliasContractTests(unittest.TestCase):
                 found.append(f"{name}({count}회)")
         self.assertEqual(found, [], f"비프로 실명 발견: {found}")
 
-    def test_each_alias_appears_at_least_once(self):
-        """Every activity alias must appear at least once in articles.js."""
-        missing = [alias for alias in ALIASES_PRESENT if alias not in self.data]
-        self.assertEqual(missing, [], f"활동명 없음: {missing}")
+    def test_each_member_initial_appears_at_least_once(self):
+        """Every fixed member initial must appear at least once."""
+        missing = [alias for alias in MEMBER_INITIALS_PRESENT if alias not in self.data]
+        self.assertEqual(missing, [], f"고정 이니셜 없음: {missing}")
+
+    def test_leadership_names_are_retained(self):
+        """The three organizational activity names remain unchanged."""
+        missing = [name for name in LEADERSHIP_NAMES_PRESENT if name not in self.data]
+        self.assertEqual(missing, [], f"운영진 활동명 없음: {missing}")
+
+    def test_legacy_activity_names_are_absent(self):
+        """All prefixed member activity names must have zero occurrences."""
+        found = [name for name in LEGACY_ACTIVITY_NAMES_ABSENT if name in self.data]
+        self.assertEqual(found, [], f"구 활동명 발견: {found}")
 
     def test_leadership_names_do_not_use_skipper_prefix(self):
         """The three club leaders use their organizational activity names."""
@@ -67,18 +75,10 @@ class PersonAliasContractTests(unittest.TestCase):
         for name in REAL_NAMES_RETAINED:
             self.assertIn(name, self.data, f"{name} 본명이 사라졌습니다")
 
-    def test_no_bare_english_skipper_xx_in_data(self):
-        """Skipper XX (English) must not appear — only 스키퍼 XX form is valid."""
-        # Exclude results.skipper field (inaccessible by line content alone,
-        # but "Skipper XX" in normal prose means the pattern is wrong)
-        # The badge value "Skipper" as a standalone quoted string is OK
-        matches = re.findall(r'Skipper [A-Z]{2}', self.data)
-        self.assertEqual(matches, [], f"영문 Skipper XX 잔존: {matches}")
-
-    def test_cache_key_is_r26(self):
-        """articles.js cache key in test_wind_data_photo_contract must be r26."""
+    def test_cache_key_is_r27(self):
+        """The cache contract pins the full-initial r27 key."""
         contract = (ROOT / "scripts/test_wind_data_photo_contract.py").read_text(encoding="utf-8")
-        self.assertIn("20260907-leadership-aliases-r26", contract)
+        self.assertIn("20260908-full-initial-aliases-r27", contract)
 
     def test_tip_title_uses_alias(self):
         """Reinforcement tip title must use alias form."""
@@ -90,11 +90,11 @@ class PersonAliasContractTests(unittest.TestCase):
         """Club Cup results use leadership names without a duplicate title badge."""
         self.assertIn(
             '{ rank: "02", skipper: "회장 DJ", badges: [], '
-            'detail: "단장 JB · Crew JM · Crew WH · Crew JI · 게스트 정성안" }',
+            'detail: "단장 JB · KJM · LWH · PJI · 게스트 정성안" }',
             self.data,
         )
         self.assertIn(
-            'detail: "국장 YH · Crew YC · Crew DC · 게스트 Crew EJ(레이디스)"',
+            'detail: "국장 YH · KYC · KDC · 게스트 KEJ(레이디스)"',
             self.data,
         )
         self.assertNotIn('badges: ["클럽 회장"]', self.data)
