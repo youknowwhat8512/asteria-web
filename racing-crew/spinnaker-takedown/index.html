@@ -1,0 +1,358 @@
+<!doctype html>
+<html lang="ko"><head><meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>스피네이커 테이크다운 학습 가이드 | Asteria Yacht Club</title>
+<meta name="description" content="리워드 드롭, 자이브 드롭, 일찍 내리기를 SVG 애니메이션과 역할별 순서표로 익히는 아스테리아 레이싱 크루 학습 페이지입니다.">
+<meta name="robots" content="noindex,nofollow">
+<link rel="canonical" href="https://asteria.club/racing-crew/spinnaker-takedown/">
+<link href="https://fonts.googleapis.com/css2?family=Gowun+Dodum&display=swap" rel="stylesheet">
+<style>
+  *{box-sizing:border-box;}
+  html{background:#f4f1ea;scroll-behavior:smooth;}
+  body{--foreground:#172331;--card:#fffdf7;margin:0;min-width:0;overflow-x:hidden;background:linear-gradient(180deg,#061622 0,#0e2a44 172px,#f4f1ea 172px);color:var(--foreground);}
+  a{color:inherit;text-decoration:none;}
+  .topbar{min-height:68px;display:flex;align-items:center;justify-content:space-between;gap:20px;width:min(1120px,100%);margin:0 auto;padding:12px 24px;color:#f8f7f2;}
+  .brand img{display:block;width:auto;height:32px;filter:drop-shadow(0 0 2px #fff);}
+  .top-links{display:flex;flex-wrap:wrap;justify-content:flex-end;gap:8px;font:700 13px/1.2 'Gowun Dodum','Apple SD Gothic Neo',sans-serif;}
+  .top-links a{display:inline-flex;align-items:center;min-height:38px;padding:0 14px;border:1px solid rgba(255,255,255,.35);border-radius:999px;background:rgba(2,9,15,.22);}
+  .page-shell{width:min(860px,100%);margin:0 auto;padding:34px 20px 64px;}
+  .page-heading{margin:0 0 24px;padding:24px 26px;border-radius:16px;background:#fffdf7;box-shadow:0 16px 44px rgba(2,9,15,.18);font-family:'Gowun Dodum','Apple SD Gothic Neo',sans-serif;}
+  .page-heading small{color:#c0392b;font-size:12px;font-weight:700;letter-spacing:.12em;}
+  .page-heading h1{margin:8px 0 6px;font-size:clamp(27px,5vw,43px);line-height:1.16;letter-spacing:-.045em;}
+  .page-heading p{margin:0;color:#53606c;font-size:14px;line-height:1.65;}
+  .site-footer{padding:26px 20px 34px;background:#061622;color:#aab8c2;text-align:center;font:600 12px/1.6 'Gowun Dodum','Apple SD Gothic Neo',sans-serif;}
+  :root{ --ink: var(--foreground, #222); --spin:#c0392b; --wind:#2b6cb0; --mark:#d97706; --note:#fff3b0;}
+  .wrap{ width:100%; font-family:'Gowun Dodum', 'Apple SD Gothic Neo', 'Noto Sans KR', sans-serif; color:var(--ink);}
+  h2{ font-size:20px; margin:0 0 4px; font-weight:600; display:flex; align-items:center; gap:10px;}
+  h2 .n{ display:inline-flex; width:30px; height:30px; border-radius:50%; background:var(--ink); color:var(--card,#fff); font-size:16px; align-items:center; justify-content:center; flex:none;}
+  section{ margin:0 0 28px; padding:18px 20px 12px; border:2px solid var(--ink); border-radius:12px; position:relative; box-shadow:4px 4px 0 rgba(0,0,0,.12);}
+  section.a{ border-color:#2e7d32; background:rgba(46,125,50,.05);}
+  section.b{ border-color:#2b6cb0; background:rgba(43,108,176,.05);}
+  section.c{ border-color:#c0392b; background:rgba(192,57,43,.05);}
+  section.d{ border-color:#b08900; background:rgba(176,137,0,.06);}
+  section.d{ border-color:#b08900; background:rgba(176,137,0,.06);}
+  section.e{ border-color:#6d4c9f; background:rgba(109,76,159,.05);}
+  section.a h2 .n{ background:#2e7d32;} section.b h2 .n{ background:#2b6cb0;} section.c h2 .n{ background:#c0392b;} section.d h2 .n{ background:#b08900;} section.e h2 .n{ background:#6d4c9f;}
+  .tag{ position:absolute; top:-12px; right:16px; font-size:12px; padding:2px 10px; border-radius:999px; background:var(--card,#fff); border:1.5px solid currentColor;}
+  section.a .tag{ color:#2e7d32;} section.b .tag{ color:#2b6cb0;} section.c .tag{ color:#c0392b;} section.d .tag{ color:#b08900;} section.e .tag{ color:#6d4c9f;}
+  .sub{ font-size:14px; opacity:.8; margin:0 0 6px; line-height:1.5;}
+  svg{ display:block; width:100%; height:auto; overflow:visible;}
+  .ink{ stroke:var(--ink); fill:none; stroke-width:2; stroke-linecap:round; stroke-linejoin:round;}
+  text{ font-family:inherit; fill:var(--ink); font-size:13px;}
+  .small{ font-size:11.5px; opacity:.9;}
+  .big{ font-size:15px; font-weight:600;}
+  .red{ fill:var(--spin);} .blue{ fill:var(--wind);}
+  .rough path, .rough circle{ filter:url(#rough);}
+  .ghost path, .ghost circle{ opacity:.45;}
+  .live path{ filter:none;}
+  text{ paint-order:stroke; stroke:var(--card,#fff); stroke-width:3px; stroke-linejoin:round;}
+  table.roles{ border-collapse:collapse; width:100%; margin:6px 0 4px; font-size:12px; line-height:1.35;}
+  table.roles th, table.roles td{ border:1.5px solid rgba(0,0,0,.35); padding:5px 6px; vertical-align:top; text-align:left;}
+  table.roles th{ background:rgba(0,0,0,.06); font-weight:600; white-space:nowrap;}
+  table.roles td.role{ font-weight:600; white-space:nowrap; background:var(--note); width:64px;}
+  table.roles td.key{ background:#fdecea;}
+  .roles-title{ font-size:14px; font-weight:600; margin:14px 0 2px;}
+  div[id^='roles']{max-width:100%;overflow-x:auto;overscroll-behavior-inline:contain;}
+  table.roles{min-width:720px;}
+  @media(max-width:600px){
+    .topbar{padding:10px 14px}.brand img{height:27px}.top-links{gap:6px;font-size:11px}.top-links a{min-height:34px;padding:0 10px}
+    .page-shell{padding:24px 12px 48px}.page-heading{padding:20px 18px;margin-bottom:20px}
+    section{padding:16px 12px 10px;margin-bottom:22px;border-width:1.5px;box-shadow:3px 3px 0 rgba(0,0,0,.1)}
+    h2{align-items:flex-start;font-size:17px;line-height:1.35}.sub{font-size:12px}.tag{right:10px}
+  }
+</style></head><body>
+<nav class="topbar" aria-label="주요 링크"><a class="brand" href="/" aria-label="아스테리아 홈페이지"><img src="../../images/asteria-logo-lockup-transparent.png" alt="Asteria Yacht Club"></a><div class="top-links"><a href="/">홈</a><a href="../">레이싱 크루 안내</a></div></nav>
+<main class="page-shell"><header class="page-heading"><small>RACING CREW LEARNING NOTE</small><h1>스피네이커 테이크다운</h1><p>택과 반환 방향에 따른 두 가지 패턴, 그리고 일찍 내리기를 역할별 순서와 움직이는 도해로 확인합니다.</p></header>
+<div class="wrap">
+
+<svg width="0" height="0"><defs>
+  <filter id="rough" x="-5%" y="-5%" width="110%" height="110%">
+    <feTurbulence type="fractalNoise" baseFrequency="0.035" numOctaves="2" seed="7" result="n"/>
+    <feDisplacementMap in="SourceGraphic" in2="n" scale="1.6" xChannelSelector="R" yChannelSelector="G"/>
+  </filter>
+  <marker id="arr" viewBox="0 0 10 10" refX="8" refY="5" markerWidth="7" markerHeight="7" orient="auto">
+    <path d="M1,1 L8,5 L1,9" fill="none" stroke="context-stroke" stroke-width="1.6" stroke-linecap="round"/>
+  </marker>
+</defs></svg>
+
+<section class="a"><span class="tag">개요</span>
+<h2><span class="n">1</span>경우의 수 — 택 2 × 반환 방향 2 = 4가지, 실제 패턴은 2개</h2>
+<p class="sub">판단 기준은 하나: <b>스핀이 턴의 바깥쪽</b>이면 리워드(표준) 드롭, <b>턴의 안쪽</b>이면 자이브(멕시칸) 드롭.</p>
+<svg id="matrix" viewBox="0 0 720 330" role="img" aria-label="택과 반환 방향에 따른 테이크다운 방식 표"></svg>
+</section>
+
+<section class="b"><span class="tag">패턴 A</span>
+<h2><span class="n">2</span>기본형 — 포트택 접근, 포트 반환(좌회전) : 리워드 드롭</h2>
+<p class="sub">스핀 우측(풍하)·폴 좌측(풍상). 스핀이 턴 바깥쪽 → 집 뒤 그늘에서 집 밑으로 내림.</p>
+<svg id="case1" viewBox="0 0 720 420" role="img" aria-label="리워드 드롭 순서 애니메이션"></svg>
+<div id="roles1"></div>
+</section>
+
+<section class="c"><span class="tag">패턴 B</span>
+<h2><span class="n">3</span>변형 — 스타보드택 접근, 포트 반환(좌회전) : 자이브 드롭 (멕시칸 = 키위 드롭)</h2>
+<p class="sub">스핀 좌측·폴 우측. 스핀이 턴 안쪽 → 폴 먼저 내리고, 자이빙하면서 스핀이 메인에 붙으면 풍상측 풋으로 걷음.</p>
+<svg id="case2" viewBox="0 0 720 420" role="img" aria-label="자이브 드롭 순서 애니메이션"></svg>
+<div id="roles2"></div>
+</section>
+
+<section class="e"><span class="tag">아마추어 권장</span>
+<h2><span class="n">4</span>일찍 내리기(Early Drop) — 마크 전에 스핀을 다 내리고, 집만으로 턴</h2>
+<p class="sub">택·반환 방향과 무관하게 언제나 쓸 수 있는 안전한 방식. 마크 5–8척 길이 전에 모든 작업을 끝내고, 마크 근처에서는 <b>조타와 집 트림만</b> 신경 쓴다.</p>
+<svg id="case0" viewBox="0 0 720 420" role="img" aria-label="일찍 내리기 순서 애니메이션"></svg>
+<div id="roles0"></div>
+</section>
+
+<!-- ⑤ 통합 타임라인은 ②③④ 각 역할표로 대체됨 -->
+
+</div></main><footer class="site-footer">ASTERIA YACHT CLUB · 직접 링크 전용 학습 자료</footer>
+<script>
+const NS='http://www.w3.org/2000/svg';
+function el(p,t,a,txt){const e=document.createElementNS(NS,t);for(const k in a)e.setAttribute(k,a[k]);if(txt!=null)e.textContent=txt;p.appendChild(e);return e;}
+function g(p,a={}){return el(p,'g',a);}
+function line(p,x1,y1,x2,y2,a={}){return el(p,'path',Object.assign({d:`M${x1},${y1} L${x2},${y2}`,class:'ink'},a));}
+function txt(p,x,y,s,a={}){return el(p,'text',Object.assign({x,y},a),s);}
+
+// 손그림 사각형 (모서리 살짝 어긋남)
+function box(p,x,y,w,h,a={}){
+  const j=()=> (Math.random()-0.5)*3;
+  const d=`M${x+j()},${y+j()} L${x+w+j()},${y+j()} L${x+w+j()},${y+h+j()} L${x+j()},${y+h+j()} Z`;
+  return el(p,'path',Object.assign({d,class:'ink'},a));
+}
+
+// ---- 세일 형상 (위에서 본 모습, 공용) ----
+// m: 메인 방향(+1 우/-1 좌), s: 스핀 방향, k: 폴 길이 0–1, jh: 집 게양 0–1, f: 스핀 부풀기 0–1
+const SAIL={
+  hull:'M0,-36 C12,-24 13,12 9,30 L-9,30 C-13,12 -12,-24 0,-36 Z',
+  deck:'M0,-30 L0,26 M-6,6 C-5,20 5,20 6,6 C4,2 -4,2 -6,6',   // 센터라인 + 콕핏
+  boom:(m)=>`M0,-6 L${m*17},20`,
+  main:(m)=>`M0,-6 Q${m*26},2 ${m*17},20 L0,-6 Z`,           // 붐 바깥쪽으로 배가 부푼 세일
+  jib:(m,h)=>h<=0?'':`M0,-36 Q${m*18*h},${-36+9*h} ${m*12*h},${-36+24*h} L0,-36 Z`,
+  jibSheet:(m,h)=>h<=0?'':`M${m*12*h},${-36+24*h} L${m*7},10`,
+  pole:(s,k)=>k<=0?'':`M0,-6 L${-s*32*k},${-6-22*k}`,
+  poleEnd:(s,k)=>[-s*32*k,-6-22*k],
+  tack:(s,k)=>k>0?[-s*32*k,-6-22*k]:[-s*6,-32],
+  spin:(s,f,t)=>f<=0?'':`M${t[0]},${t[1]} Q${-s*6*f},${-72*f-4} ${s*20*f},${-58*f-2} Q${s*58*f},${-42*f-6} ${s*34*f},-6 L0,-6 Z`,
+  spinSheet:(s,f)=>f<=0?'':`M${s*34*f},-6 L${s*8},22`,
+  spinGuy:(s,t)=>`M${t[0]},${t[1]} L${-s*8},22`,
+};
+const INK={class:'ink'};
+function drawSails(G,st){ // st={m,s,k,jh,f,spinDown}
+  el(G,'path',{d:SAIL.hull,class:'ink',fill:'var(--card,#fff)','stroke-width':2.4});
+  el(G,'path',{d:SAIL.deck,class:'ink','stroke-width':1,opacity:.6});
+  el(G,'circle',{cx:0,cy:-6,r:2.6,fill:'var(--ink)'});
+  el(G,'path',{d:SAIL.main(st.m),class:'ink','stroke-width':1.3,fill:'rgba(120,120,120,.22)'});
+  el(G,'path',{d:SAIL.boom(st.m),class:'ink','stroke-width':3});
+  if(st.jh>0){el(G,'path',{d:SAIL.jib(st.m,st.jh),class:'ink','stroke-width':1.3,fill:'rgba(120,120,120,.28)','stroke-dasharray':st.jh<1?'4 3':'none'});
+    el(G,'path',{d:SAIL.jibSheet(st.m,st.jh),class:'ink','stroke-width':1,opacity:.7});}
+  if(st.k>0){el(G,'path',{d:SAIL.pole(st.s,st.k),class:'ink','stroke-width':3});
+    const [px,py]=SAIL.poleEnd(st.s,st.k); el(G,'circle',{cx:px,cy:py,r:3,fill:'var(--ink)'});}
+  if(st.f>0){const t=SAIL.tack(st.s,st.k);
+    el(G,'path',{d:SAIL.spin(st.s,st.f,t),fill:'rgba(192,57,43,.28)',stroke:'var(--spin)','stroke-width':2.2,'stroke-linejoin':'round'});
+    el(G,'path',{d:SAIL.spinSheet(st.s,st.f),stroke:'var(--spin)','stroke-width':1,fill:'none',opacity:.8});
+    el(G,'path',{d:SAIL.spinGuy(st.s,t),stroke:'var(--spin)','stroke-width':1,fill:'none',opacity:.8,'stroke-dasharray':st.k>0?'none':'3 3'});}
+  if(st.spinDown){const s=st.s;
+    el(G,'path',{d:`M${s*4},-32 q${s*9},-4 ${s*7},4 q${s*-9},6 ${s*2},9 q${s*9},2 ${s*4},9 q${s*-10},4 ${s*1},9`,stroke:'var(--spin)','stroke-width':2.6,fill:'none','stroke-linecap':'round'});
+    el(G,'path',{d:`M${s*34},-46 L${s*13},-26`,stroke:'var(--spin)','stroke-width':1.8,fill:'none','marker-end':'url(#arr)'});}
+}
+
+// 보트 (bow up, 로컬좌표). opt: spin:'L'|'R'|'down-L'|'down-R'|null, pole:'L'|'R'|null, jib:bool|'hoist', main:'L'|'R'
+function boat(p,x,y,hdg,opt={}){
+  const G=g(p,{transform:`translate(${x},${y}) rotate(${hdg})`,class:'rough ghost'});
+  const m=opt.main==='L'?-1:1;
+  const s=(opt.spin||'').endsWith('L')?-1:(opt.spin||'').endsWith('R')?1:-m;
+  drawSails(G,{m,s,k:opt.pole?1:0,jh:opt.jib==='hoist'?.6:opt.jib?1:0,f:(opt.spin==='L'||opt.spin==='R')?1:0,spinDown:(opt.spin||'').startsWith('down')});
+  if(opt.label){txt(G,0,50,opt.label,{'text-anchor':'middle',class:'small',transform:`rotate(${-hdg},0,50)`});}
+  return G;
+}
+function wind(p,x,y,label=true){
+  const G=g(p,{class:'rough'});
+  for(let i=0;i<3;i++){el(G,'path',{d:`M${x+i*22},${y} q4,10 0,20 q-4,10 0,20`,stroke:'var(--wind)',fill:'none','stroke-width':2,'marker-end':'url(#arr)'});}
+  if(label) txt(G,x+66,y+28,'바람',{class:'blue big'});
+}
+function mark(p,x,y,label){const G=g(p,{class:'rough'});
+  el(G,'circle',{cx:x,cy:y,r:9,fill:'rgba(217,119,6,.35)',stroke:'var(--mark)','stroke-width':2.2});
+  el(G,'path',{d:`M${x},${y-9} L${x},${y-26} l14,4 l-14,5`,stroke:'var(--mark)','stroke-width':2,fill:'none'});
+  if(label) txt(G,x+16,y+6,label,{class:'small'});}
+function note(p,x,y,w,h,lines){const G=g(p,{class:'rough'});
+  box(G,x,y,w,h,{fill:'var(--note)',stroke:'#b08900'});
+  lines.forEach((l,i)=>txt(G,x+8,y+20+i*18,l,{class:'small',fill:'#3a2f00'}));}
+function path(p,d,a={}){return el(p,'path',Object.assign({d,class:'ink',fill:'none','stroke-dasharray':'6 5','marker-end':'url(#arr)'},a));}
+
+/* ---------- ① 매트릭스 ---------- */
+{
+const s=document.getElementById('matrix');
+const M=g(s,{class:'rough'});
+const x0=150,y0=60,cw=255,ch=100;
+txt(M,x0+cw/2,y0-14,'포트 반환 (좌회전)',{'text-anchor':'middle',class:'big'});
+txt(M,x0+cw+cw/2,y0-14,'스타보드 반환 (우회전)',{'text-anchor':'middle',class:'big'});
+txt(M,x0-12,y0+ch/2+6,'포트택 접근',{'text-anchor':'end',class:'big'});
+txt(M,x0-12,y0+ch/2-14,'(스핀 우·폴 좌)',{'text-anchor':'end',class:'small'});
+txt(M,x0-12,y0+ch+ch/2+6,'스타보드택 접근',{'text-anchor':'end',class:'big'});
+txt(M,x0-12,y0+ch+ch/2-14,'(스핀 좌·폴 우)',{'text-anchor':'end',class:'small'});
+const cells=[
+ [0,0,'A  리워드 드롭 (기본형 ②)','스핀 = 턴 바깥쪽','#e8f5e9'],
+ [1,0,'B  자이브 드롭 (변형 ③의 거울)','스핀 = 턴 안쪽','#fdecea'],
+ [0,1,'B  자이브 드롭 (변형 ③)','스핀 = 턴 안쪽','#fdecea'],
+ [1,1,'A  리워드 드롭 (②의 거울)','스핀 = 턴 바깥쪽','#e8f5e9'],
+];
+cells.forEach(([cx,cy,t1,t2,bg])=>{const x=x0+cx*cw,y=y0+cy*ch;
+  box(M,x,y,cw,ch,{fill:bg});
+  txt(M,x+14,y+40,t1,{class:'big'}); txt(M,x+14,y+68,t2,{class:'small'});});
+txt(M,x0,y0+2*ch+34,'→ "나머지 2개는 일찍 내리고 집만으로 턴" 이 아니라, 같은 두 패턴의 좌우 대칭임.',{class:'small'});
+txt(M,x0,y0+2*ch+56,'   일찍 내리기(Early drop, ④)는 4칸 어디서든 고를 수 있는 아마추어 권장 안전 선택지.',{class:'small'});
+}
+
+/* ---------- ② 기본형 ---------- */
+{
+const s=document.getElementById('case1');
+wind(s,40,20);
+// 경로: 위에서 아래(우측 조금)로 → 마크에서 좌회전 → 우상단으로
+path(s,'M300,40 L360,190 Q400,300 470,270 Q520,240 590,120',{stroke:'rgba(0,0,0,.35)'});
+mark(s,468,222,'');
+txt(s,486,214,'리워드 마크 (배 왼쪽)',{class:'small'});
+// 진행 순서 보트들 (heading 160 → 90 → 45)
+boat(s,290,70,160,{spin:'R',pole:'L',main:'R',label:'1 러닝'});
+boat(s,340,180,160,{spin:'R',pole:'L',main:'R',jib:'hoist',label:'2 집업'});
+boat(s,395,285,160,{spin:'R',pole:null,main:'R',jib:true,label:'3 폴다운'});
+boat(s,485,270,110,{spin:'down-R',pole:null,main:'R',jib:true,label:'4 가이 릴리스·헬리어드 다운'});
+boat(s,590,150,45,{spin:null,pole:null,main:'R',jib:true,label:'5 헤딩업·풍상 집트림'});
+// 메모
+note(s,20,120,210,150,['좌측(풍상) 라인 = 가이.','  풀리는 건 가이/택 쪽,','  풍하 시트는 잡고 있어야','  스핀이 집 뒤 그늘로 들어옴.','','바우: 택을 집 밑으로 끌어','  풍하측에서 걷는 게 표준.','  앞(포스테이 바깥)은 걸림 위험.']);
+note(s,545,300,170,96,['턴은 스핀이 다 내려온 뒤','  또는 헬리어드 절반 이하에서.','턴 중 집 시트 계속 인,','  러핑(펄럭)이 아니라 헤딩업.']);
+runner(s,'M300,40 L360,190 Q400,300 470,270 Q520,240 590,120',{jibAt:.22,poleOff:.42,spinOff:[.55,.72],gybeAt:null,side:'R'});
+}
+
+/* ---------- ③ 변형 ---------- */
+{
+const s=document.getElementById('case2');
+wind(s,40,20);
+// 경로: 위에서 아래(좌측 조금) → 마크 근처에서 자이브 겸 좌회전 → 우상단
+path(s,'M420,40 L380,180 Q340,290 430,300 Q520,300 600,140',{stroke:'rgba(0,0,0,.35)'});
+mark(s,455,240,'');
+txt(s,472,232,'리워드 마크 (배 왼쪽)',{class:'small'});
+boat(s,430,70,200,{spin:'L',pole:'R',main:'L',label:'1 러닝 (스타보드택)'});
+boat(s,390,180,200,{spin:'L',pole:null,main:'L',jib:true,label:'2 집업 → 폴다운 (자이빙 전!)'});
+boat(s,385,290,175,{spin:'L',pole:null,main:'L',jib:true,label:'3 자이브 시작 · 헬리어드 서서히'});
+boat(s,485,300,110,{spin:'down-L',pole:null,main:'R',jib:true,label:'4 메인 넘어감 → 스핀이 메인에 붙음 → 풋으로 걷기'});
+boat(s,600,160,45,{spin:null,pole:null,main:'R',jib:true,label:'5 헤딩업·집트림'});
+note(s,20,120,220,150,['핵심: 스핀 시트를 풀지 말고','  트림 유지. 그래야 자이빙 후','  스핀이 메인 앞면에 눌려서','  풍상측(새 풍상)에 그대로 남음.','','피트맨: 자이브 직전부터 천천히,','  메인 넘어가는 순간 빠르게.','트리머: 집 자이빙은 턴과 같이.']);
+note(s,545,330,170,70,['대안 "더티 멕시칸": 자이빙 없이','  깊게 베어링 → 풍상측으로 드롭.','초보 크루·강풍 = 일찍 내리기(④).']);
+runner(s,'M420,40 L380,180 Q340,290 430,300 Q520,300 600,140',{jibAt:.2,poleOff:.36,spinOff:[.58,.78],gybeAt:.58,side:'L'});
+}
+
+/* ---------- 역할별 작업 순서표 ---------- */
+function rolesTable(id,title,cols,rows){
+  const host=document.getElementById(id); if(!host)return;
+  const t=document.createElement('div'); t.className='roles-title'; t.textContent=title; host.appendChild(t);
+  const tb=document.createElement('table'); tb.className='roles';
+  tb.innerHTML='<thead><tr><th></th>'+cols.map(c=>`<th>${c}</th>`).join('')+'</tr></thead><tbody>'+
+    rows.map(r=>`<tr><td class="role">${r[0]}</td>`+r.slice(1).map(c=>{const k=c.startsWith('!');return `<td${k?' class="key"':''}>${k?c.slice(1):c}</td>`;}).join('')+'</tr>').join('')+'</tbody>';
+  host.appendChild(tb);
+}
+rolesTable('roles1','② 리워드 드롭 — 역할별 순서 (분홍 = 이 방식의 핵심 동작)',
+ ['1 집업','2 폴다운','3 드롭','4 턴','5 풍상'],
+ [['스키퍼','"집업" 콜. 코스 유지, 살짝 베어링해 집 그늘 만들기','"폴다운" 콜','"드롭" 콜. 스핀 내려갈 때까지 직진','!스핀 3/4 이상 덱에 오면 헤딩업','클로스홀드, "택 준비됐나" 확인'],
+  ['바우맨','집 헬리어드 게양 확인, 택라인·시트 정리','폴 아웃보드 엔드 트립·마스트에서 분리, 덱에 고정','!집 밑으로 택(풋) 잡아 풍하측으로 끌어 걷기 — 앞으로 절대 X','풋부터 해치/백으로 넣기','포어덱 정리, 폴·가이 마무리'],
+  ['마스트맨','집 헬리어드 점프(마스트에서 당김)','폴 리프트·다운홀 풀어 폴 낮춤','바우맨과 함께 스핀 걷기(리치 잡기)','스핀 헤드 회수','헬리어드 정리, 마스트 주변 정돈'],
+  ['피트맨','집 헬리어드 클리트, 잭라인 정리','폴 리프트 릴리스','!"드롭" 콜에 스핀 헬리어드 빠르게 런 — 단 바우가 풋 잡은 뒤','헬리어드 완전 릴리스 후 클리트','집 헬리어드 텐션, 스핀 헬리어드 정리'],
+  ['트리머','집 시트 풍하측 준비(느슨히)','!가이 릴리스 → 폴이 자유롭게. 풍하 시트는 계속 홀드','!시트 홀드 유지(스핀이 집 뒤 그늘로), 바우가 잡으면 시트 릴리스','집 시트 인(계속 당기며 헤딩업 지원)','집 풍상 트림, 스핀 시트·가이 정리']]);
+rolesTable('roles2','③ 자이브 드롭(멕시칸 = 키위) — 역할별 순서',
+ ['1 집업','2 폴다운','3 자이빙','4 드롭','5 풍상'],
+ [['스키퍼','"집업" 콜. 러닝 코스 유지','"폴다운" 콜, 깊게 베어링','!"자이빙 3·2·1" 콜, 부드러운 좌회전 — 급하게 X','스핀이 집 풍상측에 무너지면 계속 헤딩업','클로스홀드, "클리어 투 택"만 기다림'],
+  ['바우맨','집 헬리어드 게양 확인','!폴 완전 분리·덱 고정 — 자이빙 전에 끝내야 함','풍상측(새 풍상)에서 대기','!무너진 스핀 풋을 집 풍상측에서 잡아 걷기','해치로 넣기, 포어덱 정리'],
+  ['마스트맨','집 헬리어드 점프','폴 리프트 풀어 폴 낮춤 보조','메인 자이빙 시 붐 주의, 풍상측 이동','바우맨과 함께 리치 잡아 걷기','헤드 회수, 헬리어드 정리'],
+  ['피트맨','집 헬리어드 클리트','폴 리프트 릴리스','!자이빙 직전부터 헬리어드 서서히 이즈','!메인 넘어가는 순간 헬리어드 빠르게 런, 이후 택라인 블로','집 헬리어드 텐션'],
+  ['트리머','집 시트 양쪽 준비','!스핀 시트·가이 오버트림 — 풋을 덱 가까이. 풀지 말 것','!자이빙과 동시에 집 시트 반대편으로 넘김, 스핀 시트는 계속 홀드','바우가 잡으면 스핀 시트 릴리스','집 풍상 트림']]);
+rolesTable('roles0','④ 일찍 내리기 — 역할별 순서 (마크 5–8척 전에 3까지 완료)',
+ ['1 집업','2 폴다운','3 드롭','4 직진·턴','5 풍상'],
+ [['스키퍼','"집업" 콜 (마크 8척 전)','"폴다운" 콜, 살짝 베어링','"드롭" 콜. 코스 유지','!집+메인으로 마크까지 직진, 마크에서 조타에만 집중','클로스홀드'],
+  ['바우맨','집 헬리어드 게양 확인','폴 분리·덱 고정','집 밑으로 풋 잡아 풍하측에서 걷기','!스핀 완전 수납 확인 후 "클리어" 콜, 자리에 앉아 힐 잡기','포어덱 정리'],
+  ['마스트맨','집 헬리어드 점프','폴 리프트·다운홀 풀기','스핀 걷기 보조','수납 마무리, 힐','헬리어드 정리'],
+  ['피트맨','집 헬리어드 클리트','폴 리프트 릴리스','스핀 헬리어드 런(바우 준비되면)','택라인 정리, 힐','집 헬리어드 텐션'],
+  ['트리머','집 시트 준비','가이 릴리스, 시트 홀드','시트 홀드 → 바우가 잡으면 릴리스','!집 트림만 신경, 턴에 맞춰 시트 인','집 풍상 트림']]);
+
+/* ---------- 살아있는 배 (경로 따라 항해) ---------- */
+function runner(svg,d,ph){
+  const track=el(svg,'path',{d,fill:'none',stroke:'none'});
+  const L=track.getTotalLength();
+  const G=g(svg,{class:'live'});
+  const wake=el(svg,'path',{fill:'none',stroke:'rgba(43,108,176,.5)','stroke-width':2,'stroke-dasharray':'2 6'});
+  G.parentNode.insertBefore(wake,G);
+  const ease=(a,b,t)=>Math.max(0,Math.min(1,(t-a)/(b-a)));
+  let t0=null, dur=9000;
+  function frame(ts){
+    if(!t0)t0=ts; let u=((ts-t0)%(dur+1500))/dur; if(u>1){requestAnimationFrame(frame);return;}
+    const p=track.getPointAtLength(u*L), p2=track.getPointAtLength(Math.min(L,u*L+2));
+    const hdg=Math.atan2(p2.y-p.y,p2.x-p.x)*180/Math.PI+90;
+    G.setAttribute('transform',`translate(${p.x},${p.y}) rotate(${hdg})`);
+    wake.setAttribute('d',d); wake.setAttribute('stroke-dasharray',`${u*L} ${L}`);
+    let m = ph.side==='R'?1:-1; if(ph.gybeAt!=null && u>ph.gybeAt) m=-m;   // 메인 쪽
+    const s = ph.side==='R'?1:-1;                                          // 스핀 쪽
+    const k=1-ease(ph.poleOff-.08,ph.poleOff,u);
+    const jh=ease(ph.jibAt,ph.jibAt+.12,u);
+    const [a,b]=ph.spinOff; const f=1-ease(a,b,u);
+    while(G.firstChild)G.removeChild(G.firstChild);
+    drawSails(G,{m,s,k,jh,f,spinDown:f<=0&&u<b+.12});
+    requestAnimationFrame(frame);
+  }
+  requestAnimationFrame(frame);
+}
+
+/* ---------- 펜으로 그려지는 효과 ---------- */
+requestAnimationFrame(()=>{
+  document.querySelectorAll('section').forEach(sec=>{
+    const strokes=[...sec.querySelectorAll('path,circle')].filter(e=>!e.closest('.live') && e.getAttribute('stroke')!=='none');
+    strokes.forEach((e,i)=>{let len=0;try{len=e.getTotalLength();}catch(_){}
+      if(!len)return; e.style.strokeDasharray=len+' '+len; e.style.strokeDashoffset=len; e.style.fillOpacity=0;
+      e.style.transition=`stroke-dashoffset .9s ease ${i*35}ms, fill-opacity .5s ease ${i*35+600}ms`;});
+    sec.querySelectorAll('text').forEach((t,i)=>{t.style.opacity=0;t.style.transition=`opacity .4s ease ${400+i*30}ms`;});
+    const io=new IntersectionObserver(en=>{ if(en[0].isIntersecting){ strokes.forEach(e=>{e.style.strokeDashoffset=0;e.style.fillOpacity='';}); sec.querySelectorAll('text').forEach(t=>t.style.opacity=1); io.disconnect(); }},{threshold:.15});
+    io.observe(sec);
+  });
+});
+
+/* ---------- ④ 일찍 내리기 (아마추어 권장) ---------- */
+{
+const s=document.getElementById('case0');
+if(s){
+wind(s,40,20);
+const d='M230,30 L340,230 Q380,300 470,285 Q530,270 600,150';
+path(s,d,{stroke:'rgba(0,0,0,.35)'});
+mark(s,468,232,'');
+txt(s,486,224,'리워드 마크 (배 왼쪽)',{class:'small'});
+// 드롭 완료 구역 표시 (마크 5–8척 길이 전)
+el(s,'path',{d:'M250,225 L360,180',stroke:'#6d4c9f','stroke-width':2,'stroke-dasharray':'5 4',fill:'none'});
+txt(s,330,170,'여기까지 스핀 완전 수납',{class:'small',fill:'#6d4c9f'});
+boat(s,245,50,150,{spin:'R',pole:'L',main:'R',jib:'hoist',label:'1 집업 (마크 8척 전)'});
+boat(s,300,150,150,{spin:'down-R',pole:null,main:'R',jib:true,label:'2 폴다운 → 스핀 다운'});
+boat(s,350,250,155,{spin:null,pole:null,main:'R',jib:true,label:'3 집+메인으로 직진'});
+boat(s,470,290,90,{spin:null,pole:null,main:'R',jib:true,label:'4 마크 턴 (조타·집 트림만)'});
+boat(s,595,150,45,{spin:null,pole:null,main:'R',jib:true,label:'5 풍상'});
+note(s,20,120,205,150,['장점','• 마크에서 할 일이 없음','• 스핀 감김·낙수 사고 없음','• 택·자이빙 여부와 무관','','비용','• 직선 구간 5–8척 길이를','  집만으로 감 (속도 손실)']);
+note(s,545,330,170,80,['언제 쓰나','• 크루가 3명 이하·초보','• 강풍·파도','• 마크 앞이 혼잡할 때']);
+runner(s,d,{jibAt:.05,poleOff:.2,spinOff:[.25,.42],gybeAt:null,side:'R'});
+}
+}
+
+/* ---------- ⑤ 타임라인 ---------- */
+{
+const s=document.getElementById('timeline');
+if(s){
+const T=g(s,{class:'rough'});
+const rows=['헬름','트리머(풍상·가이)','트리머(풍하·시트)','피트맨','바우맨'];
+const cols=['T-3 집업','T-2 폴다운','T-1 드롭','T0 턴','T+1 풍상'];
+const x0=150,y0=40,cw=112,rh=50;
+cols.forEach((c,i)=>txt(T,x0+i*cw+cw/2,y0-10,c,{'text-anchor':'middle',class:'big'}));
+rows.forEach((r,i)=>{txt(T,x0-10,y0+i*rh+30,r,{'text-anchor':'end'}); line(T,x0-4,y0+(i+1)*rh,x0+cols.length*cw,y0+(i+1)*rh,{stroke:'rgba(0,0,0,.25)'});});
+const cell=(r,c,s,color)=>{const x=x0+c*cw+4,y=y0+r*rh+6;box(T,x,y,cw-8,rh-12,{fill:color||'var(--note)',stroke:'#b08900'});
+  s.split('|').forEach((l,i)=>txt(T,x+6,y+17+i*15,l,{class:'small',fill:'#3a2f00'}));};
+cell(0,0,'코스 유지|(약간 베어링)'); cell(0,3,'헤딩업|스핀 내려간 뒤','#e8f5e9'); cell(0,4,'클로스홀드');
+cell(1,1,'가이 풀어|폴 내리게'); cell(1,2,'②가이 릴리스|③시트 트림 유지','#fdecea');
+cell(2,0,'집 시트 준비'); cell(2,2,'②시트 홀드|③트림 유지','#fdecea'); cell(2,3,'집 시트 인|(③은 집 자이빙)'); cell(2,4,'풍상 트림');
+cell(3,0,'집 헬리어드 업'); cell(3,1,'폴 리프트|다운'); cell(3,2,'스핀 헬리어드|②빠르게 ③서서히','#fdecea');
+cell(4,0,'집 게양 확인'); cell(4,1,'폴 다운·수납'); cell(4,2,'②집 밑 택 걷기|③메인쪽 풋 걷기','#fdecea'); cell(4,3,'포어덱 정리');
+txt(T,x0,y0+rows.length*rh+30,'② = 기본형(리워드 드롭), ③ = 변형(자이브 드롭). 분홍 칸이 두 방식의 차이점. ④ 일찍 내리기는 T-3~T-1을 모두 마크 5–8척 전에 끝냄.',{class:'small'});
+}
+}
+</script>
+</body></html>
