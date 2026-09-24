@@ -75,10 +75,10 @@ class PersonAliasContractTests(unittest.TestCase):
         for name in REAL_NAMES_RETAINED:
             self.assertIn(name, self.data, f"{name} 본명이 사라졌습니다")
 
-    def test_cache_key_is_r27(self):
-        """The cache contract pins the full-initial r27 key."""
+    def test_cache_key_is_r34(self):
+        """The cache contract pins the Hwandonghae r34 key."""
         contract = (ROOT / "scripts/test_wind_data_photo_contract.py").read_text(encoding="utf-8")
-        self.assertIn("20260908-full-initial-aliases-r27", contract)
+        self.assertIn("20260918-hwandonghae-songcrew-r34", contract)
 
     def test_tip_title_uses_alias(self):
         """Reinforcement tip title must use alias form."""
