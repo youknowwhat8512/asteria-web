@@ -1,4 +1,6 @@
-#!/usr/bin/env python3
+# task_id: t_082b0f7a
+# 구현자: 덱[제품개발자·아스테리아자동화]
+# 검증자: 레벨스 플러스[CEO·기업경영]
 """Build the allow-listed static tree served by the Asteria production origin."""
 from pathlib import Path
 import shutil

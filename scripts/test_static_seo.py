@@ -190,6 +190,9 @@ def main() -> int:
     assert {"WebSite", "SportsClub"}.issubset(types(home)), "home: WebSite and SportsClub JSON-LD required"
     assert home.h1 >= 1 and home.paragraphs >= 3, "home: meaningful static headings and text required"
     assert "/magazine/" in home.links, "home: static magazine link required"
+    newest = sorted(articles, key=lambda item: item["publishedAt"], reverse=True)[:3]
+    for article in newest:
+        assert article["url"] in home.links, f"home: missing static link to recent episode {article['url']}"
 
     home_description = one(home.meta["description"], "home description")
     for key in ("og:description", "twitter:description"):

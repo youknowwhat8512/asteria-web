@@ -46,13 +46,13 @@
     const slug = articleRoot.dataset.articleSlug || new URLSearchParams(location.search).get('slug');
     const article = articles.find(item => item.slug === slug);
     if (!article) {
-      document.title = '에피소드를 찾을 수 없습니다 | Asteria Magazine';
+      document.title = '에피소드를 찾을 수 없습니다 | 아스테리아 세일링 클럽';
       articleRoot.innerHTML = `<div class="article-not-found"><h1>Episode<br>Not Found.</h1><p>요청한 매거진 에피소드를 찾을 수 없습니다.</p><a href="/magazine/">Magazine 전체보기</a></div>`;
       document.getElementById('relatedSection').hidden = true;
       return;
     }
 
-    document.title = `${article.titleKo} | Asteria Magazine`;
+    document.title = `${article.titleKo} | 아스테리아 세일링 클럽`;
     const description = document.querySelector('meta[name="description"]');
     if (description) description.content = article.excerpt;
     const canonicalUrl = new URL(articleUrl(article), location.origin).href;

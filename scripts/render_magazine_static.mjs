@@ -16,7 +16,7 @@
 // Exits non-zero on any failure so the caller can abort the deploy and keep
 // the previous published tree intact.
 
-import { readFileSync, writeFileSync } from 'node:fs';
+import { existsSync, readFileSync, writeFileSync } from 'node:fs';
 import { join, resolve } from 'node:path';
 import vm from 'node:vm';
 
@@ -84,7 +84,7 @@ function collectionStructuredData(articles) {
         '@id': `${ORIGIN}/magazine/#collection`,
         url: `${ORIGIN}/magazine/`,
         name: '아스테리아 매거진',
-        description: '아스테리아의 세일링 훈련, 레이싱 도전, 크루 성장 이야기를 모은 매거진입니다.',
+        description: '세일링 클럽 아스테리아의 요트 세일링 훈련, 세일링요트 레이싱 도전, 크루 성장 이야기를 모은 매거진입니다.',
         inLanguage: 'ko-KR',
         isPartOf: { '@id': `${ORIGIN}/#website` },
         publisher: { '@id': `${ORIGIN}/#organization` },
@@ -148,8 +148,8 @@ function articleStructuredData(article) {
 }
 
 function applyIndexSeo(html, articles) {
-  const title = '아스테리아 매거진 | 세일링 훈련과 레이싱 이야기';
-  const description = '아스테리아의 세일링 훈련, 레이싱 도전, 크루 성장 이야기를 모은 매거진입니다.';
+  const title = '아스테리아 매거진 | 요트 세일링 훈련과 레이싱 이야기';
+  const description = '세일링 클럽 아스테리아의 요트 세일링 훈련, 세일링요트 레이싱 도전, 크루 성장 이야기를 모은 매거진입니다.';
   const image = `${ORIGIN}/images/og-asteria.jpg`;
   let next = replaceTitle(html, title);
   next = upsertCanonical(next, `${ORIGIN}/magazine/`);
@@ -170,7 +170,7 @@ function applyIndexSeo(html, articles) {
 function applyArticleSeo(html, article) {
   const canonical = absolute(article.url);
   const image = absolute(article.ogImage || article.image);
-  const title = `${article.titleKo} | Asteria Magazine`;
+  const title = `${article.titleKo} | 아스테리아 세일링 클럽`;
   const published = articleDate(article.publishedAt);
   const modified = articleDate(article.modifiedAt || article.publishedAt);
   let next = replaceTitle(html, title);
@@ -233,6 +233,20 @@ function cardMarkup(article) {
     + `<div class="pin-body"><time datetime="${esc(article.publishedAt)}">${esc(article.publishedAt)}</time>`
     + `<h2>${heading}</h2><h3>${subheading}</h3><p>${esc(article.excerpt)}</p>`
     + `<span class="pin-arrow">Read Episode →</span></div></a>`;
+}
+
+// Home: crawler-facing twins of the inline index.html renderers. The latest
+// strip must match the JS markup so hydration causes no visual change; the
+// recent list gives the newest three episodes plain Korean-titled links.
+const HOME_STRIP = 5;
+const HOME_RECENT = 3;
+function homeCardMarkup(article, index) {
+  return `<a class="mag${index === 0 ? ' large' : ''}" style="--mag-photo:url('${esc(article.image)}')" href="${esc(article.url)}" aria-label="${esc(article.titleKo)} 에피소드 열기">`
+    + `<div><small>${index === 0 ? 'Feature' : esc(article.category)}</small><h3>${esc(article.title)}</h3></div></a>`;
+}
+function recentMarkup(article) {
+  return `<li><a href="${esc(article.url)}"><time datetime="${esc(article.publishedAt)}">${esc(String(article.publishedAt).replaceAll('-', '.'))}</time>`
+    + `<span>${esc(article.titleKo)}</span></a></li>`;
 }
 
 function masonryMarkup(articles) {
@@ -440,6 +454,15 @@ const nextIndexHtml = injectInto(
   'magazine/index.html',
 );
 
+// Home latest strip + recent episode links (optional: unit builds copy only magazine/).
+const homePath = join(root, 'index.html');
+let nextHomeHtml = null;
+if (existsSync(homePath)) {
+  const homeHtml = readFileSync(homePath, 'utf8');
+  nextHomeHtml = injectInto(homeHtml, 'latestMagazine', ordered.slice(0, HOME_STRIP).map(homeCardMarkup).join(''), 'index.html');
+  nextHomeHtml = injectInto(nextHomeHtml, 'recentEpisodes', ordered.slice(0, HOME_RECENT).map(recentMarkup).join(''), 'index.html');
+}
+
 // Per-article pages.
 const pages = [];
 for (const article of articles) {
@@ -462,5 +485,6 @@ if (check) {
 }
 
 writeFileSync(indexPath, nextIndexHtml);
+if (nextHomeHtml !== null) writeFileSync(homePath, nextHomeHtml);
 for (const page of pages) writeFileSync(page.pagePath, page.nextPageHtml);
 console.log(`render_magazine_static: injected ${ordered.length} cards + ${pages.length} article pages under ${root}`);
