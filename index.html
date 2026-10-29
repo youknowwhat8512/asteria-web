@@ -309,6 +309,18 @@
     .booking-fab-copy strong{font-size:14px;font-weight:900;letter-spacing:-.03em;white-space:nowrap}
     @media(max-width:600px){.booking-fab{right:14px;bottom:calc(14px + env(safe-area-inset-bottom,0px));min-height:54px;padding:8px 15px 8px 9px;gap:10px}.booking-fab-icon{width:36px;height:36px;flex-basis:36px;font-size:18px}.booking-fab-copy strong{font-size:13px}}
 
+    /* 사업자 정보 푸터 */
+    .site-footer{padding:44px clamp(18px,4vw,54px) 56px;border-top:3px solid var(--red);background:var(--deep2);color:rgba(248,247,242,.62);font-size:13px;line-height:1.75}
+    .site-footer .footer-brand{display:block;color:var(--white);font-size:16px;font-weight:1000;letter-spacing:.14em;text-transform:uppercase;margin-bottom:6px}
+    .site-footer .footer-operator{margin:0 0 18px;color:rgba(248,247,242,.78)}
+    .site-footer dl{display:flex;flex-wrap:wrap;gap:4px 22px;margin:0}
+    .site-footer dl div{display:flex;gap:8px}
+    .site-footer dt{color:rgba(248,247,242,.45);font-weight:700}
+    .site-footer dd{margin:0}
+    .site-footer a{color:inherit;text-decoration:none}
+    .site-footer .footer-copy{margin:18px 0 0;font-size:11px;letter-spacing:.08em;color:rgba(248,247,242,.4)}
+    @media(max-width:600px){.site-footer{padding:36px 18px calc(96px + env(safe-area-inset-bottom,0px));font-size:12px}.site-footer dl{flex-direction:column}}
+
 </style>
 <style id="fee-membership-styles">
     .action-buttons{display:flex;flex-wrap:wrap;gap:10px;align-items:stretch}
@@ -447,6 +459,18 @@
     </div>
     </div></section>
   <section class="section reveal" id="magazine"><div class="wrap"><div class="section-head"><div><div class="overline">Magazine</div><h2 class="title">Proof of<br>Training.</h2></div><div class="magazine-side"><p class="desc">아스테리아 도전과 선수들의 성장 이야기.</p><ol class="recent-episodes" id="recentEpisodes" aria-label="최근 에피소드"></ol><a class="magazine-all" href="/magazine/">지난 에피소드 보기 <span aria-hidden="true">→</span></a></div></div><div class="mag-grid mag-strip" id="latestMagazine" aria-label="최신 Magazine 에피소드 5개"></div></div></section>
+  <footer class="site-footer" id="business-info"><div class="wrap">
+    <strong class="footer-brand">Asteria Sailing Yacht Club · 아스테리아</strong>
+    <p class="footer-operator">아스테리아는 (주)크루북이 운영하는 세일링 요트 클럽 브랜드입니다.</p>
+    <dl>
+      <div><dt>상호</dt><dd>(주)크루북</dd></div>
+      <div><dt>대표자</dt><dd>조윤호</dd></div>
+      <div><dt>사업자등록번호</dt><dd>335-84-03938</dd></div>
+      <div><dt>주소</dt><dd>경기도 김포시 고촌읍 고송로 20, 2층 32호</dd></div>
+      <div><dt>연락처</dt><dd><a href="tel:01046587094">010-4658-7094</a></dd></div>
+    </dl>
+    <p class="footer-copy">© 2026 CREWBOOK Inc. All rights reserved.</p>
+  </div></footer>
   <div class="modal" id="applyModal" aria-hidden="true"><div class="modal-card" role="dialog" aria-modal="true" aria-labelledby="applyModalTitle"><div class="form-modal-head"><h3 id="applyModalTitle">오픈 세일링 참가 신청</h3><button class="form-modal-close" type="button" id="modalClose" aria-label="오픈 세일링 참가 신청서 닫기">×</button></div><iframe class="form-embed" id="applyForm" title="오픈 세일링 참가 신청서" data-src="https://docs.google.com/forms/d/e/1FAIpQLSfQgBt8oAAZyvqMs5Ng6H7hI2Br4NpJzzyIpQeuWZ-VSm_h9Q/viewform?embedded=true" loading="lazy" referrerpolicy="strict-origin-when-cross-origin"></iframe><div class="form-modal-foot"><a href="https://forms.gle/FyeS2XVyxLnpxY3r8" target="_blank" rel="noopener noreferrer">새 창에서 작성 ↗</a></div></div></div>
   <div class="modal fee-modal" id="feeModal" aria-hidden="true">
     <div class="modal-card" role="dialog" aria-modal="true" aria-labelledby="feeModalTitle">
