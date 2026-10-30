@@ -2,7 +2,7 @@
   const articles = [...(window.ASTERIA_ARTICLES || [])].sort((a, b) => b.publishedAt.localeCompare(a.publishedAt));
   const articleUrl = article => article.url || `/magazine/article.html?slug=${encodeURIComponent(article.slug)}`;
   const dateLabel = value => new Intl.DateTimeFormat('ko-KR', {year:'numeric',month:'long',day:'numeric'}).format(new Date(`${value}T00:00:00`));
-  const HERO_LAYOUTS = ['natural-portrait'];
+  const HERO_LAYOUTS = ['natural-portrait', 'cover-portrait'];
   const heroLayoutClass = layout => HERO_LAYOUTS.includes(layout) ? ` hero-${layout}` : '';
   const heroNaturalWidth = value => Math.min(4096, Math.max(0, Math.round(Number(value) || 0)));
   const heroStyle = value => heroNaturalWidth(value) ? ` style="--hero-natural-width:${heroNaturalWidth(value)}px"` : '';

@@ -44,8 +44,8 @@ class MagazineMembershipGuideTests(unittest.TestCase):
         self.assertEqual(set(pages), expected)
         for page in pages:
             html = page.read_text(encoding="utf-8")
-            self.assertIn("magazine.js?v=20260830-body-media-r19", html, page)
-            self.assertIn("magazine.css?v=20260830-photo-swap-r11", html, page)
+            self.assertIn("magazine.js?v=20261030-cover-hero-r20", html, page)
+            self.assertIn("magazine.css?v=20261030-cover-hero-r12", html, page)
 
 
 if __name__ == "__main__":

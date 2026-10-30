@@ -63,9 +63,9 @@ BODY_SCENES = (
 # revision advances the article data while retaining the verified renderer and
 # natural-size portrait stylesheet bundles.
 CACHE_KEYS = {
-    "articles.js": "20260918-hwandonghae-songcrew-r34",
-    "magazine.js": "20260830-body-media-r19",
-    "magazine.css": "20260830-photo-swap-r11",
+    "articles.js": "20261030-hwandonghae-cover-r35",
+    "magazine.js": "20261030-cover-hero-r20",
+    "magazine.css": "20261030-cover-hero-r12",
 }
 CARD = '<aside class="article-explainer explainer-winddata explainer-layout-device-tutorial"'
 SECTION_OPEN = '<section class="article-section">'

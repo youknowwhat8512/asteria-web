@@ -7,10 +7,18 @@ window.ASTERIA_ARTICLES = [
     titleKo: "고수는 도구를 탓하지 않는다",
     publishedAt: "2026-09-18",
     eventDate: "2026-09-13",
-    image: "/images/mag-hwandonghae-2026-hero-podium-award.jpeg",
-    imageAlt: "제5회 환동해컵 국제요트대회 J70 오픈부 2위 시상 패널과 트로피를 들고 단상에 선 팀 아스테리아 크루",
+    // Magazine-cover hero (1122×1402, text baked in): shown whole at its own
+    // 4:5 ratio, never cropped to the wide slot. ogImage is a 1200×630 card
+    // that letterboxes the full cover so share previews keep every word.
+    image: "/images/mag-hwandonghae-2026-cover.jpg",
+    imageAlt: "ASTERIA SAILING 2026년 10월호 표지. 제5회 환동해컵 국제요트대회 J70 OPEN 2위 상패와 트로피를 들어 올린 팀 아스테리아 크루, '아스테리아, 환동해컵 J70 OPEN 2위' 헤드라인",
+    ogImage: "/images/og-hwandonghae-2026-cover.jpg",
+    heroLayout: "cover-portrait",
+    // Finished cover art already carries its own headline: home cards show it
+    // clean (no overlay title or dark gradient) and anchored to the masthead.
+    coverArt: true,
     heroNote: "5TH HWANDONGHAE CUP · J70 OPEN · 2ND · POHANG · 11–13 SEP 2026",
-    shape: "wide",
+    shape: "tall",
     excerpt: "마스트가 부러졌다 이어 붙은 요트, 낡고 찢어진 메인세일. 팀 아스테리아는 주어진 장비를 탓하는 대신 세팅을 다시 잡았고, 총점 9점으로 종합 2위에 올랐습니다. 매뉴얼을 벗어난 튜닝 한 번과, 그것을 받쳐낸 크루들의 이야기입니다.",
     lead: "2026년 9월 11일부터 13일까지, 포항 영일대해수욕장 앞바다에서 제5회 환동해컵 국제요트대회가 열렸습니다. J70 클래스 여섯 척이 여섯 번의 레이스를 치렀고, 아스테리아는 세일번호 05번 팀 아스테리아로 나섰습니다.",
     pullQuote: "매뉴얼은 매뉴얼일 뿐이다. 매뉴얼을 익히는 건 초보에서 중급까지고, 그 이상 가려면 응용을 할 줄 알아야 한다.",

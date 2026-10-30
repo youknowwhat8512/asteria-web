@@ -320,6 +320,10 @@
     .site-footer a{color:inherit;text-decoration:none}
     .site-footer .footer-copy{margin:18px 0 0;font-size:11px;letter-spacing:.08em;color:rgba(248,247,242,.4)}
     @media(max-width:600px){.site-footer{padding:36px 18px calc(96px + env(safe-area-inset-bottom,0px));font-size:12px}.site-footer dl{flex-direction:column}}
+    /* Episode cards whose image is finished cover art (own masthead + headline):
+       show the art clean, pinned to the masthead, with no overlay title. */
+    .mag.cover-art:before{background:var(--mag-photo) 50% 0%/cover no-repeat!important}
+    .mag.cover-art>div{position:absolute;width:1px;height:1px;overflow:hidden;clip:rect(0 0 0 0);white-space:nowrap}
 
 </style>
 <style id="fee-membership-styles">
@@ -540,7 +544,7 @@
     </div>
   </div>
 </div>
-<script src="/magazine/articles.js?v=20260918-hwandonghae-songcrew-r34"></script>
+<script src="/magazine/articles.js?v=20261030-hwandonghae-cover-r35"></script>
 <script>
   const applyAction = document.getElementById('applyAction');
   const applyModal = document.getElementById('applyModal');
@@ -548,7 +552,7 @@
   const applyForm = document.getElementById('applyForm');
   const latestMagazine = document.getElementById('latestMagazine');
   const latestArticles = [...(window.ASTERIA_ARTICLES || [])].sort((a,b)=>b.publishedAt.localeCompare(a.publishedAt)).slice(0,5);
-  if(latestMagazine) latestMagazine.innerHTML = latestArticles.map((article,index)=>`<a class="mag${index===0?' large':''}" style="--mag-photo:url('${article.image}')" href="${article.url||`/magazine/article.html?slug=${encodeURIComponent(article.slug)}`}" aria-label="${article.titleKo} 에피소드 열기"><div><small>${index===0?'Feature':article.category}</small><h3>${article.title}</h3></div></a>`).join('');
+  if(latestMagazine) latestMagazine.innerHTML = latestArticles.map((article,index)=>`<a class="mag${index===0?' large':''}${article.coverArt?' cover-art':''}" style="--mag-photo:url('${article.image}')" href="${article.url||`/magazine/article.html?slug=${encodeURIComponent(article.slug)}`}" aria-label="${article.titleKo} 에피소드 열기"><div><small>${index===0?'Feature':article.category}</small><h3>${article.title}</h3></div></a>`).join('');
   const recentEpisodes = document.getElementById('recentEpisodes');
   if(recentEpisodes && !recentEpisodes.children.length) recentEpisodes.innerHTML = latestArticles.slice(0,3).map(article=>`<li><a href="${article.url}"><time datetime="${article.publishedAt}">${article.publishedAt.replaceAll('-','.')}</time><span>${article.titleKo}</span></a></li>`).join('');
   function openApplyModal(placement = 'guide'){

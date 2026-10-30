@@ -219,7 +219,7 @@ function injectInto(html, id, inner, file) {
 }
 
 // --- Static markup builders --------------------------------------------------
-const HERO_LAYOUTS = ['natural-portrait'];
+const HERO_LAYOUTS = ['natural-portrait', 'cover-portrait'];
 const heroLayoutClass = layout => HERO_LAYOUTS.includes(layout) ? ` hero-${layout}` : '';
 const heroNaturalWidth = value => Math.min(4096, Math.max(0, Math.round(Number(value) || 0)));
 const heroStyle = value => heroNaturalWidth(value) ? ` style="--hero-natural-width:${heroNaturalWidth(value)}px"` : '';
@@ -241,7 +241,7 @@ function cardMarkup(article) {
 const HOME_STRIP = 5;
 const HOME_RECENT = 3;
 function homeCardMarkup(article, index) {
-  return `<a class="mag${index === 0 ? ' large' : ''}" style="--mag-photo:url('${esc(article.image)}')" href="${esc(article.url)}" aria-label="${esc(article.titleKo)} 에피소드 열기">`
+  return `<a class="mag${index === 0 ? ' large' : ''}${article.coverArt ? ' cover-art' : ''}" style="--mag-photo:url('${esc(article.image)}')" href="${esc(article.url)}" aria-label="${esc(article.titleKo)} 에피소드 열기">`
     + `<div><small>${index === 0 ? 'Feature' : esc(article.category)}</small><h3>${esc(article.title)}</h3></div></a>`;
 }
 function recentMarkup(article) {

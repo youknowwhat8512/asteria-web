@@ -233,3 +233,12 @@ html[data-article-variant="reporter"] .article-meta:after{content:"REPORTER'S CU
   .explainer-device{width:min(100%,260px)}
   .explainer-layout-device-tutorial .explainer-tutorial{gap:12px}
 }
+/* Magazine-cover hero: a finished 4:5 cover with baked-in type. Show it whole
+   (no crop, no bottom gradient, no overlay note) at its own ratio, centred and
+   capped so it never upscales past the 1122px source. Placed last so it also
+   beats the mobile `.article-hero{aspect-ratio:4/3}` rule. */
+.article-hero.hero-cover-portrait{aspect-ratio:1122/1402;width:min(100%,600px);margin-left:auto;margin-right:auto;background:var(--ink)}
+.article-hero.hero-cover-portrait:after{display:none}
+.article-hero.hero-cover-portrait>span{display:none}
+.article-hero.hero-cover-portrait img{display:block;width:100%;height:100%;object-fit:contain}
+@media(max-width:760px){.article-hero.hero-cover-portrait{aspect-ratio:1122/1402;width:100%}}
