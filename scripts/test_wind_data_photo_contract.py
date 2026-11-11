@@ -63,7 +63,7 @@ BODY_SCENES = (
 # revision advances the article data while retaining the verified renderer and
 # natural-size portrait stylesheet bundles.
 CACHE_KEYS = {
-    "articles.js": "20261030-hwandonghae-cover-r35",
+    "articles.js": "20261111-incheon-cup-2026-r2",
     "magazine.js": "20261030-cover-hero-r20",
     "magazine.css": "20261030-cover-hero-r12",
 }

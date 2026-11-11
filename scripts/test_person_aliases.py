@@ -78,7 +78,7 @@ class PersonAliasContractTests(unittest.TestCase):
     def test_cache_key_is_r35(self):
         """The cache contract pins the Hwandonghae r35 key."""
         contract = (ROOT / "scripts/test_wind_data_photo_contract.py").read_text(encoding="utf-8")
-        self.assertIn("20261030-hwandonghae-cover-r35", contract)
+        self.assertIn("20261111-incheon-cup-2026-r2", contract)
 
     def test_tip_title_uses_alias(self):
         """Reinforcement tip title must use alias form."""
