@@ -1,4 +1,187 @@
 window.ASTERIA_ARTICLES = [
+{
+  slug: "incheon-cup-2026-king-of-wangsan",
+  url: "/magazine/incheon-cup-2026-king-of-wangsan/",
+  category: "Regatta",
+  title: "King of Wangsan",
+  titleKo: "왕산의 왕",
+  publishedAt: "2026-11-10",
+  eventDate: "2026-10-24",
+  image: "/images/mag-incheon-cup-2026-cover.jpg",
+  imageAlt: "ASTERIA SAILING 2026년 11월호 표지. 마리나 방파제 앞을 기울어 항해하는 슈팅스타 사진 위에 '아스테리아, 인천컵 1위 왕산의 왕' 헤드라인과 1등, 2연패 표기가 있다.",
+  ogImage: "/images/og-incheon-cup-2026-cover.jpg",
+  heroNote: "2026 INCHEON CUP · SHOOTING STAR · 1ST · WANGSAN · 24 OCT 2026",
+  shape: "tall",
+  excerpt: "한 시간에 1m씩 물이 차오른 사리 직전의 바다. 다른 배들이 물살에 밀려날 때 슈팅스타는 파란 제네이커를 펼쳤습니다. 2026 인천광역시 요트협회장배, 아스테리아가 엔진 없이 돛만으로 1위에 오르며 2년 연속 정상을 지켰습니다.",
+  lead: "다른 배들이 물살에 밀려날 때, 슈팅스타는 제네이커를 펼쳤습니다. 2026년 10월 24일, 왕산마리나 앞바다. 아스테리아는 엔진의 힘을 빌리지 않고 돛만으로 1위를 차지했습니다.",
+  facts: [
+    {
+      label: "Event",
+      value: "2026 인천광역시 요트협회장배"
+    },
+    {
+      label: "Date",
+      value: "2026.10.24 · 하루 일정"
+    },
+    {
+      label: "Race Window",
+      value: "10:00–약 13:00 · KST"
+    },
+    {
+      label: "Venue",
+      value: "왕산마리나 앞바다"
+    },
+    {
+      label: "Boat / Crew",
+      value: "슈팅스타 · 클럽 크루 4명과 지인 1명"
+    },
+    {
+      label: "Result",
+      value: "1위 · 2년 연속 우승"
+    }
+  ],
+  sections: [
+    {
+      kicker: "01 / Home Waters",
+      heading: "익숙한 바다, 낯선 물살",
+      body: [
+        "정식 이름은 인천광역시 요트협회장배, 흔히 인천컵이라고 부르는 대회입니다. 왕산마리나에 배를 대 놓은 요트 여섯 척 남짓이 나왔고, 참가자는 모두 아마추어였습니다. 경기는 하루, 오전 10시부터 오후 1시 무렵까지 열렸습니다.",
+        "아스테리아는 슈팅스타로 나섰습니다. 클럽 크루 네 명에 지인 한 명이 함께 탔습니다. 눈에 익은 왕산 앞바다였지만, 이날은 물살이 유난히 거셌습니다.",
+        "다른 배들은 스핀도 제네이커도 펴지 못한 채 물살에 떠밀렸습니다. 결국 엔진을 켤 수밖에 없었다는 팀도 있었습니다. 돛만으로 경기를 끝까지 치르는 것부터가 쉽지 않은 날이었습니다."
+      ],
+      image: {
+        src: "/images/mag-incheon-cup-2026-federation-flag.jpg",
+        width: 1920,
+        height: 1080,
+        alt: "인천광역시요트협회 깃발이 바람에 펼쳐져 있고 뒤로 요트 여러 척이 떠 있다.",
+        caption: "대회기가 걸린 왕산 앞바다. 왕산마리나에 머무는 배들이 한자리에 모였습니다.",
+        layout: "natural"
+      },
+      endImage: {
+        src: "/images/mag-incheon-cup-2026-jury-fleet.jpg",
+        width: 1920,
+        height: 1080,
+        alt: "노란 JURY 깃발을 단 고무보트와 돛을 올린 요트들이 바다에 떠 있다.",
+        caption: "심판정(JURY)과 출전 요트들. 아마추어들만 나선 하루짜리 대회였습니다.",
+        layout: "natural"
+      }
+    },
+    {
+      kicker: "02 / Weather Window",
+      heading: "잿빛 하늘, 걸음만 한 바람",
+      body: [
+        "하늘은 내내 잿빛이었습니다. 구름이 하늘을 빈틈없이 덮었고, 기온은 16~17도로 선선했습니다.",
+        "문제는 바람이었습니다. 초속 1m 안팎, 사람 걸음과 비슷한 빠르기였습니다. 그마저 오전에는 동북동에서 불다가 정오를 넘기며 북서쪽으로 돌았습니다. 약한 데다 방향까지 바뀌니, 돛을 다루기 까다로운 날이었습니다.",
+        "그래도 시야는 탁 트였습니다. 흐린 날씨에도 20km 밖까지 알아볼 만큼 공기가 맑았고, 습도는 80% 안팎이었습니다."
+      ],
+      image: {
+        src: "/images/mag-incheon-cup-2026-overcast-fleet.jpg",
+        width: 1920,
+        height: 1080,
+        alt: "흐린 하늘 아래 요트 네 척이 산을 배경으로 떠 있다.",
+        caption: "경기 내내 구름이 하늘을 덮고 있었습니다.",
+        layout: "natural"
+      },
+      endImage: {
+        src: "/images/mag-incheon-cup-2026-other-boats.jpg",
+        width: 1920,
+        height: 1080,
+        alt: "흰 메인세일과 제노아를 올린 요트 세 척이 나란히 항해하고 있다.",
+        caption: "함께 나선 배들. 이날 대부분은 흰 돛만 올린 채 경기를 치렀습니다.",
+        layout: "natural"
+      }
+    },
+    {
+      kicker: "03 / The Tide",
+      heading: "사리를 앞둔 거센 밀물",
+      body: [
+        "이날 바다는 쉬지 않고 차올랐습니다. 경기 직전인 오전 9시 38분에 물이 가장 많이 빠졌고, 그때부터 오후 3시 39분까지 내내 밀물이었습니다. 경기는 딱 그 한가운데서 열렸습니다.",
+        "차오르는 양도 엄청났습니다. 여섯 시간 동안 물 높이가 6m 넘게 올라갔으니, 한 시간에 1m씩 바다가 불어난 셈입니다. 물살이 가장 세다는 '사리'를 이틀 앞둔 날이라, 나흘 전 잔잔하던 날보다 물이 세 배 넘게 움직였습니다.",
+        "밀물은 보통 그 한가운데에서 가장 빠르게 흐릅니다. 이날로 치면 정오 무렵, 경기 후반과 딱 겹치는 시간입니다.",
+        "바람은 걸음만큼 느리고, 바다는 한 시간에 1m씩 차오르는 날. 돛의 힘만으로 물살을 버텨내야 하는 경기였습니다."
+      ],
+      image: {
+        src: "/images/mag-incheon-cup-2026-course-diagram.svg",
+        width: 1600,
+        height: 1100,
+        alt: "왕산마리나 앞바다 위성 사진 위에 그린 소시지 코스. 풍상 마크와 풍하 마크 사이에 슈팅스타가 있고, 오전 동북동·오후 서북서 바람 화살표와 코스를 가로지르는 밀물 화살표가 표시돼 있다.",
+        caption: "왕산마리나 앞바다 위성 사진 위에 그린 소시지 코스. 오전엔 동북동, 정오 이후엔 서북서~북서의 약한 바람이 불었고, 그 아래로 밀물이 코스를 가로질렀습니다. 코스 위치와 물살 방향은 대략적인 표현입니다. 위성 사진: Esri World Imagery.",
+        layout: "natural"
+      },
+      endImage: {
+        src: "/images/mag-incheon-cup-2026-mark-buoy.jpg",
+        width: 1920,
+        height: 1080,
+        alt: "노란 마크 부표 옆을 지나는 슈팅스타와 뒤편의 해안 산자락.",
+        caption: "노란 마크 부표를 돌아 나가는 슈팅스타. 마크 주변은 물살의 힘이 고스란히 느껴지는 곳입니다.",
+        layout: "natural"
+      }
+    },
+    {
+      kicker: "04 / Shooting Star",
+      heading: "홀로 펼친 파란 돛",
+      body: [
+        "다른 배들이 스핀도 제네이커도 펴지 못할 때, 슈팅스타는 제네이커를 올렸습니다. 물살에 밀려나는 배들 사이로 파란 돛이 앞으로 나아갔습니다.",
+        "결과는 1위. 엔진의 힘을 빌리지 않고 돛만으로 일군 우승이었습니다. 물살에 애를 먹었다는 다른 팀들 사이에서, 제네이커를 활짝 편 슈팅스타가 웃었습니다."
+      ],
+      galleryLayout: "pair",
+      gallery: [
+        {
+          src: "/images/mag-incheon-cup-2026-gennaker-bow.jpg",
+          width: 1920,
+          height: 1080,
+          alt: "파란 제네이커를 정면에서 본 모습. 크루 세 명이 콕핏에 앉아 앞을 보고 있다.",
+          caption: "정면에서 본 슈팅스타. 제네이커가 바람을 가득 안았습니다.",
+          layout: "standard"
+        },
+        {
+          src: "/images/mag-incheon-cup-2026-shootingstar-side.jpg",
+          width: 5712,
+          height: 4284,
+          alt: "슈팅스타의 측면 전경. 메인세일과 제노아를 올리고 크루 여섯 명이 승선해 있으며 앞갑판에 접힌 세일 백이 보인다.",
+          caption: "선체에 적힌 이름 shooting star. 앞갑판에 제네이커 가방이 놓여 있습니다.",
+          layout: "standard"
+        }
+      ],
+      endImage: {
+        src: "/images/mag-incheon-cup-2026-fleet-gennaker.jpg",
+        width: 4032,
+        height: 3024,
+        alt: "여섯 척의 요트가 흩어져 있고 그중 한 척만 파란 제네이커를 펼치고 있다.",
+        caption: "같은 바다, 같은 시간. 파란 돛을 편 배는 슈팅스타 하나였습니다.",
+        layout: "natural"
+      }
+    },
+    {
+      kicker: "05 / King of Wangsan",
+      heading: "2년 연속, 왕산의 왕",
+      body: [
+        "경기를 마치고 나니 이런 생각이 들었다고 합니다. 순수 아마추어로 꾸린 클럽인데, 실력이 정말 많이 올라왔구나. 거센 물살 속에서 제네이커를 펴고 끝까지 달려낸 결과가 그 말을 뒷받침합니다.",
+        "올해로 2년 연속 우승입니다. 왕산 앞바다는 아스테리아가 접수했다고 해도 과언이 아닙니다.",
+        "2026년 10월 24일, 왕산의 왕은 슈팅스타였습니다."
+      ],
+      image: {
+        src: "/images/mag-incheon-cup-2026-breakwater-fleet.jpg",
+        width: 5712,
+        height: 4284,
+        alt: "왕산 방파제를 배경으로 메인세일과 제노아를 올린 슈팅스타와 다른 요트들이 떠 있다.",
+        caption: "왕산 방파제를 지나 돌아오는 길.",
+        layout: "natural"
+      },
+      endImage: {
+        src: "/images/mag-incheon-cup-2026-gennaker-hero.jpg",
+        width: 1920,
+        height: 1080,
+        alt: "파란 제네이커를 펼치고 항해하는 슈팅스타. 선체에 shooting star라고 적혀 있고 크루 다섯 명이 콕핏과 레일에 앉아 있다.",
+        caption: "파란 제네이커를 펼친 슈팅스타와 크루들.",
+        layout: "natural"
+      }
+    }
+  ],
+  pullQuote: "아스테리아가 인천 요트 대회를 2년 연속 제패하였습니다.",
+  heroLayout: "cover-portrait",
+  coverArt: true
+},
   {
     slug: "hwandonghae-cup-2026-j70",
     url: "/magazine/hwandonghae-cup-2026-j70/",
