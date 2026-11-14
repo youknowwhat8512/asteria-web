@@ -1,0 +1,52 @@
+<!doctype html>
+<html lang="ko"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1"><meta name="robots" content="noindex,nofollow"><title>아스테리아 방문 통계 · 비공개</title>
+<style>
+:root{--ink:#06131d;--paper:#f4f1e9;--muted:#64717a;--line:#d8d8d0;--red:#ef402f}*{box-sizing:border-box}body{margin:0;background:var(--paper);color:var(--ink);font:14px/1.65 "Apple SD Gothic Neo",Pretendard,sans-serif}main{max-width:1150px;margin:0 auto;padding:36px 28px}header{display:flex;align-items:center;justify-content:space-between;gap:20px;border-bottom:2px solid var(--ink);padding-bottom:22px}h1{font-size:26px;margin:2px 0 0;letter-spacing:-.04em}.eyebrow{font-size:11px;letter-spacing:.16em;font-weight:800;color:var(--red)}.private{font-size:12px;color:var(--muted)}nav{display:flex;gap:8px;flex-wrap:wrap;margin:24px 0 12px}button{font:inherit;padding:9px 16px;min-height:44px;border:1px solid var(--line);background:transparent;cursor:pointer;border-radius:4px;color:var(--ink)}button[aria-pressed=true]{background:var(--ink);color:#fff;border-color:var(--ink)}button:focus-visible{outline:3px solid var(--red);outline-offset:3px}#status{margin-bottom:24px;color:var(--muted);font-size:12px}.summary{display:grid;grid-template-columns:repeat(3,1fr);border-top:1px solid var(--line);border-bottom:1px solid var(--line);margin-bottom:30px}.metric{padding:20px 16px 20px 0}.metric small{display:block;color:var(--muted)}.metric strong{font-size:30px;font-variant-numeric:tabular-nums;letter-spacing:-.04em}h2{font-size:17px;margin:28px 0 12px}.scroll{overflow-x:auto}table{border-collapse:collapse;width:100%;font-size:13px}th,td{padding:13px 12px;border-bottom:1px solid var(--line);text-align:right;font-variant-numeric:tabular-nums;white-space:nowrap}th{color:var(--muted);font-weight:600}th:first-child,td:first-child{text-align:left;padding-left:0}td:first-child{white-space:normal;min-width:210px}a{color:inherit;text-underline-offset:4px}#empty{padding:18px 0;color:var(--muted)}.notes{font-size:12px;color:var(--muted);border-top:1px solid var(--line);margin-top:32px;padding-top:18px}.notes p{margin:5px 0}.error{color:#b12618!important}@media(max-width:600px){main{padding:22px 18px}header{align-items:flex-start;flex-direction:column;gap:6px}.summary{grid-template-columns:repeat(2,1fr)}h1{font-size:23px}button{padding:8px 12px}th,td{padding:12px 8px}td:first-child{min-width:140px}}
+</style></head><body><main>
+<header><div><div class="eyebrow">ASTERIA · PAGE VIEWS</div><h1>홈페이지·에피소드 조회수</h1></div><div class="private">이 컴퓨터에서만 보는 비공개 화면</div></header>
+<nav aria-label="통계 기간"><button data-days="1" aria-pressed="false">오늘</button><button data-days="7" aria-pressed="true">최근 7일</button><button data-days="30" aria-pressed="false">최근 30일</button><button data-days="90" aria-pressed="false">최근 90일</button><button id="refresh">새로고침</button></nav>
+<div id="status" role="status">통계를 불러오는 중입니다.</div>
+<section class="summary" aria-label="전체 요약"><div class="metric"><small>전체 페이지 조회</small><strong id="views">—</strong></div><div class="metric"><small>홈페이지 조회</small><strong id="homeViews">—</strong></div><div class="metric"><small>에피소드 조회</small><strong id="episodeViews">—</strong></div></section>
+<h2>에피소드별 조회수</h2><div class="scroll"><table><thead><tr><th scope="col">에피소드</th><th scope="col">조회 횟수</th></tr></thead><tbody id="episodes"></tbody></table></div>
+<p id="empty" hidden>이 기간에 집계된 페이지 조회가 없습니다.</p>
+<h2>일별 조회수</h2><div class="scroll"><table><thead><tr><th scope="col">날짜 · 한국 시간</th><th scope="col">페이지 조회</th></tr></thead><tbody id="daily"></tbody></table></div>
+<section class="notes"><p><b>집계 기준</b> · 브라우저 식별자 없이 날짜와 페이지 경로별 조회수만 합산합니다. 고유 방문자와 읽기 여부는 수집하지 않습니다.</p><p><b>조회 횟수</b> · 문서를 연 횟수입니다. 새로고침은 새 조회이며, 브라우저 내 같은 문서에서는 한 번만 전송합니다. 사람 수 또는 완독 수를 의미하지 않습니다.</p><p><b>범위</b> · 홈페이지와 매거진 페이지를 집계합니다. 90일 보관 기준은 유지하며, 이전에 집계한 조회수도 함께 표시합니다. 봇과 반복 요청이 포함될 수 있습니다.</p><p id="started"></p></section>
+</main><script>
+let days = 7;
+let sequence = 0;
+const number = value => Number(value).toLocaleString('ko-KR');
+function cell(row, text) { const td = document.createElement('td'); td.textContent = text; row.appendChild(td); return td; }
+async function load() {
+  const current = ++sequence;
+  const status = document.getElementById('status');
+  status.className = '';
+  status.textContent = '통계를 불러오는 중입니다.';
+  try {
+    const response = await fetch('/api/v1/analytics/report?days='+days, {cache:'no-store'});
+    if (!response.ok) throw new Error('HTTP '+response.status);
+    const report = await response.json();
+    if (current !== sequence) return;
+    for (const [id,key] of [['views','page_views'],['homeViews','home_views'],['episodeViews','episode_views']]) document.getElementById(id).textContent = number(report[key] ?? 0);
+    const episodes = document.getElementById('episodes'); episodes.replaceChildren();
+    for (const item of report.episodes) {
+      const row = document.createElement('tr'); const title = cell(row, '');
+      const link = document.createElement('a'); link.textContent = item.title; link.href = 'https://asteria.club'+item.path; link.target = '_blank'; link.rel = 'noopener noreferrer'; title.appendChild(link);
+      cell(row, number(item.views)); episodes.appendChild(row);
+    }
+    const daily = document.getElementById('daily'); daily.replaceChildren();
+    for (const item of report.daily) { const row = document.createElement('tr'); cell(row,item.day); cell(row,number(item.views)); daily.appendChild(row); }
+    document.getElementById('empty').hidden = report.page_views !== 0;
+    document.getElementById('started').textContent = report.pageviews_only_since ? '식별자 없는 집계로 전환: '+new Date(report.pageviews_only_since).toLocaleString('ko-KR',{timeZone:'Asia/Seoul'}) : '';
+    document.querySelector('.private').textContent = report.is_preview ? '시험 통계 · 운영 데이터와 별도' : '이 컴퓨터에서만 보는 비공개 화면';
+    status.textContent = report.start+' ~ '+report.end+' · 한국 시간 · 방금 갱신';
+  } catch (error) {
+    if (current !== sequence) return;
+    status.className = 'error'; status.textContent = '통계를 불러오지 못했습니다. 로컬 집계 서비스가 실행 중인지 확인해 주세요. ('+error.message+')';
+    for (const id of ['views','homeViews','episodeViews']) document.getElementById(id).textContent = '—';
+    document.getElementById('episodes').replaceChildren(); document.getElementById('daily').replaceChildren();
+  }
+}
+document.querySelectorAll('[data-days]').forEach(button => button.addEventListener('click', () => { days=Number(button.dataset.days); document.querySelectorAll('[data-days]').forEach(node => node.setAttribute('aria-pressed', String(node===button))); load(); }));
+document.getElementById('refresh').addEventListener('click',load);
+load();
+</script></body></html>

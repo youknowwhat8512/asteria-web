@@ -402,14 +402,47 @@ const staticSectionVisual = image => {
     + `<img src="${esc(image.src)}" alt="${esc(image.alt)}"${size} loading="lazy"${imageStyle}>`
     + `<figcaption>${esc(image.caption)}</figcaption></figure>`;
 };
-const staticBodyMediaAfter = (section, paragraphNumber) => (section.bodyMedia || [])
-  .filter(image => Number(image.afterParagraph) === paragraphNumber)
-  .map(staticSectionVisual).join('');
-const staticSectionParagraph = (section, paragraph, paragraphNumber) => paragraph
-  ? `<p>${esc(paragraph)}</p>${staticBodyMediaAfter(section, paragraphNumber)}` : '';
+// Editorial layout is opt-in; existing episodes retain their markup.
+function staticEditorialMedia(images) {
+  let result = '', run = [];
+  const flush = () => {
+    if (run.length > 1) result += '<div class="article-section-gallery gallery-pair" data-photo-group>'
+      + run.map(image => staticSectionVisual(image).replace(/<figure class="[^"]+"/, '<figure class="section-gallery-standard"')).join('') + '</div>';
+    else if (run.length) result += staticSectionVisual(run[0]);
+    run = [];
+  };
+  for (const image of images) {
+    if (image.gallerySolo) { flush(); result += staticSectionVisual(image).replace('<figure ', '<figure data-gallery-single '); }
+    else run.push(image);
+  }
+  flush(); return result;
+}
+const staticBodyMediaAfter = (section, paragraphNumber, editorial = false) => {
+  const images = (section.bodyMedia || []).filter(image =>
+    (!editorial || image.placement !== 'section-start') && Number(image.afterParagraph) === paragraphNumber);
+  return editorial ? staticEditorialMedia(images) : images.map(staticSectionVisual).join('');
+};
+const staticSectionParagraph = (section, paragraph, paragraphNumber, editorial = false) => paragraph
+  ? `<p>${esc(paragraph)}</p>${staticBodyMediaAfter(section, paragraphNumber, editorial)}` : '';
+function staticInterview(section, index) {
+  const c = section.interview, answers = section.body || [];
+  if (!Array.isArray(c.questions) || c.questions.length !== answers.length) fail('Interview question/answer count mismatch');
+  const id = `article-interview-${index}`;
+  return `<section class="article-section article-interview" aria-labelledby="${id}">`
+    + `<header class="interview-head"><div class="interview-eyebrow">${esc(c.eyebrow)}</div>`
+    + `<h3 id="${id}">${esc(section.heading)}</h3><p class="interview-dek">${esc(c.dek)}</p>`
+    + `<p class="interview-note">${esc(c.note)}</p></header>`
+    + answers.map((answer, i) => `<div class="interview-exchange"><h4 class="interview-question">`
+      + `<span class="interview-q">Q.</span><span class="interview-question-copy">${esc(c.questions[i])}</span></h4>`
+      + `<div class="interview-answer"><span class="interview-speaker">A. ${esc(c.respondent)}</span>`
+      + `<p>${esc(answer)}</p></div></div>${staticBodyMediaAfter(section, i + 1, true)}`).join('') + '</section>';
+}
 
 function articleMarkup(article) {
-  const sections = (article.sections || []).map(section => {
+  const editorial = article.editorialLayout === true;
+  const sections = (article.sections || []).map((section, sectionIndex) => {
+    if (editorial && section.interview) return staticInterview(section, sectionIndex);
+    const startMedia = editorial ? staticEditorialMedia((section.bodyMedia || []).filter(image => image.placement === 'section-start')) : '';
     const [firstParagraph, ...remainingParagraphs] = section.body || [];
     const tip = section.tip ? `<aside class="article-tip" aria-label="${esc(section.tip.title)}">`
       + `<div class="article-tip-mark" aria-hidden="true">TIP</div><div class="article-tip-copy">`
@@ -417,12 +450,12 @@ function articleMarkup(article) {
       + `<p>${esc(section.tip.summary)}</p><dl>${(section.tip.items || []).map((item, index) => ``
         + `<div><dt>${String(index + 1).padStart(2, '0')} · ${esc(item.label)}</dt><dd>${esc(item.value)}</dd></div>`).join('')}</dl>`
       + `</div></aside>` : '';
-    const body = `${staticSectionParagraph(section, firstParagraph, 1)}`
+    const body = `${staticSectionParagraph(section, firstParagraph, 1, editorial)}`
       + `${section.intro ? `<p>${esc(section.intro)}</p>` : ''}`
       + `${atArticleEnd(section) ? '' : explainerMarkup(section.explainer)}${tip}`
-      + remainingParagraphs.map((paragraph, index) => staticSectionParagraph(section, paragraph, index + 2)).join('');
+      + remainingParagraphs.map((paragraph, index) => staticSectionParagraph(section, paragraph, index + 2, editorial)).join('');
     return `<section class="article-section">${section.kicker ? `<div class="section-kicker">${esc(section.kicker)}</div>` : ''}`
-      + `<h3>${esc(section.heading)}</h3>${body}</section>`;
+      + `<h3>${esc(section.heading)}</h3>${startMedia}${body}</section>`;
   }).join('\n');
   const endExplainers = (article.sections || []).filter(atArticleEnd)
     .map(section => explainerMarkup(section.explainer)).join('');

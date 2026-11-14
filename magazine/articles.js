@@ -1,5 +1,450 @@
 window.ASTERIA_ARTICLES = [
 {
+  slug: "yisunshin-cup-2026-grit",
+  "url": "/magazine/yisunshin-cup-2026-grit/",
+  "category": "Regatta",
+  "title": "Grit is the Asteria Spirit.",
+  "titleKo": "2026 이순신컵 · 4명이 함께한 사흘",
+  "publishedAt": "2026-11-12",
+  "modifiedAt": "2026-11-12",
+  "image": "/images/mag-yisunshin-grit-2026-cover-v3.jpg",
+  "imageAlt": "ASTERIA SAILING 2026년 11월 표지. 로프를 잡고 있는 두 크루의 사진 위에 최악의 조건과 장비·인원 제약, Grit is the Asteria Spirit. 제목, 4명의 크루, 마지막까지 우리 호흡을 잃지 않고 완주했습니다. 문구가 적혀 있다.",
+  "ogImage": "/images/og-yisunshin-grit-2026-cover-v3.jpg",
+  "heroLayout": "cover-portrait",
+  "heroNaturalWidth": 1122,
+  "shape": "tall",
+  "heroNote": "2026 이순신컵 · Fareast28R · 4명의 크루",
+  "excerpt": "5명으로 한 번 연습한 뒤, 대회는 4명이 치렀습니다. 청소도구로 만든 틸러 익스텐션, 붕대로 물기를 닦아가며 수리한 제네이커. 사흘간의 경기와 수리 끝에 마지막 경기 아마추어 디비전 2위, 종합 3위로 마친 아스테리아의 이순신컵 이야기입니다.",
+  "lead": "틸러 익스텐션이 없었고, 백스테이 플리커가 없었고, 바우스피릿 로프는 끊어지기 직전이었고, 멤버 1명이 없었습니다. 2026 이순신컵은 처음부터 쉽지 않았습니다.",
+  "facts": [
+    {
+      "label": "대회",
+      "value": "2026 이순신컵"
+    },
+    {
+      "label": "요트",
+      "value": "Fareast28R"
+    },
+    {
+      "label": "크루",
+      "value": "JB · YH · KJM · LJH"
+    },
+    {
+      "label": "결과",
+      "value": "아마추어 디비전 · 마지막 경기 2위 / 종합 3위"
+    }
+  ],
+  "sections": [
+    {
+      "heading": "한 번 연습하고, 4명이서",
+      "body": [
+        "원래는 폴스타로 나갈 예정이었습니다. 연습 중 엔진이 고장 나면서 그 계획이 무산됐습니다.",
+        "대회 3주 전, Fareast28R을 챠터할 수 있게 됐습니다. 급하게 5명을 모아 팀을 꾸리고 한 번 연습했습니다.",
+        "연습 때는 JB가 스키퍼, YH가 집 트리머, KJM이 바우맨, LJH가 피트맨을 맡았습니다. 메인 트리머도 따로 있어 5명이 각자 포지션을 맡아 손발을 한 번은 맞출 수 있었습니다.",
+        "하지만 대회를 하루 앞두고 메인 트리머가 급한 회사 일로 참가하지 못하게 됐습니다. 결국 4명이 출전했고, KJM이 바우맨과 메인 트리머를 함께 맡아야 했습니다. 연습 때는 나눠 맡았던 일을 대회에서는 한 사람이 해내야 했습니다.",
+        "출전한 4명 중 KJM과 LJH는 세일링을 시작한 지 1년도 안 된 크루였습니다. Fareast28R을 아는 사람들은 이 인원으로 타기는 어려울 거라고 고개를 절레절레 흔들었습니다.",
+        "대회 하루 전, JB, KJM, LJH는 명동마리나에서 딜리버리를 하며 미리 대회 수역을 둘러봤습니다.",
+        "어디로 배를 몰고 갈지 미리 루트도 계산했습니다.",
+        "이런 준비에도 불구하고 상황은 여전히 좋지 않았습니다.",
+        "익스텐션이 없어서 임시방편으로 청소 도구로 대체를 했고, 백스테이는 수리도 불가한 상태였습니다."
+      ],
+      "bodyMedia": [
+        {
+          "src": "/images/mag-yisunshin-grit-2026-photo-23.jpg",
+          "width": 1958,
+          "height": 1606,
+          "alt": "분해된 엔진과 금속 부품들이 작업대 주변에 놓여 있는 흑백 사진.",
+          "caption": "분해된 엔진과 부품.",
+          "layout": "natural",
+          "afterParagraph": 1
+        },
+        {
+          "src": "/images/mag-yisunshin-grit-2026-photo-22.jpg",
+          "width": 480,
+          "height": 360,
+          "alt": "구명조끼를 입은 다섯 사람이 접어둔 돛 아래에서 함께 찍은 단체 사진.",
+          "caption": "요트 위에서 함께 남긴 단체사진.",
+          "layout": "natural",
+          "afterParagraph": 3
+        },
+        {
+          "src": "/images/mag-yisunshin-grit-2026-waters-recon.png",
+          "width": 300,
+          "height": 649,
+          "alt": "섬과 수심이 표시된 해도 위에 노란 항로가 그려져 있는 화면.",
+          "caption": "수역 탐색 때 살펴본 항로.",
+          "layout": "natural",
+          "afterParagraph": 6
+        },
+        {
+          "src": "/images/mag-yisunshin-grit-2026-photo-10.jpg",
+          "width": 480,
+          "height": 360,
+          "alt": "잔물결이 있는 수역 너머로 낮은 섬과 해안, 요트가 보인다.",
+          "caption": "배 위에서 바라본 수역과 해안.",
+          "layout": "natural",
+          "afterParagraph": 7
+        }
+      ]
+    },
+    {
+      "heading": "첫날부터 마음이 앞섰습니다",
+      "body": [
+        "첫 경기를 앞두고 다른 배들보다 일찍 바다로 나갔습니다. 4명 조합으로는 연습해본 적이 없어 제네이커를 올려봤는데 생각보다 잘됐습니다. 이 정도면 해볼 만하겠다는 욕심이 났습니다.",
+        "하지만, 연습하다 너무 멀리 나간 게 문제였습니다. 스타트 시간에 겨우 맞춰 돌아왔고, 마음이 급해졌습니다. 바람을 뒤에서 받으며 출발하는 풍하 스타트였는데, 서둘러 제네이커를 올리다 바다에 빠뜨렸습니다. 물에 잠긴 세일이 배를 붙잡으면서 한참 뒤처졌습니다.",
+        "겨우 수습하고 보니 제네이커가 찢어져 있었습니다. 다시 내렸고, YH가 세일을 수리하러 선실로 들어갔습니다. 경기는 아직 진행 중이었고, 수리하는 동안 포기하지 않고 집과 메인으로만 풍하를 타며 한 번 기회를 준비했습니다.",
+        "젖은 세일에는 수리 테이프가 잘 붙지 않았습니다. 당장 물기를 닦을 만한 것은 구급상자에 든 붕대뿐이었습니다. 붕대로 닦고 테이프를 붙여가며 겨우 수리했습니다.",
+        "경기 중간쯤 다시 제네이커를 올렸습니다. 이번에도 오래 쓰지는 못했습니다. 바람이 돌며 세게 부는 구간에서 자이빙하다 브로칭에 걸렸고, 제네이커가 포스테이에 꼬였습니다. 결국 다시 내려야 했습니다.",
+        "풍하 구간에서 따라붙을 기회를 놓친 채 마크를 돌았습니다. 그래도 풍상에서는 전날 살펴본 수역이 도움이 됐습니다. 바람을 향해 올라갈 각도와 코스를 잡아 경기를 이어갔고, DNF 없이 첫 경기를 마쳤습니다.",
+        "돌아와 제네이커 수리를 마저 끝내고, 밤늦게까지 그날의 실수를 크루들끼리 돌아봤습니다. 크루가 함께 움직일 수 있는 속도에 맞추면 됐는데, 경기라고 마음부터 앞섰습니다. 4명으로 이 배를 다루는 게 어렵다는 건 이미 알고 있었습니다. 다음 날에는 우리 실력을 믿고 해보기로 했습니다."
+      ],
+      "bodyMedia": [
+        {
+          "src": "/images/mag-yisunshin-grit-2026-photo-11.jpg",
+          "width": 480,
+          "height": 360,
+          "alt": "첫날, 주황빛 하늘 아래 대회장 건물과 깃발들이 보인다.",
+          "caption": "첫날의 대회장 풍경.",
+          "layout": "natural",
+          "afterParagraph": 1,
+          "eventDay": 1,
+          "gallerySolo": true,
+          "placement": "section-start"
+        },
+        {
+          "src": "/images/mag-yisunshin-grit-2026-photo-09.jpg",
+          "width": 768,
+          "height": 1024,
+          "alt": "콕핏에 무릎을 꿇은 사람이 틸러 부근을 손보고 있다.",
+          "caption": "첫날, 현장에서 장비를 손보는 모습.",
+          "layout": "natural",
+          "afterParagraph": 1,
+          "placement": "section-start",
+          "eventDay": 1
+        },
+        {
+          "src": "/images/mag-yisunshin-grit-2026-photo-05.jpg",
+          "width": 360,
+          "height": 480,
+          "alt": "앉아 있는 크루가 은색 막대를 잡고 있고, 검은 테이프를 감은 연결 부위가 가까이 보인다.",
+          "caption": "청소도구를 틸러 익스텐션으로 대용으로 세팅하였습니다.",
+          "layout": "natural",
+          "afterParagraph": 1,
+          "placement": "section-start",
+          "eventDay": 1
+        },
+        {
+          "src": "/images/mag-yisunshin-grit-2026-photo-19.jpg",
+          "width": 768,
+          "height": 1024,
+          "alt": "첫날 계류장에서 한 사람이 요트 위에 서서 위로 이어진 로프를 당기고 있다.",
+          "caption": "첫날, 계류장에서 장비를 손보는 모습.",
+          "layout": "natural",
+          "afterParagraph": 1,
+          "eventDay": 1,
+          "placement": "section-start"
+        },
+        {
+          "src": "/images/mag-yisunshin-grit-2026-photo-27.jpg",
+          "width": 360,
+          "height": 480,
+          "alt": "계류장에서 와이어에 걸어 둔 검은 측정 도구가 가까이 보인다.",
+          "caption": "첫날 와이어에 걸어 둔 측정 도구.",
+          "layout": "natural",
+          "afterParagraph": 1,
+          "placement": "section-start",
+          "eventDay": 1
+        },
+        {
+          "src": "/images/mag-yisunshin-grit-2026-photo-21.jpg",
+          "width": 1024,
+          "height": 768,
+          "alt": "맑은 하늘과 산을 배경으로 여러 척의 세일링 요트가 바다 위에 모여 있다.",
+          "caption": "대회 수역에 모인 요트들.",
+          "layout": "natural",
+          "afterParagraph": 1
+        },
+        {
+          "src": "/images/mag-yisunshin-grit-2026-photo-01.jpg",
+          "width": 480,
+          "height": 360,
+          "alt": "흰 제네이커와 어두운 메인세일을 펼친 요트가 푸른 바다 위를 지나간다.",
+          "caption": "흰 제네이커를 펼친 요트.",
+          "layout": "natural",
+          "afterParagraph": 1
+        },
+        {
+          "src": "/images/mag-yisunshin-grit-2026-photo-14.jpg",
+          "width": 1024,
+          "height": 768,
+          "alt": "파란 세일 위에 빨간 구급상자와 붕대가 놓여 있다.",
+          "caption": "젖은 제네이커를 수리하며 구급상자의 붕대까지 꺼내 썼습니다.",
+          "layout": "natural",
+          "afterParagraph": 4
+        },
+        {
+          "src": "/images/mag-yisunshin-grit-2026-photo-20.jpg",
+          "width": 768,
+          "height": 1024,
+          "alt": "청록색 앞돛과 회색 메인세일 아래로 파란 옷을 입은 크루의 뒷모습이 보인다.",
+          "caption": "돛 아래에서 이어지는 선상 작업.",
+          "layout": "natural",
+          "afterParagraph": 5
+        },
+        {
+          "src": "/images/mag-yisunshin-grit-2026-photo-07.jpg",
+          "width": 768,
+          "height": 1024,
+          "alt": "접어둔 메인세일 아래로 구명조끼를 입은 크루가 앉아 있고 뒤에서 햇빛이 비친다.",
+          "caption": "햇빛을 등지고 콕핏에 앉은 크루.",
+          "layout": "natural",
+          "afterParagraph": 7
+        }
+      ]
+    },
+    {
+      "heading": "둘째 날에도 고치고, 다시 준비했습니다",
+      "body": [
+        "아침에 정한 전술은 명확했습니다. 바람이 너무 강하면 지금 인원으로는 제네이커를 다루기 어려우니, 쓸 때와 쓰지 않을 때를 나누자는 것이었습니다. 모든 경기에서 욕심내지 말고, 우리가 할 수 있는 경기에 집중하기로 했습니다.",
+        "막상 경기가 시작되니 그 판단을 지키기가 어려웠습니다. 첫 경기부터 강한 바람에도 제네이커를 올렸습니다.",
+        "브로칭이 걸렸고, 삭아 있던 바우스피릿 로프가 끊어졌습니다. 브로칭 때문에 끊어진 건지, 로프가 끊어져 브로칭이 걸린 건지는 알 수 없었습니다. 급하게 제네이커를 회수했지만, 이미 선두는 마크를 돌아 골인하고 있었습니다.",
+        "바우스피릿 로프가 끊어져서 멘붕이었지만, 정신줄을 끊지 않으려고 부단히 노력했습니다.",
+        "그날 남은 2경기는 제네이커 없이 치렀습니다. 첫날처럼 풍상에서 만회해보려 했지만 그것도 잘되지 않았습니다. 고정해둔 백스테이가 메인세일에 심하게 걸렸고, 집은 집대로 털렸습니다. 원하는 각도가 나오지 않았습니다. 경기 중에 백스테이를 다시 원래대로 돌려놓기도 어려웠습니다.",
+        "남은 경기까지 뛰었지만 3경기 모두 만족스럽지 못한 결과였습니다.",
+        "뒤늦게 마리나에 들어왔을 때는 다른 팀들이 모두 정리를 마치고 떠난 뒤였습니다. 우리를 기다리고 있던 건 정성안 감독님이었습니다. 배 수리를 도와주시려고 남아 계셨습니다.",
+        "감독님과 배 상태를 살펴보고, 다음 날 경기를 뛸 수 있도록 긴급 수리를 했습니다. 바우스피릿을 고정하고 나서야 우리도 마리나를 나올 수 있었습니다."
+      ],
+      "bodyMedia": [
+        {
+          "src": "/images/mag-yisunshin-grit-2026-photo-02.jpg",
+          "width": 1024,
+          "height": 768,
+          "alt": "둘째 날 아침, 깃발이 늘어선 계류장에 햇빛이 비치고 여러 요트와 보트가 정박해 있다.",
+          "caption": "둘째 날 아침의 계류장.",
+          "layout": "natural",
+          "afterParagraph": 1,
+          "eventDay": 2,
+          "timeOfDay": "morning"
+        },
+        {
+          "src": "/images/mag-yisunshin-grit-2026-bowsprit-rope-break.jpg",
+          "width": 480,
+          "height": 360,
+          "alt": "장갑을 낀 손바닥 위에 붉은 로프의 끊어져 풀린 끝부분이 놓여 있다.",
+          "caption": "둘째 날 끊어진 바우스피릿 로프.",
+          "layout": "natural",
+          "afterParagraph": 3,
+          "eventDay": 2
+        },
+        {
+          "src": "/images/mag-yisunshin-grit-2026-photo-08.jpg",
+          "width": 1592,
+          "height": 2122,
+          "alt": "둘째 날 마스트 아래에서 올려다본 메인세일. 세일 주변으로 로프와 와이어가 이어져 있다.",
+          "caption": "둘째 날, 백스테이를 제대로 쓰지 못해 메인세일 운용에 방해를 받았습니다.",
+          "layout": "natural",
+          "afterParagraph": 5,
+          "eventDay": 2,
+          "gallerySolo": true
+        },
+        {
+          "src": "/images/mag-yisunshin-grit-2026-photo-26.jpg",
+          "width": 768,
+          "height": 1024,
+          "alt": "구명조끼를 입은 크루 4명이 요트 위에서 함께 찍은 세로 사진. 뒤로 파란 바다와 해안이 보인다.",
+          "caption": "요트 위에서 함께한 크루들.",
+          "layout": "natural",
+          "afterParagraph": 5
+        },
+        {
+          "src": "/images/mag-yisunshin-grit-2026-photo-16.jpg",
+          "width": 768,
+          "height": 1024,
+          "alt": "구명조끼를 입은 두 크루가 콕핏에 앉아 로프와 장비를 잡고 있다.",
+          "caption": "거친 움직임 속에서도 각자 맡은 일을 이어갔습니다.",
+          "layout": "natural",
+          "afterParagraph": 5
+        },
+        {
+          "src": "/images/mag-yisunshin-grit-2026-day2-evening-repair-work.jpg",
+          "width": 360,
+          "height": 480,
+          "alt": "계류된 요트 옆에서 한 사람이 바우스피릿과 연결 부위를 손보고 있다.",
+          "caption": "둘째 날 저녁, 감독님과 함께한 긴급 수리.",
+          "layout": "natural",
+          "afterParagraph": 8,
+          "eventDay": 2,
+          "timeOfDay": "evening"
+        },
+        {
+          "src": "/images/mag-yisunshin-grit-2026-day2-evening-repair-detail.jpg",
+          "width": 1024,
+          "height": 768,
+          "alt": "흰 선체 앞쪽으로 뻗은 봉의 연결 부위에 검은 테이프가 감겨 있다.",
+          "caption": "둘째 날 저녁 수리한 바우스피릿 연결 부위.",
+          "layout": "natural",
+          "afterParagraph": 8,
+          "eventDay": 2,
+          "timeOfDay": "evening"
+        }
+      ]
+    },
+    {
+      "heading": "마지막 날은 우리 호흡으로",
+      "body": [
+        "셋째 날 아침에는 오늘 바람이면 해볼 수 있겠다는 생각이 들었습니다. 앞선 성적은 일단 접어두고, 오늘 경기에 최선을 다하기로 했습니다. 배 상태는 여전히 좋지 않았지만 서로를 격려하며 나갔습니다.",
+        "첫날과 같은 풍하 스타트였습니다. 이번에는 바우스피릿 상태를 생각해 스타트부터 제네이커를 올리지 않았습니다. 다른 팀들과 달리 출발한 뒤에 올렸고, 무사히 펼쳐졌습니다.",
+        "그때부터 세일을 조절하며 코스를 잡아 내려갔습니다. 가능한 한 자이빙을 적게 할 수 있도록 각도를 잡았습니다. 중간에 강한 바람을 맞아 브로칭에 걸릴 뻔했지만 곧바로 회복했습니다. 제네이커도 찢어지지 않았고, 바우스피릿도 버텨줬습니다.",
+        "마크를 돌아 풍상으로 올라갔습니다. 백스테이는 여전히 문제였고 집도 털렸습니다. 4명으로는 배가 기우는 것을 잡는 데에도 한계가 있어 원하는 만큼 각도를 낼 수는 없었습니다. 바람마저 예상보다 강해져 자주 태킹해야 했습니다. 몸은 힘들었지만, 코스를 이어가며 2~3척을 앞질렀습니다.",
+        "이날 경기는 아마추어 디비전 2위로 마쳤습니다.",
+        "이번 대회에서는 세일링을 시작한 지 1년도 안 된 KJM과 LJH의 실력도 볼 수 있었습니다. 두 사람은 작전을 이해하고 그대로 해내려고 했습니다. 문제가 생기면 무엇이 잘못됐는지 알아보고 해결하려 했고, 배가 거칠게 움직여도 당황하지 않았습니다. 몸이 배에 적응하는 데에도 오래 걸리지 않았습니다.",
+        "레이저를 열심히 탄 덕이었습니다. 큰 배에서도 각자 맡은 일을 해내는 두 사람을 보면서, 그동안의 레이저 연습이 헛되지 않았다는 생각이 들었습니다.",
+        "전체 성적은 아쉬웠습니다. 지금까지 나간 대회 중 조건이 가장 열악했고, 사흘 내내 고치고 수습하느라 바빴습니다. 그래도 마지막 날에는 후회 없이 탔습니다. 처음부터 어려운 상황인 줄 알고 나온 대회였습니다. 그동안 쌓은 실력으로 어디까지 할 수 있을지 보고 싶었고, 마지막 경기에서 그 모습을 볼 수 있었습니다.",
+        "경기를 마친 배 위에서는 우리끼리 자축했습니다.",
+        "악조건 속에서도 끝까지 포기하지 않고 배를 제대로 타냈습니다. 그동안 실력이 많이 늘었다는 게 느껴져 스스로 대견했습니다. 이제는 스스로 세일러라고 말할 수 있을 만큼 성장한 것 같았습니다.",
+        "마지막 경기는 아마추어 디비전 2위, 대회 전체로는 아마추어 디비전 종합 3위로 마쳤습니다."
+      ],
+      "bodyMedia": [
+        {
+          "src": "/images/mag-yisunshin-grit-2026-day3-sails.jpg",
+          "width": 768,
+          "height": 1024,
+          "alt": "콕핏에서 올려다본 청록색 제네이커와 짙은 메인세일. 아래로 로프와 윈치, 선체가 보인다.",
+          "caption": "마지막 날, 펼쳐 올린 제네이커와 메인세일.",
+          "layout": "natural",
+          "afterParagraph": 2,
+          "eventDay": 3
+        },
+        {
+          "src": "/images/mag-yisunshin-grit-2026-day3-crew-trim.jpg",
+          "width": 768,
+          "height": 1024,
+          "alt": "구명조끼를 입은 두 크루가 요트 위에서 로프와 틸러를 잡고 있다.",
+          "caption": "마지막 날, 각자의 자리에서 로프와 틸러를 잡은 크루들.",
+          "layout": "natural",
+          "afterParagraph": 2,
+          "eventDay": 3
+        },
+        {
+          "src": "/images/mag-yisunshin-grit-2026-photo-24.jpg",
+          "width": 1024,
+          "height": 768,
+          "alt": "넓은 푸른 하늘과 섬을 배경으로 요트들이 바다 위에 흩어져 있다.",
+          "caption": "넓은 수역에 흩어진 요트들.",
+          "layout": "natural",
+          "afterParagraph": 3
+        },
+        {
+          "src": "/images/mag-yisunshin-grit-2026-photo-25.jpg",
+          "width": 1024,
+          "height": 768,
+          "alt": "요트 난간 쪽의 두 크루가 여러 척의 요트가 모인 바다를 바라보고 있다.",
+          "caption": "크루들의 시선 너머로 이어지는 경기 수역.",
+          "layout": "natural",
+          "afterParagraph": 3
+        },
+        {
+          "src": "/images/mag-yisunshin-grit-2026-photo-04.jpg",
+          "width": 1024,
+          "height": 768,
+          "alt": "기울어진 요트의 콕핏에서 바라본 메인세일과 집, 갑판과 파란 바다.",
+          "caption": "콕핏에서 바라본 돛과 바다.",
+          "layout": "natural",
+          "afterParagraph": 4
+        },
+        {
+          "src": "/images/mag-yisunshin-grit-2026-photo-13.jpg",
+          "width": 602,
+          "height": 1308,
+          "alt": "마지막 날의 항해 경로가 노란색과 주황색 선으로 표시된 지도 화면.",
+          "caption": "마지막 날의 항해 경로.",
+          "layout": "natural",
+          "afterParagraph": 5,
+          "eventDay": 3
+        },
+        {
+          "src": "/images/mag-yisunshin-grit-2026-photo-03.jpg",
+          "width": 768,
+          "height": 1024,
+          "alt": "요트 위에 구명조끼를 입은 크루들이 앉아 있고 뒤로 푸른 바다와 해안이 보인다.",
+          "caption": "각자의 자리에 앉은 크루들.",
+          "layout": "natural",
+          "afterParagraph": 6
+        },
+        {
+          "src": "/images/mag-yisunshin-grit-2026-photo-17.jpg",
+          "width": 480,
+          "height": 360,
+          "alt": "구명조끼를 입은 크루 4명이 요트 위에서 함께 찍은 가로 사진.",
+          "caption": "함께 출전한 4명의 크루.",
+          "layout": "natural",
+          "afterParagraph": 11
+        },
+        {
+          "src": "/images/mag-yisunshin-grit-2026-photo-18.jpg",
+          "width": 360,
+          "height": 480,
+          "alt": "계류된 요트의 마스트에 분홍색 ASTERIA 깃발이 세로로 펼쳐져 있다.",
+          "caption": "대회장에 세운 ASTERIA 깃발.",
+          "layout": "natural",
+          "afterParagraph": 11
+        }
+      ]
+    },
+    {
+      "heading": "스키퍼 JB의 회고",
+      "body": [
+        "전반적으로는 출발 전에 기획한 대로 진행됐습니다. 항적을 보니 풍상 코스도 의도한 대로 유지했더라고요. 다만 여객선 때문에 진행요원의 안내에 따라 자이빙했던 지점은 아쉬웠습니다. 조금 더 풍하 마크 쪽으로 직진할 수 있었다면 어땠을까 하는 생각이 남습니다.",
+        "팀을 꾸리는 것부터 쉽지 않았고 딜리버리도 앞당겨야 했습니다. 4명으로 감당하기에는 날씨와 배 상태가 벅찼습니다. 그래도 하루 먼저 도착해 수역과 코스를 살펴본 준비는 큰 도움이 됐습니다. 배 상태나 인원, 대회에 나선 4명이 함께 연습할 여건이 더 나았다면 어땠을까 하는 아쉬움은 남습니다.",
+        "잘 달리는 능력 못지않게 위기에 대처하는 능력이 중요하다는 걸 느꼈습니다. 위기 상황에서는 각자 자기 포지션만 맡는 것으로는 부족했습니다. 서로의 일을 메울 수 있도록 다른 역할의 기본도 익히고 숙달해야겠다고 생각했습니다.",
+        "메인과 집 트림을 감각에만 맡기지 않고 속도계로 확인하며 다듬어가고 싶습니다. KJM이 짚은 것처럼 배도 크루들과 같은 한 팀이더라고요. 세일을 조작하는 기술뿐 아니라 배의 상태를 함께 조율하는 능력도 익혀야겠다고 느꼈습니다.",
+        "오더를 내리고 지시를 따르는 것보다 협조하고 협력하는 관계라는 인식이 중요했습니다. 서로 어떤 상황인지 이해하고 조작의 타이밍을 맞추는 일이 필요했습니다.",
+        "제 복기로는 마지막 날 제네이커가 꼬이며 조종이 어려워졌던 장면에 인사이드 운용과 짧은 시트가 영향을 줬다고 봅니다. 자이빙과 태킹 때 조타와 메인세일 조작의 타이밍도 더 맞춰야겠다고 느꼈습니다. 시트를 충분히 풀 여유가 있는지 점검하고, 아웃사이드 운용도 평소에 연습해두고 싶습니다.",
+        "늘 풍하 세일링이 두려웠습니다. 이번 대회는 그 두려움을 조금씩 극복할 계기가 됐습니다. 함께 탄 크루들 모두 수고 많으셨습니다."
+      ],
+      "bodyMedia": [
+        {
+          "src": "/images/mag-yisunshin-grit-2026-reflection-tiller.jpg",
+          "width": 768,
+          "height": 1024,
+          "alt": "모자와 구명조끼를 착용한 크루가 청소도구를 잡고 앉아 있고, 앞쪽 틸러 연결 부위에는 검은 테이프가 감겨 있다.",
+          "caption": "청소도구를 틸러 익스텐션 대용으로 사용한 모습.",
+          "layout": "natural",
+          "afterParagraph": 2,
+          "gallerySolo": true
+        },
+        {
+          "src": "/images/mag-yisunshin-grit-2026-photo-15.jpg",
+          "width": 768,
+          "height": 1024,
+          "alt": "여러 요트가 떠 있는 바다를 향해 콕핏의 크루가 한쪽 팔을 들어 가리키고 있다.",
+          "caption": "배 위에서 바라본 다른 요트들.",
+          "layout": "natural",
+          "afterParagraph": 5,
+          "gallerySolo": true
+        }
+      ],
+      "interview": {
+        "eyebrow": "SKIPPER INTERVIEW",
+        "dek": "마지막 경기와 다음 준비에 대하여",
+        "note": "스키퍼가 남긴 회고를 바탕으로 재구성한 문답입니다.",
+        "respondent": "JB",
+        "questions": [
+          "마지막 경기는 계획대로 풀렸나요?",
+          "도움이 된 준비와 아쉬웠던 조건은 무엇이었나요?",
+          "이번 대회에서 가장 크게 배운 것은 무엇인가요?",
+          "트림과 배 상태는 어떻게 보완하고 싶나요?",
+          "크루와의 소통에서 달라진 생각이 있나요?",
+          "마지막 날의 자이빙은 어떻게 복기했나요?",
+          "개인적으로 남은 변화와 크루들에게 전하고 싶은 말은요?"
+        ]
+      }
+    }
+  ],
+  "coverArt": true,
+  "editorialLayout": true
+},
+{
   slug: "incheon-cup-2026-king-of-wangsan",
   url: "/magazine/incheon-cup-2026-king-of-wangsan/",
   category: "Regatta",

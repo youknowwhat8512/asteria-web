@@ -49,6 +49,9 @@ subprocess.run([node, str(RENDERER), str(NEXT)], check=True)
 # canonical, JSON-LD, sitemap, or no-JS regression must never replace live.
 subprocess.run([sys.executable, str(SEO_TEST), str(NEXT)], check=True)
 
+from prepare_site_analytics import prepare
+prepare(NEXT)
+
 if DEST.exists():
     DEST.rename(OLD)
 NEXT.rename(DEST)
