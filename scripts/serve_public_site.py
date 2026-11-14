@@ -14,20 +14,21 @@ from pathlib import Path
 CANONICAL_HOST = "asteria.club"
 CANONICAL_ORIGIN = "https://asteria.club"
 REDIRECT_HOSTS = {"www.asteria.club"}
-MEASUREMENT_UPSTREAM = ("127.0.0.1", 8788)
-API_PREFIX = "/api/v1/"
 MAX_API_BODY = 4096
 
 
 class CanonicalStaticHandler(SimpleHTTPRequestHandler):
-    # Fail closed in production. A future inspection-only subclass may set this
-    # true only behind independently validated access control; no query string,
-    # public asset, or runtime request header can enable it here.
-    measurement_proxy_enabled = False
+    # Explicit startup opt-in; never proxy the private dashboard/report route.
+    analytics_proxy_enabled = False
+    analytics_upstream = ("127.0.0.1", 8794)
 
-    def _proxy_measurement(self) -> bool:
-        if not self.measurement_proxy_enabled or not self.path.startswith(API_PREFIX):
+    def _proxy_analytics(self) -> bool:
+        if not self.path.startswith("/api/v1/analytics/"):
             return False
+        if (not self.analytics_proxy_enabled or self.command != "POST"
+                or self.path != "/api/v1/analytics/event"):
+            self.send_error(404, "Not Found")
+            return True
         length_text = self.headers.get("Content-Length", "0")
         try:
             length = int(length_text)
@@ -37,7 +38,9 @@ class CanonicalStaticHandler(SimpleHTTPRequestHandler):
             self.send_error(413, "Request body too large")
             return True
         body = self.rfile.read(length) if length else None
-        headers = {"Host": f"{MEASUREMENT_UPSTREAM[0]}:{MEASUREMENT_UPSTREAM[1]}"}
+        headers = {"Host": f"{self.analytics_upstream[0]}:{self.analytics_upstream[1]}"}
+        if self.headers.get("Origin"):
+            headers["Origin"] = self.headers["Origin"]
         content_type = self.headers.get("Content-Type")
         if content_type:
             headers["Content-Type"] = content_type
@@ -48,7 +51,7 @@ class CanonicalStaticHandler(SimpleHTTPRequestHandler):
                 headers["CF-Connecting-IP"] = str(ipaddress.ip_address(forwarded))
         except ValueError:
             pass
-        connection = http.client.HTTPConnection(*MEASUREMENT_UPSTREAM, timeout=5)
+        connection = http.client.HTTPConnection(*self.analytics_upstream, timeout=5)
         try:
             connection.request(self.command, self.path, body=body, headers=headers)
             response = connection.getresponse()
@@ -89,15 +92,15 @@ class CanonicalStaticHandler(SimpleHTTPRequestHandler):
         return False
 
     def do_GET(self) -> None:
-        if not self._route_canonical() and not self._proxy_measurement():
+        if not self._route_canonical() and not self._proxy_analytics():
             super().do_GET()
 
     def do_HEAD(self) -> None:
-        if not self._route_canonical() and not self._proxy_measurement():
+        if not self._route_canonical() and not self._proxy_analytics():
             super().do_HEAD()
 
     def do_POST(self) -> None:
-        if not self._route_canonical() and not self._proxy_measurement():
+        if not self._route_canonical() and not self._proxy_analytics():
             self.send_error(405, "Method Not Allowed")
 
     def end_headers(self) -> None:
@@ -111,7 +114,10 @@ def main() -> None:
     parser.add_argument("--bind", default="127.0.0.1")
     parser.add_argument("--port", type=int, default=8787)
     parser.add_argument("--directory", type=Path, required=True)
+    parser.add_argument("--enable-analytics", action="store_true")
     args = parser.parse_args()
+    if args.enable_analytics:
+        CanonicalStaticHandler.analytics_proxy_enabled = True
     directory = args.directory.expanduser().resolve(strict=True)
     handler = partial(CanonicalStaticHandler, directory=str(directory))
     server = ThreadingHTTPServer((args.bind, args.port), handler)

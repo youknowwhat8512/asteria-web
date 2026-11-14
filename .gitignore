@@ -11,3 +11,16 @@
 prototypes/
 supabase/
 tests/
+
+# Kakao TalkCalendar sync: secrets, ledger, generated output, live schedule
+ops/kakao-calendar/.env
+ops/kakao-calendar/state/
+ops/kakao-calendar/out/
+ops/kakao-calendar/events.csv
+.env
+
+# Local worktrees, caches and environment credentials
+.worktrees/
+__pycache__/
+*.pyc
+.env.*
